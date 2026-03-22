@@ -1,0 +1,19 @@
+id: prettier
+name: Prettier
+category: devops
+description: Opinionated code formatter supporting many languages and integrations
+website: https://prettier.io
+versions:
+  - version: "3.5"
+  - version: "3.4"
+  - version: "3.3"
+defaultVersion: "3.5"
+requires: [nodejs]
+incompatibleWith: [biome]
+suggestedWith: [eslint, typescript]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles: [.prettierrc]
+lastVerified: "2026-03-22"
+tags: [prettier, formatter, code-quality, devops]

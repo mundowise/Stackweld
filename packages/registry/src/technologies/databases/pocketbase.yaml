@@ -1,0 +1,24 @@
+id: pocketbase
+name: PocketBase
+category: database
+description: Open source backend with embedded SQLite database, auth, and file storage
+website: https://pocketbase.io
+versions:
+  - version: "0.25"
+  - version: "0.24"
+defaultVersion: "0.25"
+defaultPort: 8090
+requires: []
+incompatibleWith: []
+suggestedWith: [svelte, react]
+officialScaffold: null
+dockerImage: null
+healthCheck:
+  endpoint: http://localhost:8090/api/health
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars: {}
+configFiles: []
+lastVerified: "2026-03-22"
+tags: [pocketbase, sqlite, baas, backend, realtime, auth]

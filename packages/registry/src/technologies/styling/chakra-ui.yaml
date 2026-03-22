@@ -1,0 +1,21 @@
+id: chakra-ui
+name: Chakra UI
+category: styling
+description: Simple, modular and accessible component library for React applications
+website: https://chakra-ui.com
+versions:
+  - version: "3.3"
+  - version: "3.2"
+  - version: "3.1"
+  - version: "3.0"
+  - version: "2.10"
+defaultVersion: "3.3"
+requires: [nodejs, react]
+incompatibleWith: [shadcn-ui, material-ui]
+suggestedWith: [nextjs, typescript]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles: [theme.ts]
+lastVerified: "2026-03-22"
+tags: [chakra, ui, components, accessible, styling]

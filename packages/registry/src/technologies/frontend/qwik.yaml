@@ -1,0 +1,28 @@
+id: qwik
+name: Qwik
+category: frontend
+description: Instant-loading web framework with resumability and fine-grained lazy loading
+website: https://qwik.dev
+versions:
+  - version: "1.12"
+  - version: "1.11"
+defaultVersion: "1.12"
+defaultPort: 5173
+requires: [nodejs]
+incompatibleWith: [react, vue, svelte, angular]
+suggestedWith: [typescript, tailwindcss]
+officialScaffold: "npm create qwik@latest"
+dockerImage: null
+healthCheck:
+  endpoint: http://localhost:5173
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  NODE_ENV: development
+configFiles:
+  - package.json
+  - tsconfig.json
+  - vite.config.ts
+lastVerified: "2026-03-22"
+tags: [qwik, resumable, frontend, framework, performance]

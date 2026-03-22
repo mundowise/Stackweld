@@ -1,0 +1,22 @@
+id: material-ui
+name: Material UI (MUI)
+category: styling
+description: React component library implementing Google's Material Design
+website: https://mui.com
+versions:
+  - version: "6.4"
+  - version: "6.3"
+  - version: "6.2"
+  - version: "6.1"
+  - version: "6.0"
+  - version: "5.16"
+defaultVersion: "6.4"
+requires: [nodejs, react]
+incompatibleWith: [shadcn-ui, chakra-ui]
+suggestedWith: [nextjs, typescript]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles: [theme.ts]
+lastVerified: "2026-03-22"
+tags: [material, mui, ui, components, google, styling]

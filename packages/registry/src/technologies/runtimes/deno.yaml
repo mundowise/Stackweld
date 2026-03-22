@@ -1,0 +1,30 @@
+id: deno
+name: Deno
+category: runtime
+description: Secure runtime for JavaScript and TypeScript with built-in tooling
+website: https://deno.land
+versions:
+  - version: "2.2"
+  - version: "2.1"
+  - version: "1.46"
+    eol: "2025-12-31"
+defaultVersion: "2.2"
+defaultPort: 8000
+requires: []
+incompatibleWith: []
+suggestedWith: [typescript]
+officialScaffold: null
+dockerImage: denoland/deno:2.2.0
+healthCheck:
+  endpoint: http://localhost:8000
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  DENO_ENV: development
+  PORT: "8000"
+configFiles:
+  - deno.json
+  - deno.lock
+lastVerified: "2026-03-22"
+tags: [deno, javascript, typescript, runtime, server, secure]

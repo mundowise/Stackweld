@@ -1,0 +1,17 @@
+id: flask
+name: Flask
+category: backend
+description: Lightweight Python web framework
+website: https://flask.palletsprojects.com
+versions: [{version: "3.1"}, {version: "3.0"}]
+defaultVersion: "3.1"
+defaultPort: 5000
+requires: [python]
+incompatibleWith: [fastapi, django]
+suggestedWith: [postgresql, sqlalchemy]
+officialScaffold: null
+dockerImage: null
+envVars: {FLASK_APP: "app", FLASK_ENV: "development"}
+configFiles: [requirements.txt]
+lastVerified: "2026-03-22"
+tags: [flask, python, micro, api]

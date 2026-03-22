@@ -1,0 +1,17 @@
+id: hono
+name: Hono
+category: backend
+description: Ultrafast web framework for the edge
+website: https://hono.dev
+versions: [{version: "4"}]
+defaultVersion: "4"
+defaultPort: 3001
+requires: [nodejs]
+incompatibleWith: []
+suggestedWith: [typescript, bun]
+officialScaffold: npm create hono@latest
+dockerImage: null
+envVars: {PORT: "3001"}
+configFiles: []
+lastVerified: "2026-03-22"
+tags: [hono, edge, api, fast]

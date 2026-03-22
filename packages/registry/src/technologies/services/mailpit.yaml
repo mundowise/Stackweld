@@ -1,0 +1,27 @@
+id: mailpit
+name: Mailpit
+category: service
+description: Email and SMTP testing tool for developers with web UI
+website: https://mailpit.axllent.org
+versions:
+  - {version: "1.21"}
+  - {version: "1.20"}
+  - {version: "1.19"}
+defaultVersion: "1.21"
+defaultPort: 8025
+requires: []
+incompatibleWith: []
+suggestedWith: []
+officialScaffold: null
+dockerImage: axllent/mailpit:latest
+healthCheck:
+  endpoint: http://localhost:8025
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  SMTP_HOST: localhost
+  SMTP_PORT: "1025"
+configFiles: []
+lastVerified: "2026-03-22"
+tags: [mailpit, email, smtp, testing, development, mail-catcher]

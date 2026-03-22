@@ -1,0 +1,18 @@
+id: devcontainers
+name: Dev Containers
+category: devops
+description: Containerized development environments with consistent tooling and configuration
+website: https://containers.dev
+versions:
+  - version: "1"
+defaultVersion: "1"
+requires: []
+incompatibleWith: []
+suggestedWith: [docker]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles:
+  - .devcontainer/devcontainer.json
+lastVerified: "2026-03-22"
+tags: [devcontainers, docker, development, environment, vscode, codespaces]

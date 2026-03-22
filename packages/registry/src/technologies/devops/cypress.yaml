@@ -1,0 +1,20 @@
+id: cypress
+name: Cypress
+category: devops
+description: JavaScript end-to-end testing framework for web applications
+website: https://www.cypress.io
+versions:
+  - version: "14.2"
+  - version: "14.1"
+  - version: "13.17"
+defaultVersion: "14.2"
+requires: [nodejs]
+incompatibleWith: []
+suggestedWith: [typescript]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles:
+  - cypress.config.ts
+lastVerified: "2026-03-22"
+tags: [cypress, testing, e2e, integration, browser, automation]

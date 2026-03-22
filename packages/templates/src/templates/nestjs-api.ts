@@ -1,0 +1,124 @@
+import type { Template } from "@stackpilot/core";
+
+export const nestjsApi: Template = {
+  id: "nestjs-api",
+  name: "NestJS API",
+  description:
+    "Production-ready NestJS REST API with Prisma, PostgreSQL, Redis, and Docker",
+  technologyIds: [
+    "nestjs",
+    "nodejs",
+    "typescript",
+    "prisma",
+    "postgresql",
+    "redis",
+    "docker",
+  ],
+  profile: "production",
+  scaffoldSteps: [
+    {
+      name: "Create NestJS project",
+      command: "npx @nestjs/cli new {{projectName}} --package-manager npm --strict",
+    },
+    {
+      name: "Install Prisma",
+      command: "cd {{projectName}} && npm install prisma @prisma/client",
+    },
+    {
+      name: "Initialize Prisma",
+      command:
+        "cd {{projectName}} && npx prisma init --datasource-provider postgresql",
+    },
+    {
+      name: "Install Redis and config",
+      command:
+        "cd {{projectName}} && npm install @nestjs/config ioredis @nestjs-modules/ioredis",
+    },
+    {
+      name: "Install validation",
+      command:
+        "cd {{projectName}} && npm install class-validator class-transformer",
+    },
+  ],
+  overrides: [
+    {
+      path: ".env.example",
+      content: [
+        "PORT=3000",
+        "NODE_ENV=development",
+        "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/{{projectName}}",
+        "REDIS_URL=redis://localhost:6379",
+      ].join("\n"),
+    },
+    {
+      path: "docker-compose.yml",
+      content: [
+        "services:",
+        "  db:",
+        "    image: postgres:17",
+        "    restart: unless-stopped",
+        "    ports:",
+        '      - "5432:5432"',
+        "    environment:",
+        "      POSTGRES_USER: postgres",
+        "      POSTGRES_PASSWORD: postgres",
+        "      POSTGRES_DB: {{projectName}}",
+        "    volumes:",
+        "      - pgdata:/var/lib/postgresql/data",
+        "    healthcheck:",
+        '      test: ["CMD-SHELL", "pg_isready -U postgres"]',
+        "      interval: 5s",
+        "      timeout: 5s",
+        "      retries: 5",
+        "",
+        "  redis:",
+        "    image: redis:7-alpine",
+        "    restart: unless-stopped",
+        "    ports:",
+        '      - "6379:6379"',
+        "    healthcheck:",
+        '      test: ["CMD", "redis-cli", "ping"]',
+        "      interval: 5s",
+        "      timeout: 5s",
+        "      retries: 5",
+        "",
+        "volumes:",
+        "  pgdata:",
+      ].join("\n"),
+    },
+    {
+      path: "Dockerfile",
+      content: [
+        "FROM node:22-alpine AS builder",
+        "WORKDIR /app",
+        "COPY package*.json ./",
+        "RUN npm ci",
+        "COPY . .",
+        "RUN npx prisma generate",
+        "RUN npm run build",
+        "",
+        "FROM node:22-alpine",
+        "WORKDIR /app",
+        "COPY package*.json ./",
+        "RUN npm ci --omit=dev",
+        "COPY --from=builder /app/dist ./dist",
+        "COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma",
+        "COPY prisma ./prisma",
+        "EXPOSE 3000",
+        'CMD ["node", "dist/main.js"]',
+      ].join("\n"),
+    },
+  ],
+  hooks: [
+    {
+      timing: "post-scaffold",
+      name: "Generate Prisma client",
+      command: "cd {{projectName}} && npx prisma generate",
+      description: "Generate the Prisma client from schema",
+      requiresConfirmation: false,
+    },
+  ],
+  variables: {
+    projectName: "my-nestjs-api",
+  },
+};

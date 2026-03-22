@@ -1,0 +1,28 @@
+id: traefik
+name: Traefik
+category: service
+description: Cloud-native reverse proxy and load balancer with automatic service discovery
+website: https://traefik.io
+versions:
+  - version: "3.3"
+  - version: "3.2"
+  - version: "2.11"
+    lts: true
+defaultVersion: "3.3"
+defaultPort: 80
+requires: []
+incompatibleWith: [nginx]
+suggestedWith: [docker]
+officialScaffold: null
+dockerImage: traefik:v3.3
+healthCheck:
+  endpoint: http://localhost:8080/ping
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars: {}
+configFiles:
+  - traefik.yml
+  - traefik.toml
+lastVerified: "2026-03-22"
+tags: [traefik, reverse-proxy, load-balancer, ingress, docker, cloud-native]

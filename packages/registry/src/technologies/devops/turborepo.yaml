@@ -1,0 +1,20 @@
+id: turborepo
+name: Turborepo
+category: devops
+description: High-performance build system for JavaScript and TypeScript monorepos
+website: https://turbo.build
+versions:
+  - version: "2.8"
+  - version: "2.7"
+defaultVersion: "2.8"
+requires: [nodejs]
+incompatibleWith: []
+suggestedWith: [pnpm, typescript]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles:
+  - turbo.json
+  - package.json
+lastVerified: "2026-03-22"
+tags: [turborepo, monorepo, build, caching, pipeline, devops]

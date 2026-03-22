@@ -1,0 +1,32 @@
+id: supabase-auth
+name: Supabase Auth
+category: auth
+description: Open-source authentication with row-level security, social logins, and magic links powered by GoTrue
+website: https://supabase.com/auth
+versions:
+  - version: "2.72"
+  - version: "2.65"
+    lts: true
+  - version: "1.0"
+    eol: "2024-01-01"
+defaultVersion: "2.72"
+defaultPort: 54321
+requires: [nodejs]
+incompatibleWith: [nextauth, clerk, lucia]
+suggestedWith: [postgresql, nextjs, react]
+officialScaffold: npx create-next-app --example with-supabase
+dockerImage: supabase/gotrue
+healthCheck:
+  endpoint: /auth/v1/health
+  interval: "30s"
+  timeout: "5s"
+  retries: 3
+envVars:
+  NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: your-anon-key
+  SUPABASE_SERVICE_ROLE_KEY: your-service-role-key
+configFiles:
+  - supabase/config.toml
+  - lib/supabase.ts
+lastVerified: "2026-03-22"
+tags: [auth, supabase, authentication, rls, oauth, magic-link, open-source]

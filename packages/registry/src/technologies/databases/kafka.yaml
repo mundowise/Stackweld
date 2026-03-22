@@ -1,0 +1,27 @@
+id: kafka
+name: Apache Kafka
+category: database
+description: Distributed event streaming platform for high-throughput data pipelines
+website: https://kafka.apache.org
+versions:
+  - version: "3.9"
+  - version: "3.8"
+defaultVersion: "3.9"
+defaultPort: 9092
+requires: []
+incompatibleWith: []
+suggestedWith: []
+officialScaffold: null
+dockerImage: confluentinc/cp-kafka:7.8.0
+healthCheck:
+  command: kafka-broker-api-versions --bootstrap-server localhost:9092
+  interval: 15s
+  timeout: 10s
+  retries: 5
+envVars:
+  KAFKA_BROKER_ID: "1"
+  KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+  KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+configFiles: []
+lastVerified: "2026-03-22"
+tags: [kafka, streaming, event, message-broker, distributed, queue]

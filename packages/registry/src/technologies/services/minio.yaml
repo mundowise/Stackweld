@@ -1,0 +1,28 @@
+id: minio
+name: MinIO
+category: service
+description: High-performance S3-compatible object storage
+website: https://min.io
+versions:
+  - {version: "2024.12"}
+  - {version: "2024.11"}
+  - {version: "2024.10"}
+defaultVersion: "2024.12"
+defaultPort: 9000
+requires: []
+incompatibleWith: []
+suggestedWith: []
+officialScaffold: null
+dockerImage: minio/minio:latest
+healthCheck:
+  endpoint: http://localhost:9000/minio/health/live
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  MINIO_ROOT_USER: minioadmin
+  MINIO_ROOT_PASSWORD: minioadmin
+  S3_ENDPOINT: http://localhost:9000
+configFiles: []
+lastVerified: "2026-03-22"
+tags: [minio, s3, object-storage, storage, aws-s3-compatible]

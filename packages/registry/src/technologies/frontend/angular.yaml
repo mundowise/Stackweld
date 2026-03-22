@@ -1,0 +1,19 @@
+id: angular
+name: Angular
+category: frontend
+description: Platform for building web applications
+website: https://angular.dev
+versions:
+  - version: "19"
+  - version: "18"
+defaultVersion: "19"
+defaultPort: 4200
+requires: [nodejs]
+incompatibleWith: [nextjs, nuxt, sveltekit, qwik, solidjs]
+suggestedWith: [typescript]
+officialScaffold: npx @angular/cli new
+dockerImage: null
+envVars: {}
+configFiles: [angular.json, tsconfig.json]
+lastVerified: "2026-03-22"
+tags: [angular, frontend, enterprise, spa]

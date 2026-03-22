@@ -1,0 +1,19 @@
+id: biome
+name: Biome
+category: devops
+description: Fast formatter and linter for JavaScript, TypeScript, JSX, and JSON
+website: https://biomejs.dev
+versions:
+  - version: "1.9"
+  - version: "1.8"
+  - version: "1.7"
+defaultVersion: "1.9"
+requires: [nodejs]
+incompatibleWith: [eslint, prettier]
+suggestedWith: [typescript]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles: [biome.json]
+lastVerified: "2026-03-22"
+tags: [biome, linter, formatter, devops, code-quality]

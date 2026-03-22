@@ -1,0 +1,140 @@
+import type { Template } from "@stackpilot/core";
+
+export const monorepoStarter: Template = {
+  id: "monorepo-starter",
+  name: "Monorepo Starter",
+  description:
+    "Turborepo monorepo with Next.js frontend, Express API, shared packages, Prisma, PostgreSQL, Biome, and Vitest",
+  technologyIds: [
+    "nextjs",
+    "react",
+    "express",
+    "nodejs",
+    "typescript",
+    "tailwindcss",
+    "prisma",
+    "postgresql",
+    "turborepo",
+    "pnpm",
+    "biome",
+    "vitest",
+  ],
+  profile: "enterprise",
+  scaffoldSteps: [
+    {
+      name: "Create Turborepo project",
+      command: "npx create-turbo@latest {{projectName}} --package-manager pnpm",
+    },
+    {
+      name: "Create API package directory",
+      command: "mkdir -p {{projectName}}/apps/api/src",
+    },
+    {
+      name: "Create shared packages directory",
+      command: "mkdir -p {{projectName}}/packages/{db,shared}",
+    },
+    {
+      name: "Install Prisma in db package",
+      command:
+        "cd {{projectName}}/packages/db && pnpm init && pnpm add prisma @prisma/client",
+    },
+    {
+      name: "Initialize Prisma",
+      command:
+        "cd {{projectName}}/packages/db && npx prisma init --datasource-provider postgresql",
+    },
+    {
+      name: "Install Biome",
+      command: "cd {{projectName}} && pnpm add -Dw @biomejs/biome",
+    },
+    {
+      name: "Install Vitest",
+      command: "cd {{projectName}} && pnpm add -Dw vitest",
+    },
+  ],
+  overrides: [
+    {
+      path: ".env.example",
+      content: [
+        "# Database",
+        "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/{{projectName}}",
+        "",
+        "# API",
+        "API_PORT=3001",
+        "NODE_ENV=development",
+        "",
+        "# Frontend",
+        "NEXT_PUBLIC_API_URL=http://localhost:3001",
+      ].join("\n"),
+    },
+    {
+      path: "docker-compose.yml",
+      content: [
+        "services:",
+        "  db:",
+        "    image: postgres:17",
+        "    restart: unless-stopped",
+        "    ports:",
+        '      - "5432:5432"',
+        "    environment:",
+        "      POSTGRES_USER: postgres",
+        "      POSTGRES_PASSWORD: postgres",
+        "      POSTGRES_DB: {{projectName}}",
+        "    volumes:",
+        "      - pgdata:/var/lib/postgresql/data",
+        "    healthcheck:",
+        '      test: ["CMD-SHELL", "pg_isready -U postgres"]',
+        "      interval: 5s",
+        "      timeout: 5s",
+        "      retries: 5",
+        "",
+        "volumes:",
+        "  pgdata:",
+      ].join("\n"),
+    },
+    {
+      path: "biome.json",
+      content: [
+        "{",
+        '  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",',
+        '  "formatter": {',
+        '    "indentStyle": "space",',
+        '    "indentWidth": 2,',
+        '    "lineWidth": 100',
+        "  },",
+        '  "linter": {',
+        '    "rules": {',
+        '      "recommended": true',
+        "    }",
+        "  }",
+        "}",
+      ].join("\n"),
+    },
+  ],
+  hooks: [
+    {
+      timing: "post-scaffold",
+      name: "Install all dependencies",
+      command: "cd {{projectName}} && pnpm install",
+      description: "Install all workspace dependencies",
+      requiresConfirmation: false,
+    },
+    {
+      timing: "post-scaffold",
+      name: "Generate Prisma client",
+      command: "cd {{projectName}}/packages/db && npx prisma generate",
+      description: "Generate the Prisma client from schema",
+      requiresConfirmation: false,
+    },
+    {
+      timing: "post-scaffold",
+      name: "Build packages",
+      command: "cd {{projectName}} && pnpm build",
+      description: "Build all packages in the monorepo",
+      requiresConfirmation: true,
+    },
+  ],
+  variables: {
+    projectName: "my-monorepo",
+  },
+};

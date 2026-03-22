@@ -1,0 +1,28 @@
+id: remix
+name: Remix
+category: frontend
+description: Full stack web framework focused on web standards and modern UX
+website: https://remix.run
+versions:
+  - version: "2.15"
+  - version: "2.14"
+defaultVersion: "2.15"
+defaultPort: 3000
+requires: [nodejs, react]
+incompatibleWith: [nextjs, nuxt, sveltekit, astro]
+suggestedWith: [typescript, tailwindcss, prisma]
+officialScaffold: "npx create-remix@latest"
+dockerImage: null
+healthCheck:
+  endpoint: http://localhost:3000
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  NODE_ENV: development
+  PORT: "3000"
+configFiles:
+  - remix.config.js
+  - package.json
+lastVerified: "2026-03-22"
+tags: [remix, react, fullstack, framework, ssr, web-standards]

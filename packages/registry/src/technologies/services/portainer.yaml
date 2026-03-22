@@ -1,0 +1,24 @@
+id: portainer
+name: Portainer
+category: service
+description: Universal container management platform for Docker and Kubernetes
+website: https://www.portainer.io
+versions:
+  - version: "2.25"
+  - version: "2.24"
+defaultVersion: "2.25"
+defaultPort: 9443
+requires: []
+incompatibleWith: []
+suggestedWith: [docker]
+officialScaffold: null
+dockerImage: portainer/portainer-ce:2.25.0
+healthCheck:
+  endpoint: http://localhost:9000/api/system/status
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars: {}
+configFiles: []
+lastVerified: "2026-03-22"
+tags: [portainer, docker, containers, management, gui, kubernetes]

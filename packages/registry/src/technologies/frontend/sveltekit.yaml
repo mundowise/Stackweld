@@ -1,0 +1,18 @@
+id: sveltekit
+name: SvelteKit
+category: frontend
+description: Full-stack Svelte framework
+website: https://svelte.dev/docs/kit
+versions:
+  - version: "2"
+defaultVersion: "2"
+defaultPort: 5173
+requires: [nodejs, svelte]
+incompatibleWith: [nextjs, nuxt, angular, remix]
+suggestedWith: [typescript, tailwindcss, prisma]
+officialScaffold: npx sv create
+dockerImage: null
+envVars: {}
+configFiles: [svelte.config.js, vite.config.ts]
+lastVerified: "2026-03-22"
+tags: [sveltekit, svelte, ssr, fullstack]

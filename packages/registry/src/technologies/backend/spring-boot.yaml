@@ -1,0 +1,30 @@
+id: spring-boot
+name: Spring Boot
+category: backend
+description: Production-ready Java framework for building stand-alone Spring applications
+website: https://spring.io/projects/spring-boot
+versions:
+  - version: "3.4"
+  - version: "3.3"
+    lts: true
+defaultVersion: "3.4"
+defaultPort: 8080
+requires: []
+incompatibleWith: []
+suggestedWith: [postgresql, redis]
+officialScaffold: null
+dockerImage: null
+healthCheck:
+  endpoint: http://localhost:8080/actuator/health
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  SPRING_PROFILES_ACTIVE: dev
+  SERVER_PORT: "8080"
+configFiles:
+  - pom.xml
+  - application.properties
+  - application.yml
+lastVerified: "2026-03-22"
+tags: [spring-boot, java, backend, framework, enterprise, jvm]

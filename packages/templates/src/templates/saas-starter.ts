@@ -1,0 +1,132 @@
+import type { Template } from "@stackpilot/core";
+
+export const saasStarter: Template = {
+  id: "saas-starter",
+  name: "SaaS Starter",
+  description:
+    "Production-ready SaaS boilerplate with Next.js, Prisma, PostgreSQL, Redis, NextAuth, shadcn/ui, and Stripe-ready architecture",
+  technologyIds: [
+    "nextjs",
+    "react",
+    "nodejs",
+    "typescript",
+    "tailwindcss",
+    "shadcn-ui",
+    "prisma",
+    "postgresql",
+    "redis",
+    "nextauth",
+  ],
+  profile: "production",
+  scaffoldSteps: [
+    {
+      name: "Create Next.js app",
+      command:
+        "npx create-next-app@latest {{projectName}} --typescript --tailwind --eslint --app --src-dir --import-alias '@/*'",
+    },
+    {
+      name: "Install Prisma",
+      command: "cd {{projectName}} && npm install prisma @prisma/client",
+    },
+    {
+      name: "Initialize Prisma",
+      command:
+        "cd {{projectName}} && npx prisma init --datasource-provider postgresql",
+    },
+    {
+      name: "Install NextAuth",
+      command: "cd {{projectName}} && npm install next-auth@beta",
+    },
+    {
+      name: "Install Redis client",
+      command: "cd {{projectName}} && npm install ioredis",
+    },
+    {
+      name: "Initialize shadcn/ui",
+      command: "cd {{projectName}} && npx shadcn@latest init -d",
+    },
+    {
+      name: "Install Stripe",
+      command: "cd {{projectName}} && npm install stripe @stripe/stripe-js",
+    },
+  ],
+  overrides: [
+    {
+      path: ".env.example",
+      content: [
+        "# Database",
+        "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/{{projectName}}",
+        "",
+        "# Redis",
+        "REDIS_URL=redis://localhost:6379",
+        "",
+        "# Auth",
+        "NEXTAUTH_SECRET=your-secret-key-change-me",
+        "NEXTAUTH_URL=http://localhost:3000",
+        "",
+        "# Stripe",
+        "STRIPE_SECRET_KEY=sk_test_...",
+        "STRIPE_PUBLISHABLE_KEY=pk_test_...",
+        "STRIPE_WEBHOOK_SECRET=whsec_...",
+        "",
+        "# App",
+        "NEXT_PUBLIC_APP_URL=http://localhost:3000",
+      ].join("\n"),
+    },
+    {
+      path: "docker-compose.yml",
+      content: [
+        "services:",
+        "  db:",
+        "    image: postgres:17",
+        "    restart: unless-stopped",
+        "    ports:",
+        '      - "5432:5432"',
+        "    environment:",
+        "      POSTGRES_USER: postgres",
+        "      POSTGRES_PASSWORD: postgres",
+        "      POSTGRES_DB: {{projectName}}",
+        "    volumes:",
+        "      - pgdata:/var/lib/postgresql/data",
+        "    healthcheck:",
+        '      test: ["CMD-SHELL", "pg_isready -U postgres"]',
+        "      interval: 5s",
+        "      timeout: 5s",
+        "      retries: 5",
+        "",
+        "  redis:",
+        "    image: redis:7-alpine",
+        "    restart: unless-stopped",
+        "    ports:",
+        '      - "6379:6379"',
+        "    healthcheck:",
+        '      test: ["CMD", "redis-cli", "ping"]',
+        "      interval: 5s",
+        "      timeout: 5s",
+        "      retries: 5",
+        "",
+        "volumes:",
+        "  pgdata:",
+      ].join("\n"),
+    },
+  ],
+  hooks: [
+    {
+      timing: "post-scaffold",
+      name: "Generate Prisma client",
+      command: "cd {{projectName}} && npx prisma generate",
+      description: "Generate the Prisma client from schema",
+      requiresConfirmation: false,
+    },
+    {
+      timing: "post-scaffold",
+      name: "Install dependencies",
+      command: "cd {{projectName}} && npm install",
+      description: "Install all npm dependencies",
+      requiresConfirmation: false,
+    },
+  ],
+  variables: {
+    projectName: "my-saas-app",
+  },
+};

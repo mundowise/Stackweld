@@ -1,0 +1,29 @@
+id: solidjs
+name: Solid.js
+category: frontend
+description: Declarative, efficient, and flexible JavaScript library for building UIs
+website: https://www.solidjs.com
+versions:
+  - version: "1.9"
+  - version: "1.8"
+defaultVersion: "1.9"
+defaultPort: 3000
+requires: [nodejs]
+incompatibleWith: [react, vue, svelte, angular]
+suggestedWith: [typescript, tailwindcss]
+officialScaffold: "npx degit solidjs/templates/ts"
+dockerImage: null
+healthCheck:
+  endpoint: http://localhost:3000
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  NODE_ENV: development
+  PORT: "3000"
+configFiles:
+  - package.json
+  - tsconfig.json
+  - vite.config.ts
+lastVerified: "2026-03-22"
+tags: [solidjs, reactive, frontend, ui, signals]

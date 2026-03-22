@@ -1,0 +1,25 @@
+{
+  "name": "@stackpilot/templates",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "tsc -b --watch",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src/",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@stackpilot/core": "workspace:*",
+    "@stackpilot/registry": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.0",
+    "@biomejs/biome": "^2.0.0"
+  }
+}

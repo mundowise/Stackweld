@@ -1,0 +1,19 @@
+id: playwright
+name: Playwright
+category: devops
+description: End-to-end testing framework for modern web apps across all browsers
+website: https://playwright.dev
+versions:
+  - version: "1.51"
+  - version: "1.50"
+  - version: "1.49"
+defaultVersion: "1.51"
+requires: [nodejs]
+incompatibleWith: []
+suggestedWith: [typescript]
+officialScaffold: "npm init playwright@latest"
+dockerImage: null
+envVars: {}
+configFiles: [playwright.config.ts]
+lastVerified: "2026-03-22"
+tags: [playwright, testing, e2e, browser, devops]

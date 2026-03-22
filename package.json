@@ -1,0 +1,32 @@
+{
+  "name": "stackpilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The operating system for your dev stacks",
+  "author": "Orlando Fernandez",
+  "license": "MIT",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "turbo": "^2.8.20",
+    "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "better-sqlite3",
+      "turbo"
+    ]
+  }
+}

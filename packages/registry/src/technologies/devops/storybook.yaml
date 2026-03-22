@@ -1,0 +1,28 @@
+id: storybook
+name: Storybook
+category: devops
+description: UI development workshop for building and testing components in isolation
+website: https://storybook.js.org
+versions:
+  - version: "8.6"
+  - version: "8.5"
+  - version: "7.6"
+    eol: "2025-06-30"
+defaultVersion: "8.6"
+defaultPort: 6006
+requires: [nodejs]
+incompatibleWith: []
+suggestedWith: [react, vue, svelte, angular]
+officialScaffold: "npx storybook@latest init"
+dockerImage: null
+healthCheck:
+  endpoint: http://localhost:6006
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars: {}
+configFiles:
+  - .storybook/main.ts
+  - .storybook/preview.ts
+lastVerified: "2026-03-22"
+tags: [storybook, ui, components, testing, documentation, development]

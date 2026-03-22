@@ -1,0 +1,22 @@
+id: pnpm
+name: pnpm
+category: devops
+description: Fast, disk space efficient package manager for Node.js
+website: https://pnpm.io
+versions:
+  - version: "10"
+  - version: "9"
+    lts: true
+  - version: "8"
+defaultVersion: "9"
+requires: [nodejs]
+incompatibleWith: []
+suggestedWith: [typescript]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles:
+  - pnpm-workspace.yaml
+  - .npmrc
+lastVerified: "2026-03-22"
+tags: [pnpm, package-manager, monorepo, nodejs]

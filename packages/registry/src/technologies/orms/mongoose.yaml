@@ -1,0 +1,22 @@
+id: mongoose
+name: Mongoose
+category: orm
+description: Elegant MongoDB object modeling for Node.js with schema validation
+website: https://mongoosejs.com
+versions:
+  - version: "8.10"
+  - version: "8.9"
+  - version: "7.8"
+    eol: "2025-12-31"
+defaultVersion: "8.10"
+requires: [nodejs, mongodb]
+incompatibleWith: [prisma, drizzle, typeorm]
+suggestedWith: [express, fastify, typescript]
+officialScaffold: null
+dockerImage: null
+envVars:
+  MONGODB_URI: mongodb://localhost:27017/app
+configFiles:
+  - package.json
+lastVerified: "2026-03-22"
+tags: [mongoose, mongodb, odm, nodejs, schema, models]

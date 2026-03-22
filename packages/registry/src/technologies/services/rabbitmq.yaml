@@ -1,0 +1,28 @@
+id: rabbitmq
+name: RabbitMQ
+category: service
+description: Open-source message broker for reliable asynchronous messaging
+website: https://www.rabbitmq.com
+versions:
+  - {version: "4.0", lts: true}
+  - {version: "3.13"}
+  - {version: "3.12", eol: "2025-12-31"}
+defaultVersion: "4.0"
+defaultPort: 5672
+requires: []
+incompatibleWith: []
+suggestedWith: []
+officialScaffold: null
+dockerImage: rabbitmq:3-management
+healthCheck:
+  command: rabbitmq-diagnostics -q ping
+  interval: 10s
+  timeout: 10s
+  retries: 5
+envVars:
+  RABBITMQ_DEFAULT_USER: guest
+  RABBITMQ_DEFAULT_PASS: guest
+  AMQP_URL: amqp://guest:guest@localhost:5672
+configFiles: [rabbitmq.conf]
+lastVerified: "2026-03-22"
+tags: [rabbitmq, message-broker, amqp, queue, messaging, async]

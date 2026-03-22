@@ -1,0 +1,21 @@
+id: typeorm
+name: TypeORM
+category: orm
+description: ORM for TypeScript and JavaScript with Active Record and Data Mapper patterns
+website: https://typeorm.io
+versions:
+  - {version: "0.3", lts: true}
+  - {version: "0.2"}
+defaultVersion: "0.3"
+requires: [nodejs]
+incompatibleWith: [prisma, drizzle, mongoose]
+suggestedWith: [postgresql, typescript]
+officialScaffold: "npx typeorm init"
+dockerImage: null
+healthCheck:
+  command: npx ts-node -e "import { DataSource } from 'typeorm'; new DataSource({type:'postgres',url:process.env.DATABASE_URL}).initialize()"
+envVars:
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/app
+configFiles: [ormconfig.json, data-source.ts]
+lastVerified: "2026-03-22"
+tags: [typeorm, orm, typescript, database, migrations, active-record, data-mapper]

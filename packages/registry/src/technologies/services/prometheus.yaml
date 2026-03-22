@@ -1,0 +1,27 @@
+id: prometheus
+name: Prometheus
+category: service
+description: Open source monitoring and alerting toolkit with time series database
+website: https://prometheus.io
+versions:
+  - version: "3.2"
+  - version: "3.1"
+  - version: "2.55"
+    lts: true
+defaultVersion: "3.2"
+defaultPort: 9090
+requires: []
+incompatibleWith: []
+suggestedWith: [grafana]
+officialScaffold: null
+dockerImage: prom/prometheus:v3.2.0
+healthCheck:
+  endpoint: http://localhost:9090/-/healthy
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars: {}
+configFiles:
+  - prometheus.yml
+lastVerified: "2026-03-22"
+tags: [prometheus, monitoring, metrics, alerting, time-series, observability]

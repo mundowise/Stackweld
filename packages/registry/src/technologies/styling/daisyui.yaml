@@ -1,0 +1,20 @@
+id: daisyui
+name: DaisyUI
+category: styling
+description: Tailwind CSS component library with semantic class names and themes
+website: https://daisyui.com
+versions:
+  - version: "4.12"
+  - version: "4.11"
+defaultVersion: "4.12"
+requires: [nodejs, tailwindcss]
+incompatibleWith: []
+suggestedWith: [react, vue]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles:
+  - tailwind.config.js
+  - tailwind.config.ts
+lastVerified: "2026-03-22"
+tags: [daisyui, tailwindcss, components, themes, styling, ui]

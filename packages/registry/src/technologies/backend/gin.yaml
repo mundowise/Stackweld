@@ -1,0 +1,17 @@
+id: gin
+name: Gin
+category: backend
+description: HTTP web framework for Go
+website: https://gin-gonic.com
+versions: [{version: "1.10"}]
+defaultVersion: "1.10"
+defaultPort: 8080
+requires: [go]
+incompatibleWith: [echo]
+suggestedWith: [postgresql]
+officialScaffold: null
+dockerImage: null
+envVars: {GIN_MODE: "debug", PORT: "8080"}
+configFiles: [go.mod]
+lastVerified: "2026-03-22"
+tags: [gin, go, api, fast]

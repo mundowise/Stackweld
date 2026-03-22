@@ -1,0 +1,30 @@
+id: mariadb
+name: MariaDB
+category: database
+description: Community-developed fork of MySQL with enhanced features and performance
+website: https://mariadb.org
+versions:
+  - version: "11.7"
+  - version: "11.6"
+    lts: true
+defaultVersion: "11.7"
+defaultPort: 3306
+requires: []
+incompatibleWith: [mysql]
+suggestedWith: [prisma, drizzle, laravel]
+officialScaffold: null
+dockerImage: mariadb:11.7
+healthCheck:
+  command: mariadb-admin ping -u root
+  interval: 10s
+  timeout: 5s
+  retries: 5
+envVars:
+  MARIADB_ROOT_PASSWORD: mariadb
+  MARIADB_DATABASE: app
+  MARIADB_USER: mariadb
+  MARIADB_PASSWORD: mariadb
+  DATABASE_URL: mysql://mariadb:mariadb@localhost:3306/app
+configFiles: []
+lastVerified: "2026-03-22"
+tags: [mariadb, mysql, sql, relational, database]

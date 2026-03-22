@@ -1,0 +1,18 @@
+id: eslint
+name: ESLint
+category: devops
+description: Pluggable linting utility for identifying and fixing problems in JavaScript code
+website: https://eslint.org
+versions:
+  - version: "9"
+  - version: "8"
+defaultVersion: "9"
+requires: [nodejs]
+incompatibleWith: [biome]
+suggestedWith: [prettier, typescript]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles: [eslint.config.js]
+lastVerified: "2026-03-22"
+tags: [eslint, linter, code-quality, devops]

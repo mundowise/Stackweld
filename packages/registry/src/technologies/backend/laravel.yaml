@@ -1,0 +1,32 @@
+id: laravel
+name: Laravel
+category: backend
+description: PHP web application framework with expressive, elegant syntax
+website: https://laravel.com
+versions:
+  - version: "12"
+  - version: "11"
+    lts: true
+defaultVersion: "12"
+defaultPort: 8000
+requires: [php]
+incompatibleWith: []
+suggestedWith: [mysql, redis, nginx]
+officialScaffold: "composer create-project laravel/laravel"
+dockerImage: null
+healthCheck:
+  endpoint: http://localhost:8000
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  APP_ENV: local
+  APP_DEBUG: "true"
+  APP_KEY: ""
+  DB_CONNECTION: mysql
+configFiles:
+  - .env
+  - composer.json
+  - artisan
+lastVerified: "2026-03-22"
+tags: [laravel, php, backend, framework, mvc, eloquent]

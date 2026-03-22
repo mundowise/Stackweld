@@ -1,0 +1,25 @@
+id: nginx
+name: Nginx
+category: service
+description: High-performance HTTP server, reverse proxy, and load balancer
+website: https://nginx.org
+versions:
+  - {version: "1.27"}
+  - {version: "1.26", lts: true}
+  - {version: "1.25"}
+defaultVersion: "1.27"
+defaultPort: 80
+requires: []
+incompatibleWith: [traefik]
+suggestedWith: []
+officialScaffold: null
+dockerImage: nginx:alpine
+healthCheck:
+  endpoint: http://localhost:80
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars: {}
+configFiles: [nginx.conf]
+lastVerified: "2026-03-22"
+tags: [nginx, reverse-proxy, web-server, load-balancer, http]

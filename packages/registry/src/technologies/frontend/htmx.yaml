@@ -1,0 +1,18 @@
+id: htmx
+name: HTMX
+category: frontend
+description: High power tools for HTML — access modern browser features directly from HTML
+website: https://htmx.org
+versions:
+  - version: "2.0"
+  - version: "1.9"
+defaultVersion: "2.0"
+requires: [nodejs]
+incompatibleWith: []
+suggestedWith: [tailwindcss]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles: []
+lastVerified: "2026-03-22"
+tags: [htmx, html, hypermedia, frontend, progressive-enhancement]

@@ -1,0 +1,21 @@
+id: django-orm
+name: Django ORM
+category: orm
+description: Built-in ORM for Django with migrations, querysets, and model relationships
+website: https://docs.djangoproject.com/en/5.1/topics/db/
+versions:
+  - version: "5.1"
+  - version: "5.0"
+  - version: "4.2"
+    lts: true
+defaultVersion: "5.1"
+requires: [python, django]
+incompatibleWith: [sqlalchemy]
+suggestedWith: [postgresql, mysql]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles:
+  - models.py
+lastVerified: "2026-03-22"
+tags: [django, orm, python, models, migrations, querysets]

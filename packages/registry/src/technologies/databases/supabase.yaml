@@ -1,0 +1,27 @@
+id: supabase
+name: Supabase
+category: database
+description: Open source Firebase alternative with PostgreSQL, auth, and realtime
+website: https://supabase.com
+versions:
+  - version: "2"
+defaultVersion: "2"
+defaultPort: 54321
+requires: []
+incompatibleWith: []
+suggestedWith: [supabase-auth, nextjs]
+officialScaffold: null
+dockerImage: supabase/postgres
+healthCheck:
+  endpoint: http://localhost:54321/rest/v1/
+  interval: 10s
+  timeout: 5s
+  retries: 5
+envVars:
+  SUPABASE_URL: http://localhost:54321
+  SUPABASE_ANON_KEY: ""
+  SUPABASE_SERVICE_ROLE_KEY: ""
+configFiles:
+  - supabase/config.toml
+lastVerified: "2026-03-22"
+tags: [supabase, postgresql, baas, realtime, auth, storage]

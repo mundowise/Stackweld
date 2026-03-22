@@ -1,0 +1,19 @@
+id: jest
+name: Jest
+category: devops
+description: Delightful JavaScript testing framework with a focus on simplicity
+website: https://jestjs.io
+versions:
+  - version: "30"
+  - version: "29"
+  - version: "28"
+defaultVersion: "30"
+requires: [nodejs]
+incompatibleWith: [vitest]
+suggestedWith: [typescript]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles: [jest.config.ts, jest.config.js]
+lastVerified: "2026-03-22"
+tags: [jest, testing, unit-testing, devops]

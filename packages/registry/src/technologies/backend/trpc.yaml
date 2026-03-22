@@ -1,0 +1,20 @@
+id: trpc
+name: tRPC
+category: backend
+description: End-to-end typesafe APIs made easy with TypeScript
+website: https://trpc.io
+versions:
+  - version: "11"
+  - version: "10"
+defaultVersion: "11"
+requires: [nodejs, typescript]
+incompatibleWith: []
+suggestedWith: [nextjs, react, prisma]
+officialScaffold: null
+dockerImage: null
+envVars: {}
+configFiles:
+  - package.json
+  - tsconfig.json
+lastVerified: "2026-03-22"
+tags: [trpc, typescript, api, rpc, typesafe, fullstack]

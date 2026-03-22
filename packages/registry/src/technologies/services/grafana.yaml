@@ -1,0 +1,29 @@
+id: grafana
+name: Grafana
+category: service
+description: Open source analytics and interactive visualization platform
+website: https://grafana.com
+versions:
+  - version: "11.5"
+  - version: "11.4"
+  - version: "10.4"
+    lts: true
+defaultVersion: "11.5"
+defaultPort: 3001
+requires: []
+incompatibleWith: []
+suggestedWith: [prometheus]
+officialScaffold: null
+dockerImage: grafana/grafana:11.5.0
+healthCheck:
+  endpoint: http://localhost:3001/api/health
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  GF_SECURITY_ADMIN_USER: admin
+  GF_SECURITY_ADMIN_PASSWORD: admin
+configFiles:
+  - grafana.ini
+lastVerified: "2026-03-22"
+tags: [grafana, monitoring, visualization, dashboards, observability]

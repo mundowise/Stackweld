@@ -1,0 +1,24 @@
+id: bun
+name: Bun
+category: runtime
+description: Fast all-in-one JavaScript runtime and toolkit
+website: https://bun.sh
+versions:
+  - version: "1.2"
+  - version: "1.1"
+defaultVersion: "1.2"
+defaultPort: 3000
+requires: []
+incompatibleWith: []
+suggestedWith: [typescript]
+officialScaffold: bun init
+dockerImage: oven/bun:1.2
+healthCheck:
+  endpoint: http://localhost:3000
+envVars:
+  BUN_ENV: development
+configFiles:
+  - package.json
+  - bunfig.toml
+lastVerified: "2026-03-22"
+tags: [javascript, typescript, runtime, fast]

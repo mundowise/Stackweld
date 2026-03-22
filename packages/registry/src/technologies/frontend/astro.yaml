@@ -1,0 +1,19 @@
+id: astro
+name: Astro
+category: frontend
+description: Content-focused web framework with island architecture
+website: https://astro.build
+versions:
+  - version: "5"
+  - version: "4"
+defaultVersion: "5"
+defaultPort: 4321
+requires: [nodejs]
+incompatibleWith: [remix]
+suggestedWith: [tailwindcss, typescript]
+officialScaffold: npm create astro@latest
+dockerImage: null
+envVars: {}
+configFiles: [astro.config.mjs]
+lastVerified: "2026-03-22"
+tags: [astro, static, islands, content]

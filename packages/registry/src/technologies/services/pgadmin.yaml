@@ -1,0 +1,26 @@
+id: pgadmin
+name: pgAdmin
+category: service
+description: Feature-rich administration and development platform for PostgreSQL
+website: https://www.pgadmin.org
+versions:
+  - version: "8.16"
+  - version: "8.15"
+defaultVersion: "8.16"
+defaultPort: 5050
+requires: []
+incompatibleWith: []
+suggestedWith: [postgresql]
+officialScaffold: null
+dockerImage: dpage/pgadmin4:8.16
+healthCheck:
+  endpoint: http://localhost:5050/misc/ping
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  PGADMIN_DEFAULT_EMAIL: admin@admin.com
+  PGADMIN_DEFAULT_PASSWORD: admin
+configFiles: []
+lastVerified: "2026-03-22"
+tags: [pgadmin, postgresql, database, management, gui, admin]

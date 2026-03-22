@@ -1,0 +1,30 @@
+id: php
+name: PHP
+category: runtime
+description: Popular general-purpose scripting language suited for web development
+website: https://www.php.net
+versions:
+  - version: "8.4"
+  - version: "8.3"
+    lts: true
+  - version: "8.2"
+    eol: "2025-12-31"
+defaultVersion: "8.4"
+defaultPort: 9000
+requires: []
+incompatibleWith: []
+suggestedWith: [laravel, nginx]
+officialScaffold: null
+dockerImage: php:8.4-fpm
+healthCheck:
+  command: php -r "echo 'ok';"
+  interval: 10s
+  timeout: 5s
+  retries: 3
+envVars:
+  PHP_ENV: development
+configFiles:
+  - php.ini
+  - composer.json
+lastVerified: "2026-03-22"
+tags: [php, scripting, web, server, runtime]
