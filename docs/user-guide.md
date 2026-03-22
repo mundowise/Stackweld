@@ -517,11 +517,12 @@ Available configuration options:
 
 | Key | Description | Default |
 |-----|-------------|---------|
-| `defaultRuntime` | Runtime to pre-select during `init` | `nodejs` |
-| `defaultDatabase` | Database to pre-select during `init` | `postgresql` |
-| `scaffoldDirectory` | Base directory for scaffolded projects | Current directory |
-| `dockerComposeCommand` | Override the compose command | `docker compose` |
-| `defaultProfile` | Scaffold profile (minimal/standard/production) | `standard` |
+| `editor` | Preferred code editor (code, cursor, zed, nvim, webstorm) | `code` |
+| `packageManager` | Node.js package manager (pnpm, npm, yarn, bun) | `pnpm` |
+| `shell` | Shell for completions and scripts (bash, zsh, fish) | `zsh` |
+| `dockerMode` | Container strategy (compose, devcontainer, none) | `compose` |
+| `defaultProfile` | Default stack profile (rapid, standard, production, enterprise, lightweight) | `standard` |
+| `theme` | Desktop app theme | `dark` |
 
 Preferences are stored locally in your home directory (`~/.stackpilot/`) and persist across sessions.
 
