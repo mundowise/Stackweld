@@ -22,7 +22,17 @@ StackPilot eliminates the hours spent setting up new projects. Select your techn
 - **Docker Compose** generation with only databases and services (not runtimes)
 - **Version control**: save, diff, rollback stack versions
 - **Desktop app**: Tauri 2 native application with visual stack builder
-- **23 CLI commands** for every workflow
+- **38 CLI commands** for every workflow
+- **Compatibility scoring** between technologies (0-100)
+- **Project health monitoring** (secrets, .gitignore, TypeScript strict, etc.)
+- **Migration planning** with step-by-step guides between technologies
+- **Cost estimation** for monthly hosting across providers
+- **Performance profiling** for stack benchmarks
+- **Stack sharing** via encoded URLs (no cloud needed)
+- **Infrastructure as Code** generation for VPS, AWS, and GCP
+- **Learning paths** with curated resources per technology
+- **Team standards** enforcement via `.stackpilotrc` linting
+- **Plugin system** for community extensions
 
 ## Compatibility
 
@@ -165,6 +175,27 @@ my-saas/
 | `stackpilot ai readme <id>` | Generate README from stack |
 | `stackpilot ai explain <id>` | Explain stack architecture |
 | `stackpilot completion <shell>` | Generate shell completions (bash/zsh/fish) |
+| **Analysis** | |
+| `stackpilot score <techA> [techB]` | Compatibility score (0-100) between technologies |
+| `stackpilot analyze [path]` | Detect stack from existing project |
+| `stackpilot benchmark <id>` | Performance profile for a stack |
+| `stackpilot cost <id>` | Estimate monthly hosting costs |
+| **Environment** | |
+| `stackpilot env [sync\|check]` | Sync .env.example with .env, detect dangerous values |
+| `stackpilot health [path]` | Health check (secrets, .gitignore, TypeScript strict, etc.) |
+| **Scaffolding** | |
+| `stackpilot preview <id>` | Preview docker-compose.yml without generating files |
+| `stackpilot deploy <id> --target <provider>` | Generate Infrastructure as Code (vps, aws, gcp) |
+| **Migration & Learning** | |
+| `stackpilot migrate --from <tech> --to <tech>` | Step-by-step migration plan |
+| `stackpilot learn <technology>` | Learning resources for a technology |
+| **Collaboration** | |
+| `stackpilot share <id>` | Generate shareable URL (no cloud needed) |
+| `stackpilot import-url <url>` | Import from shared URL |
+| `stackpilot compare <a> <b>` | Compare two stacks side by side |
+| `stackpilot lint` | Validate stack against team standards (.stackpilotrc) |
+| **Extensibility** | |
+| `stackpilot plugin list\|install\|remove\|info` | Plugin management |
 
 ### Technology catalog (83 technologies)
 
@@ -200,9 +231,11 @@ The desktop application provides a visual interface for all CLI functionality:
 ```
 packages/
   core/        -- Engine, rules, scaffold orchestrator, runtime manager, tech installer, SQLite DB
+                  + 14 new modules: compatibility, env-sync, detect, compose-preview,
+                    health, migration, diff, share, infra, lint, benchmark, cost, learn, plugin
   registry/    -- 83 YAML technology definitions with JSON Schema validation
   templates/   -- 20 built-in stack templates + custom template support
-  cli/         -- 23 commands (Commander + Inquirer + Chalk + Ora)
+  cli/         -- 38 commands (Commander + Inquirer + Chalk + Ora)
   desktop/     -- Tauri 2 + React 19 + TypeScript + Tailwind CSS 4 + Zustand
 ```
 
