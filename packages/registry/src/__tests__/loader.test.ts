@@ -85,4 +85,84 @@ describe("Registry Loader", () => {
       }
     }
   });
+
+  it("all technologies have unique IDs", () => {
+    const techs = loadAllTechnologies();
+    const ids = techs.map((t) => t.id);
+    const uniqueIds = new Set(ids);
+    expect(
+      uniqueIds.size,
+      `Found duplicate IDs: ${ids.filter((id, i) => ids.indexOf(id) !== i).join(", ")}`,
+    ).toBe(ids.length);
+  });
+
+  it("all requires references point to existing technology IDs", () => {
+    const techs = loadAllTechnologies();
+    const idSet = new Set(techs.map((t) => t.id));
+
+    for (const tech of techs) {
+      for (const reqId of tech.requires) {
+        expect(
+          idSet.has(reqId),
+          `${tech.id} requires "${reqId}" which does not exist in the registry`,
+        ).toBe(true);
+      }
+    }
+  });
+
+  it("all incompatibleWith references point to existing technology IDs", () => {
+    const techs = loadAllTechnologies();
+    const idSet = new Set(techs.map((t) => t.id));
+
+    for (const tech of techs) {
+      for (const incompId of tech.incompatibleWith) {
+        expect(
+          idSet.has(incompId),
+          `${tech.id} lists incompatibleWith "${incompId}" which does not exist in the registry`,
+        ).toBe(true);
+      }
+    }
+  });
+
+  it("no technology is incompatible with itself", () => {
+    const techs = loadAllTechnologies();
+
+    for (const tech of techs) {
+      expect(
+        tech.incompatibleWith.includes(tech.id),
+        `${tech.id} is listed as incompatible with itself`,
+      ).toBe(false);
+    }
+  });
+
+  it("all technologies have at least one version defined", () => {
+    const techs = loadAllTechnologies();
+
+    for (const tech of techs) {
+      expect(
+        tech.versions.length,
+        `${tech.id} has no versions defined`,
+      ).toBeGreaterThan(0);
+    }
+  });
+
+  it("bidirectional incompatibilities are symmetric (if A lists B, B lists A)", () => {
+    const techs = loadAllTechnologies();
+    const techMap = new Map(techs.map((t) => [t.id, t]));
+    const asymmetric: string[] = [];
+
+    for (const tech of techs) {
+      for (const incompId of tech.incompatibleWith) {
+        const other = techMap.get(incompId);
+        if (other && !other.incompatibleWith.includes(tech.id)) {
+          asymmetric.push(`${tech.id} -> ${incompId}`);
+        }
+      }
+    }
+
+    expect(
+      asymmetric,
+      `Asymmetric incompatibilities found: ${asymmetric.join(", ")}`,
+    ).toEqual([]);
+  });
 });

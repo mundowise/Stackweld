@@ -1,5 +1,11 @@
 # StackPilot
 
+[![CI](https://github.com/mundowise/StackPilot/actions/workflows/ci.yml/badge.svg)](https://github.com/mundowise/StackPilot/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](https://github.com/mundowise/StackPilot/releases)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![Tauri](https://img.shields.io/badge/Tauri-2.0-orange.svg)](https://tauri.app/)
+
 The operating system for your dev stacks. Define, validate, scaffold, launch, version, and reproduce full development environments from CLI or desktop.
 
 ## What it does
