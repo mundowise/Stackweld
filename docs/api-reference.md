@@ -1,6 +1,6 @@
 # StackPilot — Core API Reference
 
-> Package: `@stackpilot/core` | Version: 0.1.0 | Last updated: 2026-03-29
+> Package: `@stackpilot/core` | Version: 0.2.0 | Last updated: 2026-03-30
 
 This document covers the public API of the `@stackpilot/core` package. The CLI and Desktop app both consume this package — understanding this API is useful if you want to embed StackPilot in a custom tool or write integration tests.
 
@@ -340,3 +340,480 @@ The core package does not throw custom error classes. All methods either:
 - Return a `ValidationResult` with `valid: false` for invalid input (never throws on invalid tech selections)
 
 Callers should check return values rather than catching exceptions. The only exceptions that can propagate are SQLite errors (disk full, corrupted database) and `execSync` errors from Docker operations — both are unrecoverable and should be treated as fatal.
+
+---
+
+## Compatibility Engine (`engine/compatibility.ts`)
+
+```typescript
+import { scoreCompatibility, scoreStack } from "@stackpilot/core";
+```
+
+### `CompatibilityResult`
+
+```typescript
+interface CompatibilityResult {
+  techA: string;                    // Technology ID
+  techB: string;                    // Technology ID
+  score: number;                    // 0-100
+  verdict: "excellent" | "good" | "fair" | "poor" | "incompatible";
+  notes: string[];                  // Positive and negative observations
+}
+```
+
+### `scoreCompatibility(techA: string, techB: string, technologies: Technology[]): CompatibilityResult`
+
+Returns a compatibility score between two technologies. The score considers: direct incompatibilities (score 0), shared dependencies, ecosystem overlap, common usage patterns, and community adoption.
+
+```typescript
+const result = scoreCompatibility("nextjs", "postgresql", technologies);
+// { techA: "nextjs", techB: "postgresql", score: 92, verdict: "excellent", notes: [...] }
+```
+
+### `scoreStack(stack: StackDefinition, technologies: Technology[]): { overall: number; pairs: CompatibilityResult[] }`
+
+Scores all technology pairs within a stack and returns an aggregate score.
+
+```typescript
+const report = scoreStack(myStack, technologies);
+// { overall: 87, pairs: [{ techA: "nextjs", techB: "postgresql", score: 92, ... }, ...] }
+```
+
+---
+
+## Environment Sync (`engine/env-sync.ts`)
+
+```typescript
+import { syncEnv, checkDangerous } from "@stackpilot/core";
+```
+
+### `EnvSyncResult`
+
+```typescript
+interface EnvSyncResult {
+  added: string[];                  // Keys added to .env from .env.example
+  existing: string[];               // Keys already present in .env
+  warnings: EnvWarning[];           // Dangerous values detected
+}
+
+interface EnvWarning {
+  file: string;                     // File path
+  line: number;                     // Line number
+  key: string;                      // Variable name
+  reason: string;                   // Why it was flagged
+}
+```
+
+### `syncEnv(projectDir: string): EnvSyncResult`
+
+Reads `.env.example`, compares with `.env`, and adds missing keys with default values. Existing values in `.env` are preserved.
+
+```typescript
+const result = syncEnv("/home/user/projects/my-app");
+// { added: ["REDIS_URL"], existing: ["DATABASE_URL"], warnings: [] }
+```
+
+### `checkDangerous(projectDir: string): EnvWarning[]`
+
+Scans `.env` files for hardcoded secrets, default passwords, and placeholder values.
+
+```typescript
+const warnings = checkDangerous("/home/user/projects/my-app");
+// [{ file: ".env", line: 3, key: "SECRET_KEY", reason: "default/placeholder value" }]
+```
+
+---
+
+## Stack Detection (`engine/detect.ts`)
+
+```typescript
+import { detectStack } from "@stackpilot/core";
+```
+
+### `DetectedStack`
+
+```typescript
+interface DetectedStack {
+  technologies: DetectedTechnology[];
+  confidence: number;                // 0-100 overall confidence
+}
+
+interface DetectedTechnology {
+  technologyId: string;              // Matched technology ID from registry
+  version?: string;                  // Detected version if available
+  source: string;                    // Where it was detected (e.g. "package.json", "docker-compose.yml")
+  confidence: number;                // 0-100 confidence for this detection
+}
+```
+
+### `detectStack(projectDir: string, technologies: Technology[]): DetectedStack`
+
+Inspects files in `projectDir` to determine the technology stack. Checks: `package.json`, `requirements.txt`, `go.mod`, `Cargo.toml`, `docker-compose.yml`, config files, and directory structure.
+
+```typescript
+const detected = detectStack("/home/user/projects/my-app", technologies);
+// { technologies: [{ technologyId: "nextjs", version: "15", source: "package.json", confidence: 98 }], confidence: 94 }
+```
+
+---
+
+## Compose Preview (`engine/compose-preview.ts`)
+
+```typescript
+import { generateComposePreview } from "@stackpilot/core";
+```
+
+### `ComposePreviewResult`
+
+```typescript
+interface ComposePreviewResult {
+  yaml: string;                     // Rendered docker-compose.yml content
+  services: string[];               // List of service names
+}
+```
+
+### `generateComposePreview(stack: StackDefinition, technologies: Technology[]): ComposePreviewResult`
+
+Generates docker-compose.yml content from a stack definition without writing to disk.
+
+```typescript
+const preview = generateComposePreview(myStack, technologies);
+console.log(preview.yaml);  // YAML string
+// preview.services: ["postgresql", "redis"]
+```
+
+---
+
+## Health Check (`engine/health.ts`)
+
+```typescript
+import { checkProjectHealth } from "@stackpilot/core";
+```
+
+### `HealthReport`
+
+```typescript
+interface HealthReport {
+  score: number;                    // 0-100
+  checks: HealthCheck[];
+}
+
+interface HealthCheck {
+  name: string;                     // e.g. "gitignore-coverage", "no-secrets-tracked"
+  status: "pass" | "warn" | "fail";
+  message: string;                  // Human-readable description
+  autoFixable: boolean;             // Whether --fix can resolve this
+}
+```
+
+### `checkProjectHealth(projectDir: string): HealthReport`
+
+Runs a suite of health checks on a project directory. Checks include: .gitignore coverage, exposed secrets in tracked files, TypeScript strict mode, Docker health checks, dependency vulnerabilities, and CI configuration.
+
+```typescript
+const report = checkProjectHealth("/home/user/projects/my-app");
+// { score: 71, checks: [{ name: "gitignore-coverage", status: "pass", message: "...", autoFixable: false }, ...] }
+```
+
+---
+
+## Migration Planner (`engine/migration.ts`)
+
+```typescript
+import { planMigration } from "@stackpilot/core";
+```
+
+### `MigrationPlan`
+
+```typescript
+interface MigrationPlan {
+  from: string;                     // Source technology ID
+  to: string;                       // Target technology ID
+  steps: MigrationStep[];
+  estimatedEffort: string;          // e.g. "2-4 hours"
+  risk: "low" | "medium" | "high";
+}
+
+interface MigrationStep {
+  order: number;
+  title: string;                    // e.g. "Install Fastify"
+  description: string;              // Detailed instructions
+  codeExamples?: { before: string; after: string }[];
+}
+```
+
+### `planMigration(from: string, to: string, technologies: Technology[]): MigrationPlan`
+
+Generates a step-by-step migration plan between two technologies in the same category.
+
+```typescript
+const plan = planMigration("express", "fastify", technologies);
+// { from: "express", to: "fastify", steps: [...], estimatedEffort: "2-4 hours", risk: "low" }
+```
+
+---
+
+## Stack Diff (`engine/diff.ts`)
+
+```typescript
+import { diffStacks } from "@stackpilot/core";
+```
+
+### `StackDiff`
+
+```typescript
+interface StackDiff {
+  added: string[];                  // Tech IDs in B but not in A
+  removed: string[];                // Tech IDs in A but not in B
+  changed: VersionChange[];         // Same tech, different version
+  unchanged: string[];              // Same tech and version in both
+}
+
+interface VersionChange {
+  technologyId: string;
+  versionA: string;
+  versionB: string;
+}
+```
+
+### `diffStacks(a: StackDefinition, b: StackDefinition): StackDiff`
+
+Compares two stack definitions and returns the difference.
+
+```typescript
+const diff = diffStacks(stackA, stackB);
+// { added: ["redis"], removed: ["mongodb"], changed: [{ technologyId: "nodejs", versionA: "20", versionB: "22" }], unchanged: ["nextjs", "postgresql"] }
+```
+
+---
+
+## Stack Sharing (`engine/share.ts`)
+
+```typescript
+import { serializeStack, deserializeStack } from "@stackpilot/core";
+```
+
+### `ShareableStack`
+
+```typescript
+interface ShareableStack {
+  url: string;                      // Full stackpilot:// URL
+  encoded: string;                  // Base64-encoded payload
+}
+```
+
+### `serializeStack(stack: StackDefinition): ShareableStack`
+
+Serializes a stack definition into a compact, URL-safe format.
+
+```typescript
+const shareable = serializeStack(myStack);
+// { url: "stackpilot://import/eyJuYW1l...", encoded: "eyJuYW1l..." }
+```
+
+### `deserializeStack(urlOrEncoded: string): StackDefinition`
+
+Reconstructs a stack definition from a serialized URL or base64 payload.
+
+```typescript
+const stack = deserializeStack("stackpilot://import/eyJuYW1l...");
+// Returns a full StackDefinition ready to save
+```
+
+---
+
+## Infrastructure Generation (`engine/infra.ts`)
+
+```typescript
+import { generateInfra } from "@stackpilot/core";
+```
+
+### `InfraOutput`
+
+```typescript
+interface InfraOutput {
+  target: "vps" | "aws" | "gcp";
+  files: InfraFile[];               // Generated file contents
+  deployCommand: string;            // Suggested deploy command
+}
+
+interface InfraFile {
+  path: string;                     // Relative path (e.g. "infra/cloudformation.yml")
+  content: string;                  // File contents
+}
+```
+
+### `generateInfra(stack: StackDefinition, target: "vps" | "aws" | "gcp", technologies: Technology[]): InfraOutput`
+
+Generates Infrastructure as Code files for the specified target platform.
+
+- **vps**: Dockerfile, nginx.conf, systemd service unit
+- **aws**: CloudFormation template (ECS + RDS + ElastiCache), buildspec.yml, task definition
+- **gcp**: Terraform files (Cloud Run + Cloud SQL + Memorystore)
+
+```typescript
+const infra = generateInfra(myStack, "aws", technologies);
+// { target: "aws", files: [{ path: "infra/cloudformation.yml", content: "..." }], deployCommand: "aws cloudformation deploy ..." }
+```
+
+---
+
+## Stack Linting (`engine/lint.ts`)
+
+```typescript
+import { lintStack } from "@stackpilot/core";
+```
+
+### `StackStandards`
+
+```typescript
+interface StackStandards {
+  required: string[];               // Tech IDs that must be present
+  banned: string[];                 // Tech IDs that must NOT be present
+  versions: Record<string, string>; // Version constraints (semver ranges)
+}
+```
+
+### `LintResult`
+
+```typescript
+interface LintResult {
+  passed: boolean;
+  checks: LintCheck[];
+}
+
+interface LintCheck {
+  rule: string;                     // e.g. "required", "banned", "version"
+  status: "pass" | "warn" | "fail";
+  message: string;
+}
+```
+
+### `lintStack(stack: StackDefinition, standards: StackStandards): LintResult`
+
+Validates a stack against team-defined standards.
+
+```typescript
+const standards: StackStandards = {
+  required: ["typescript", "docker", "biome"],
+  banned: ["webpack"],
+  versions: { nodejs: ">=22" },
+};
+const result = lintStack(myStack, standards);
+// { passed: false, checks: [{ rule: "required", status: "fail", message: "biome is missing" }, ...] }
+```
+
+---
+
+## Performance Profiling (`engine/benchmark.ts`)
+
+```typescript
+import { profilePerformance } from "@stackpilot/core";
+```
+
+### `PerformanceProfile`
+
+```typescript
+interface PerformanceProfile {
+  coldStart: string;                // e.g. "~2.1s"
+  hotReload: string;                // e.g. "~180ms"
+  buildTime: string;                // e.g. "~45s"
+  memoryIdle: string;               // e.g. "~320MB"
+  memoryPeak: string;               // e.g. "~1.2GB"
+  dockerImageSize: string;          // e.g. "~890MB"
+  installTime: string;              // e.g. "~38s"
+}
+```
+
+### `profilePerformance(stack: StackDefinition, technologies: Technology[]): PerformanceProfile`
+
+Generates performance estimates based on the technologies in the stack. Values are heuristic-based, not from live benchmarks.
+
+```typescript
+const profile = profilePerformance(myStack, technologies);
+// { coldStart: "~2.1s", hotReload: "~180ms", buildTime: "~45s", ... }
+```
+
+---
+
+## Cost Estimation (`engine/cost.ts`)
+
+```typescript
+import { estimateCost } from "@stackpilot/core";
+```
+
+### `CostEstimate`
+
+```typescript
+interface CostEstimate {
+  providers: ProviderCost[];
+  assumptions: Record<string, string>;
+}
+
+interface ProviderCost {
+  provider: "vps" | "aws" | "gcp";
+  min: number;                      // USD per month
+  typical: number;                  // USD per month
+  max: number;                      // USD per month
+  breakdown: Record<string, number>; // Per-service cost (e.g. { compute: 15, database: 10 })
+}
+```
+
+### `estimateCost(stack: StackDefinition, technologies: Technology[], options?: { users?: number; storageGb?: number }): CostEstimate`
+
+Estimates monthly hosting costs for a stack across providers.
+
+```typescript
+const estimate = estimateCost(myStack, technologies, { users: 10000, storageGb: 50 });
+// { providers: [{ provider: "vps", min: 12, typical: 24, max: 48, breakdown: {...} }, ...], assumptions: { users: "10000", storage: "50GB" } }
+```
+
+---
+
+## Plugin System (`engine/plugin.ts`)
+
+```typescript
+import { listPlugins, installPlugin, removePlugin } from "@stackpilot/core";
+```
+
+### `StackPilotPlugin`
+
+```typescript
+interface StackPilotPlugin {
+  name: string;                     // Package name (e.g. "@stackpilot/plugin-aws")
+  version: string;
+  description: string;
+  provides: {
+    commands: string[];             // CLI commands added
+    templates: string[];            // Template IDs added
+    technologies: string[];         // Technology IDs added
+  };
+  installed: boolean;
+}
+```
+
+### `listPlugins(): StackPilotPlugin[]`
+
+Returns all installed plugins with their metadata.
+
+```typescript
+const plugins = listPlugins();
+// [{ name: "@stackpilot/plugin-aws", version: "1.0.0", provides: { commands: ["deploy-aws"], ... }, installed: true }]
+```
+
+### `installPlugin(name: string): StackPilotPlugin`
+
+Installs a plugin by name from the npm registry and registers its commands, templates, and technologies.
+
+```typescript
+const plugin = installPlugin("@stackpilot/plugin-aws");
+```
+
+### `removePlugin(name: string): boolean`
+
+Removes an installed plugin and unregisters its contributions. Returns true if the plugin was found and removed.
+
+```typescript
+const removed = removePlugin("@stackpilot/plugin-aws");
+// true
+```

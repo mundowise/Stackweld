@@ -14,6 +14,20 @@
 - [System Doctor](#system-doctor)
 - [Configuration and Preferences](#configuration-and-preferences)
 - [Shell Completions](#shell-completions)
+- [Compatibility Scoring](#compatibility-scoring)
+- [Stack Detection](#stack-detection)
+- [Performance Benchmarks](#performance-benchmarks)
+- [Cost Estimation](#cost-estimation)
+- [Environment Management](#environment-management)
+- [Project Health Check](#project-health-check)
+- [Compose Preview](#compose-preview)
+- [Infrastructure as Code](#infrastructure-as-code)
+- [Migration Planning](#migration-planning)
+- [Learning Resources](#learning-resources)
+- [Stack Sharing](#stack-sharing)
+- [Stack Comparison](#stack-comparison)
+- [Team Standards (Lint)](#team-standards-lint)
+- [Plugin Management](#plugin-management)
 - [Troubleshooting](#troubleshooting)
 
 ---
@@ -544,6 +558,481 @@ stackpilot completion fish > ~/.config/fish/completions/stackpilot.fish
 ```
 
 After adding the completion script, restart your shell or source the configuration file. Tab completion works for all commands, subcommands, and saved stack names.
+
+---
+
+## Compatibility Scoring
+
+Check how well two technologies work together, or score an entire stack:
+
+```bash
+# Score compatibility between two technologies (0-100)
+stackpilot score nextjs postgresql
+
+# Example output:
+#   nextjs <-> postgresql
+#   Compatibility: 92/100
+#   Verdict: Excellent
+#   Notes:
+#     + Both widely used together in production
+#     + Prisma/Drizzle bridge available
+#     - No native ORM, needs adapter layer
+
+# Score a full saved stack
+stackpilot score my-stack
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON |
+| `--verbose` | Show detailed scoring breakdown per category |
+
+---
+
+## Stack Detection
+
+Detect the technology stack of an existing project by inspecting its files:
+
+```bash
+# Detect stack in current directory
+stackpilot analyze
+
+# Detect stack in a specific path
+stackpilot analyze /home/user/projects/my-app
+
+# Example output:
+#   Detected Stack:
+#     Runtime:   Node.js 22
+#     Frontend:  Next.js 15
+#     Backend:   (none detected)
+#     Database:  PostgreSQL (from docker-compose.yml)
+#     ORM:       Prisma
+#     Styling:   Tailwind CSS
+#     DevOps:    Docker, GitHub Actions, Biome
+#   Confidence: 94%
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON |
+| `--save` | Save detected stack to local database |
+| `--path <dir>` | Project path (default: current directory) |
+
+---
+
+## Performance Benchmarks
+
+Generate a performance profile for a saved stack:
+
+```bash
+stackpilot benchmark my-stack
+
+# Example output:
+#   Performance Profile: my-stack
+#   ┌──────────────────┬──────────┐
+#   │ Metric           │ Estimate │
+#   ├──────────────────┼──────────┤
+#   │ Cold start       │ ~2.1s    │
+#   │ Hot reload       │ ~180ms   │
+#   │ Build time       │ ~45s     │
+#   │ Memory (idle)    │ ~320MB   │
+#   │ Memory (peak)    │ ~1.2GB   │
+#   │ Docker image     │ ~890MB   │
+#   │ Install time     │ ~38s     │
+#   └──────────────────┴──────────┘
+#   Profile: production
+#   Technologies: 9
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON |
+| `--profile <name>` | Override stack profile for the estimate |
+
+---
+
+## Cost Estimation
+
+Estimate monthly hosting costs for a stack:
+
+```bash
+stackpilot cost my-stack
+
+# Example output:
+#   Monthly Cost Estimate: my-stack
+#   ┌───────────┬──────────┬──────────┬──────────┐
+#   │ Provider  │ Min      │ Typical  │ Max      │
+#   ├───────────┼──────────┼──────────┼──────────┤
+#   │ VPS       │ $12/mo   │ $24/mo   │ $48/mo   │
+#   │ AWS       │ $35/mo   │ $85/mo   │ $200/mo  │
+#   │ GCP       │ $30/mo   │ $78/mo   │ $180/mo  │
+#   └───────────┴──────────┴──────────┴──────────┘
+#   Assumptions: 10K monthly users, 50GB storage
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON |
+| `--users <n>` | Expected monthly active users (default: 10000) |
+| `--storage <gb>` | Expected storage in GB (default: 50) |
+
+---
+
+## Environment Management
+
+Manage environment variables across `.env.example` and `.env` files:
+
+```bash
+# Sync .env.example to .env (adds missing keys, preserves existing values)
+stackpilot env sync
+
+# Example output:
+#   Syncing .env.example -> .env
+#   + Added DATABASE_URL (default: postgresql://localhost:5432/mydb)
+#   + Added REDIS_URL (default: redis://localhost:6379)
+#   = Kept NEXTAUTH_SECRET (already set)
+#   Done: 2 added, 1 unchanged
+
+# Check for dangerous values in .env files
+stackpilot env check
+
+# Example output:
+#   Environment Check:
+#   [WARN] .env:3 DATABASE_URL contains "password" — likely hardcoded credential
+#   [WARN] .env:7 SECRET_KEY = "changeme" — default/placeholder value
+#   [PASS] .env:9 NEXTAUTH_SECRET — looks properly randomized
+#   Result: 2 warnings, 1 passed
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--path <dir>` | Project path (default: current directory) |
+| `--json` | Output as JSON |
+
+---
+
+## Project Health Check
+
+Run a comprehensive health audit on a project:
+
+```bash
+stackpilot health
+
+# Or specify a path
+stackpilot health /home/user/projects/my-app
+
+# Example output:
+#   Project Health: my-app
+#   [PASS] .gitignore exists and covers node_modules, .env, dist
+#   [PASS] No secrets detected in tracked files
+#   [WARN] TypeScript strict mode is disabled in tsconfig.json
+#   [FAIL] .env file is tracked by git
+#   [PASS] Docker Compose services have health checks
+#   [WARN] 3 dependencies have known vulnerabilities
+#   [PASS] CI pipeline configured
+#
+#   Score: 71/100 (5 passed, 2 warnings, 1 failure)
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON |
+| `--fix` | Auto-fix issues where possible (e.g., add .env to .gitignore) |
+| `--path <dir>` | Project path (default: current directory) |
+
+---
+
+## Compose Preview
+
+Preview the generated docker-compose.yml without writing any files:
+
+```bash
+stackpilot preview my-stack
+
+# Example output (prints YAML to stdout):
+#   version: "3.8"
+#   services:
+#     postgresql:
+#       image: postgres:17
+#       ports:
+#         - "5432:5432"
+#       environment:
+#         POSTGRES_DB: "mydb"
+#         POSTGRES_USER: "postgres"
+#         POSTGRES_PASSWORD: "postgres"
+#       volumes:
+#         - pgdata:/var/lib/postgresql/data
+#     redis:
+#       image: redis:7-alpine
+#       ports:
+#         - "6379:6379"
+#   volumes:
+#     pgdata:
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON instead of YAML |
+
+---
+
+## Infrastructure as Code
+
+Generate deployment configurations for a target platform:
+
+```bash
+# Generate for a VPS (Dockerfile + nginx config + systemd unit)
+stackpilot deploy my-stack --target vps
+
+# Generate for AWS (CloudFormation template)
+stackpilot deploy my-stack --target aws
+
+# Generate for GCP (Terraform files)
+stackpilot deploy my-stack --target gcp
+
+# Example output:
+#   Generated Infrastructure as Code:
+#     Target: aws
+#     Files:
+#       infra/cloudformation.yml    (ECS + RDS + ElastiCache)
+#       infra/buildspec.yml         (CodeBuild pipeline)
+#       infra/task-definition.json  (ECS task)
+#     Deploy with: aws cloudformation deploy --template-file infra/cloudformation.yml
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--target <provider>` | Target platform: `vps`, `aws`, or `gcp` (required) |
+| `--output <dir>` | Output directory (default: `./infra/`) |
+| `--json` | Output file manifest as JSON |
+
+---
+
+## Migration Planning
+
+Generate a step-by-step migration plan between two technologies:
+
+```bash
+stackpilot migrate --from express --to fastify
+
+# Example output:
+#   Migration Plan: Express -> Fastify
+#
+#   Step 1: Install Fastify
+#     npm install fastify @fastify/cors @fastify/helmet
+#
+#   Step 2: Convert route handlers
+#     Express: app.get('/api', (req, res) => res.json({...}))
+#     Fastify: app.get('/api', async (req, reply) => reply.send({...}))
+#
+#   Step 3: Replace middleware with plugins
+#     cors()        -> @fastify/cors
+#     helmet()      -> @fastify/helmet
+#     body-parser   -> built-in (fastify parses JSON by default)
+#
+#   Step 4: Update error handling
+#     ...
+#
+#   Estimated effort: 2-4 hours for a medium project
+#   Risk: Low (same ecosystem, similar API surface)
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--from <tech>` | Source technology (required) |
+| `--to <tech>` | Target technology (required) |
+| `--json` | Output as JSON |
+
+---
+
+## Learning Resources
+
+Get curated learning resources for any technology in the catalog:
+
+```bash
+stackpilot learn fastapi
+
+# Example output:
+#   Learning Resources: FastAPI
+#
+#   Official:
+#     - Documentation: https://fastapi.tiangolo.com
+#     - Tutorial: https://fastapi.tiangolo.com/tutorial/
+#     - GitHub: https://github.com/tiangolo/fastapi
+#
+#   Tutorials:
+#     - "FastAPI for Beginners" (freeCodeCamp)
+#     - "Full Stack FastAPI + React" (official template)
+#
+#   Key concepts:
+#     - Path operations and dependency injection
+#     - Pydantic models for request/response validation
+#     - Async support with ASGI
+#     - OpenAPI docs auto-generated at /docs
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON |
+
+---
+
+## Stack Sharing
+
+Share a stack definition via an encoded URL without any cloud service:
+
+```bash
+# Generate a shareable URL
+stackpilot share my-stack
+
+# Example output:
+#   Shareable URL:
+#   stackpilot://import/eyJuYW1lIjoibXktc2FhcyIsInRlY2hub2xvZ2llcyI6...
+#
+#   Or copy this command:
+#   stackpilot import-url "stackpilot://import/eyJuYW1lIjoi..."
+
+# Import a stack from a shared URL
+stackpilot import-url "stackpilot://import/eyJuYW1lIjoibXktc2FhcyI..."
+
+# Example output:
+#   Imported stack: my-saas
+#   Technologies: nextjs, fastapi, postgresql, redis, prisma, tailwindcss
+#   Saved with ID: a1b2c3d4-...
+```
+
+**Options (share):**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON |
+| `--clipboard` | Copy URL to clipboard |
+
+---
+
+## Stack Comparison
+
+Compare two saved stacks side by side:
+
+```bash
+stackpilot compare stack-a stack-b
+
+# Example output:
+#   Comparing: stack-a vs stack-b
+#   ┌──────────────┬───────────────┬───────────────┐
+#   │ Technology   │ stack-a       │ stack-b       │
+#   ├──────────────┼───────────────┼───────────────┤
+#   │ Runtime      │ Node.js 22    │ Node.js 22    │
+#   │ Frontend     │ Next.js 15    │ Nuxt 3        │
+#   │ Backend      │ FastAPI 0.115 │ Express 4     │
+#   │ Database     │ PostgreSQL 17 │ PostgreSQL 17 │
+#   │ ORM          │ Prisma        │ Drizzle       │
+#   │ Styling      │ Tailwind CSS  │ Tailwind CSS  │
+#   │ Auth         │ NextAuth      │ Clerk         │
+#   └──────────────┴───────────────┴───────────────┘
+#   Added in stack-b: nuxt, express, drizzle, clerk
+#   Removed from stack-a: nextjs, fastapi, prisma, nextauth
+#   Unchanged: nodejs, postgresql, tailwindcss
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON |
+
+---
+
+## Team Standards (Lint)
+
+Validate a stack against team-defined standards in a `.stackpilotrc` file:
+
+```bash
+stackpilot lint
+
+# Example .stackpilotrc (JSON):
+# {
+#   "required": ["typescript", "docker", "biome"],
+#   "banned": ["webpack", "eslint"],
+#   "versions": {
+#     "nodejs": ">=22",
+#     "postgresql": ">=16"
+#   }
+# }
+
+# Example output:
+#   Linting stack against .stackpilotrc
+#   [PASS] typescript is present
+#   [PASS] docker is present
+#   [FAIL] biome is missing (required by team standards)
+#   [PASS] No banned technologies detected
+#   [PASS] nodejs 22 satisfies >=22
+#   [WARN] postgresql 15 does not satisfy >=16
+#
+#   Result: 1 failure, 1 warning, 3 passed
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--config <path>` | Path to standards file (default: `.stackpilotrc`) |
+| `--json` | Output as JSON |
+
+---
+
+## Plugin Management
+
+Extend StackPilot with community plugins that add commands, templates, or technology definitions:
+
+```bash
+# List installed plugins
+stackpilot plugin list
+
+# Install a plugin
+stackpilot plugin install @stackpilot/plugin-aws
+
+# Remove a plugin
+stackpilot plugin remove @stackpilot/plugin-aws
+
+# Show plugin details
+stackpilot plugin info @stackpilot/plugin-aws
+
+# Example output (list):
+#   Installed Plugins:
+#   ┌──────────────────────────┬─────────┬──────────────────────────┐
+#   │ Name                     │ Version │ Provides                 │
+#   ├──────────────────────────┼─────────┼──────────────────────────┤
+#   │ @stackpilot/plugin-aws   │ 1.0.0   │ 3 commands, 2 templates  │
+#   │ @stackpilot/plugin-k8s   │ 0.5.0   │ 1 command, 5 tech defs   │
+#   └──────────────────────────┴─────────┴──────────────────────────┘
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON |
 
 ---
 

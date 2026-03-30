@@ -1,6 +1,6 @@
 # StackPilot — Architecture Documentation
 
-> Version: 0.1.1 | Last updated: 2026-03-29 | Covers: Core, Registry, Templates, CLI, Desktop
+> Version: 0.2.0 | Last updated: 2026-03-30 | Covers: Core, Registry, Templates, CLI, Desktop
 
 ---
 
@@ -20,7 +20,7 @@ View the live diagram: https://excalidraw.com/#json=BP8xETF3JbxkKp41nNR99,K8_-h6
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │  User Layer                                                                  │
 │  ┌───────────────────┐    ┌──────────────────────────────────────────────┐   │
-│  │  CLI (23 commands)│    │  Desktop App (Tauri 2 + React 19 + Zustand) │   │
+│  │  CLI (38 commands)│    │  Desktop App (Tauri 2 + React 19 + Zustand) │   │
 │  │  Commander+Inquirer│   │  Communicates via Tauri IPC                 │   │
 │  └────────┬──────────┘    └──────────────────┬───────────────────────────┘   │
 └───────────┼───────────────────────────────────┼──────────────────────────────┘
@@ -36,6 +36,12 @@ View the live diagram: https://excalidraw.com/#json=BP8xETF3JbxkKp41nNR99,K8_-h6
 │  │  Tech Installer│  │Runtime Manager│                                       │
 │  │  ORM/auth/devop│  │Docker lifecycle│                                      │
 │  └────────────────┘  └───────────────┘                                       │
+│  ┌────────────────────────────────────────────────────────────────────────┐  │
+│  │  New Engine Modules (v0.2.0)                                           │  │
+│  │  compatibility · env-sync · detect · compose-preview · health          │  │
+│  │  migration · diff · share · infra · lint · benchmark · cost            │  │
+│  │  learn · plugin                                                        │  │
+│  └────────────────────────────────────────────────────────────────────────┘  │
 │  ┌─────────────────────────┐                                                 │
 │  │  SQLite (better-sqlite3)│  ~/.stackpilot/stackpilot.db                   │
 │  └─────────────────────────┘                                                 │
@@ -115,6 +121,29 @@ Thin wrapper around `docker compose` for a project's `docker-compose.yml`. Opera
 - `down(opts, volumes)` — `docker compose -f <path> down [--volumes]`, timeout 60s
 - `status(opts)` — `docker compose -f <path> ps --format json`
 - `logs(opts, service, follow)` — `docker compose -f <path> logs [service] [-f]`
+
+### New Engine Modules (v0.2.0)
+
+14 new modules were added to the core package in v0.2.0:
+
+| Module | File | Public API | Purpose |
+|--------|------|-----------|---------|
+| Compatibility | `engine/compatibility.ts` | `scoreCompatibility()`, `scoreStack()` | Score technology pairs (0-100) and aggregate stack scores |
+| Env Sync | `engine/env-sync.ts` | `syncEnv()`, `checkDangerous()` | Sync .env.example with .env, detect hardcoded secrets |
+| Stack Detection | `engine/detect.ts` | `detectStack()` | Detect technologies from project files (package.json, Cargo.toml, etc.) |
+| Compose Preview | `engine/compose-preview.ts` | `generateComposePreview()` | Render docker-compose.yml to string without disk writes |
+| Health Check | `engine/health.ts` | `checkProjectHealth()` | Audit project for secrets, .gitignore gaps, strict mode, vulnerabilities |
+| Migration | `engine/migration.ts` | `planMigration()` | Generate step-by-step migration plans between technologies |
+| Stack Diff | `engine/diff.ts` | `diffStacks()` | Compare two stack definitions (added, removed, changed, unchanged) |
+| Sharing | `engine/share.ts` | `serializeStack()`, `deserializeStack()` | Encode/decode stacks as base64 URLs for cloudless sharing |
+| Infrastructure | `engine/infra.ts` | `generateInfra()` | Generate IaC files for VPS, AWS, and GCP deployment |
+| Lint | `engine/lint.ts` | `lintStack()` | Validate stacks against team standards (.stackpilotrc) |
+| Benchmark | `engine/benchmark.ts` | `profilePerformance()` | Heuristic performance estimates (cold start, build time, memory) |
+| Cost | `engine/cost.ts` | `estimateCost()` | Monthly hosting cost estimates across providers |
+| Learn | `engine/learn.ts` | `getResources()` | Curated learning resources per technology |
+| Plugin | `engine/plugin.ts` | `listPlugins()`, `installPlugin()`, `removePlugin()` | Plugin lifecycle management (npm-based) |
+
+All new modules follow the same pattern: pure functions that receive a `StackDefinition` and/or `Technology[]` and return a typed result. No side effects except `syncEnv()` (writes to .env), `installPlugin()` (npm install), and `removePlugin()` (npm uninstall).
 
 ### SQLite Database (`db/database.ts`)
 
