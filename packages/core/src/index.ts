@@ -29,6 +29,19 @@ export { parseEnvFile, syncEnv, checkDangerous } from "./engine/env-analyzer.js"
 export type { EnvVar, EnvSyncResult, EnvDangerousVar } from "./engine/env-analyzer.js";
 export { detectStack } from "./engine/stack-detector.js";
 export type { DetectedStack, DetectedTech } from "./engine/stack-detector.js";
+export { generateComposePreview } from "./engine/compose-generator.js";
+export type { ComposePreviewResult } from "./engine/compose-generator.js";
+export {
+  serializeStack,
+  deserializeStack,
+  generateShareUrl,
+  extractFromShareUrl,
+} from "./engine/stack-serializer.js";
+export type { ShareableStack } from "./engine/stack-serializer.js";
+export { checkProjectHealth } from "./engine/health-checker.js";
+export type { HealthReport, HealthCheck } from "./engine/health-checker.js";
+export { diffStacks } from "./engine/stack-differ.js";
+export type { StackDiff, DiffItem, DiffChange } from "./engine/stack-differ.js";
 
 // Database
 export { getDatabase, closeDatabase, getDefaultDbPath } from "./db/database.js";

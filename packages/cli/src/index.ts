@@ -30,6 +30,10 @@ import { scoreCommand } from "./commands/score.js";
 import { statusCommand } from "./commands/status.js";
 import { templateCommand } from "./commands/template.js";
 import { upCommand } from "./commands/up.js";
+import { compareCommand } from "./commands/compare.js";
+import { healthCommand } from "./commands/health.js";
+import { previewCommand } from "./commands/preview.js";
+import { shareCommand, importUrlCommand } from "./commands/share.js";
 import { versionCommand } from "./commands/version-cmd.js";
 import { banner } from "./ui/format.js";
 
@@ -65,6 +69,11 @@ program
   .addCommand(scoreCommand)
   .addCommand(analyzeCommand)
   .addCommand(envCommand)
+  .addCommand(previewCommand)
+  .addCommand(shareCommand)
+  .addCommand(importUrlCommand)
+  .addCommand(healthCommand)
+  .addCommand(compareCommand)
   .addCommand(versionCommand);
 
 // Show banner when run without arguments
@@ -86,6 +95,9 @@ if (process.argv.length <= 2) {
   console.log(chalk.dim("      delete          ") + "Delete a saved stack");
   console.log(chalk.dim("      clone           ") + "Duplicate a stack");
   console.log(chalk.dim("      export/import   ") + "Export or import stack definitions");
+  console.log(chalk.dim("      share <id>      ") + "Generate a shareable URL for a stack");
+  console.log(chalk.dim("      import-url <url> ") + "Import a stack from a share URL");
+  console.log(chalk.dim("      preview <id>    ") + "Preview docker-compose.yml for a stack");
   console.log("");
   console.log(chalk.cyan("    Runtime"));
   console.log(chalk.dim("      up              ") + "Start Docker services");
@@ -95,6 +107,8 @@ if (process.argv.length <= 2) {
   console.log("");
   console.log(chalk.cyan("    Analysis"));
   console.log(chalk.dim("      analyze [path]  ") + "Detect project stack automatically");
+  console.log(chalk.dim("      health [path]   ") + "Check project health and best practices");
+  console.log(chalk.dim("      compare <a> <b> ") + "Compare two saved stacks");
   console.log(chalk.dim("      env [sync|check]") + " Sync .env files and check for issues");
   console.log(chalk.dim("      score <a> [b]   ") + "Compatibility score between technologies");
   console.log("");
