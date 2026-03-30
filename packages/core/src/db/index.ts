@@ -1,1 +1,1 @@
-export { getDatabase, closeDatabase, getDefaultDbPath } from "./database.js";
+export { closeDatabase, getDatabase, getDefaultDbPath } from "./database.js";

@@ -2,11 +2,11 @@
  * stackpilot health [path] — Check project health across multiple dimensions.
  */
 
+import * as path from "node:path";
 import type { HealthCheck, HealthReport } from "@stackpilot/core";
 import { checkProjectHealth } from "@stackpilot/core";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as path from "path";
 import { box, formatJson, gradientHeader } from "../ui/format.js";
 
 function statusIcon(status: HealthCheck["status"]): string {
@@ -50,7 +50,9 @@ export const healthCommand = new Command("health")
     // Build content lines
     const lines: string[] = [];
     lines.push("");
-    lines.push(`  Overall: ${overallLabel(report.overall)} (${summary.passed}/${totalChecks} passed)`);
+    lines.push(
+      `  Overall: ${overallLabel(report.overall)} (${summary.passed}/${totalChecks} passed)`,
+    );
     lines.push("");
 
     // Group: passes first, then warns, then fails
@@ -69,9 +71,9 @@ export const healthCommand = new Command("health")
 
     lines.push("");
     lines.push(
-      `  ${chalk.green(String(summary.passed) + " passed")} ${chalk.dim("\u00B7")} ` +
-        `${chalk.yellow(String(summary.warnings) + " warnings")} ${chalk.dim("\u00B7")} ` +
-        `${chalk.red(String(summary.critical) + " critical")}`,
+      `  ${chalk.green(`${String(summary.passed)} passed`)} ${chalk.dim("\u00B7")} ` +
+        `${chalk.yellow(`${String(summary.warnings)} warnings`)} ${chalk.dim("\u00B7")} ` +
+        `${chalk.red(`${String(summary.critical)} critical`)}`,
     );
     lines.push("");
 

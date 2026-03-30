@@ -6,9 +6,5 @@
     "composite": true
   },
   "include": ["src"],
-  "references": [
-    { "path": "../core" },
-    { "path": "../registry" },
-    { "path": "../templates" }
-  ]
+  "references": [{ "path": "../core" }, { "path": "../registry" }, { "path": "../templates" }]
 }

@@ -2,13 +2,13 @@
  * stackpilot analyze [path] — Detect the technology stack of a project.
  */
 
+import * as path from "node:path";
 import type { DetectedTech } from "@stackpilot/core";
 import { detectStack } from "@stackpilot/core";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as path from "path";
 import { getStackEngine } from "../ui/context.js";
-import { box, error, formatJson, info, success } from "../ui/format.js";
+import { box, error, formatJson, success } from "../ui/format.js";
 
 const PROJECT_TYPE_LABELS: Record<string, string> = {
   frontend: "Frontend",
@@ -31,7 +31,9 @@ export const analyzeCommand = new Command("analyze")
     try {
       result = detectStack(projectDir);
     } catch (err) {
-      console.error(error(`Failed to analyze project: ${err instanceof Error ? err.message : String(err)}`));
+      console.error(
+        error(`Failed to analyze project: ${err instanceof Error ? err.message : String(err)}`),
+      );
       process.exit(1);
     }
 
@@ -66,9 +68,7 @@ export const analyzeCommand = new Command("analyze")
 
     // Package managers
     if (result.packageManagers.length > 0) {
-      lines.push(
-        `${chalk.dim("Package Managers:")} ${result.packageManagers.join(", ")}`,
-      );
+      lines.push(`${chalk.dim("Package Managers:")} ${result.packageManagers.join(", ")}`);
       lines.push("");
     }
 

@@ -3,15 +3,10 @@
  * Handles up, down, status, logs, and health check waiting.
  */
 
-import { execSync, spawn, type ChildProcess } from "child_process";
-import * as fs from "fs";
-import * as path from "path";
-import type {
-  RuntimeState,
-  ServiceStatus,
-  StackDefinition,
-  Technology,
-} from "../types/index.js";
+import { execSync } from "node:child_process";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import type { RuntimeState, ServiceStatus, Technology } from "../types/index.js";
 
 export interface RuntimeOptions {
   composePath: string;
@@ -31,10 +26,11 @@ export class RuntimeManager {
   up(opts: RuntimeOptions, detach = true): { success: boolean; output: string } {
     const flags = detach ? "-d" : "";
     try {
-      const output = execSync(
-        `docker compose -f "${opts.composePath}" up ${flags}`,
-        { cwd: opts.projectDir, stdio: "pipe", timeout: 120_000 },
-      ).toString();
+      const output = execSync(`docker compose -f "${opts.composePath}" up ${flags}`, {
+        cwd: opts.projectDir,
+        stdio: "pipe",
+        timeout: 120_000,
+      }).toString();
       return { success: true, output };
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -48,10 +44,11 @@ export class RuntimeManager {
   down(opts: RuntimeOptions, volumes = false): { success: boolean; output: string } {
     try {
       const volumesFlag = volumes ? " --volumes" : "";
-      const output = execSync(
-        `docker compose -f "${opts.composePath}" down${volumesFlag}`,
-        { cwd: opts.projectDir, stdio: "pipe", timeout: 60_000 },
-      ).toString();
+      const output = execSync(`docker compose -f "${opts.composePath}" down${volumesFlag}`, {
+        cwd: opts.projectDir,
+        stdio: "pipe",
+        timeout: 60_000,
+      }).toString();
       return { success: true, output };
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -64,10 +61,11 @@ export class RuntimeManager {
    */
   status(opts: RuntimeOptions): ServiceStatus[] {
     try {
-      const raw = execSync(
-        `docker compose -f "${opts.composePath}" ps --format json`,
-        { cwd: opts.projectDir, stdio: "pipe", timeout: 10_000 },
-      ).toString();
+      const raw = execSync(`docker compose -f "${opts.composePath}" ps --format json`, {
+        cwd: opts.projectDir,
+        stdio: "pipe",
+        timeout: 10_000,
+      }).toString();
 
       const services: ServiceStatus[] = [];
       const lines = raw.trim().split("\n").filter(Boolean);
@@ -98,9 +96,7 @@ export class RuntimeManager {
           // Extract port from Publishers
           let port: number | undefined;
           if (container.Publishers && Array.isArray(container.Publishers)) {
-            const pub = container.Publishers.find(
-              (p: Record<string, unknown>) => p.PublishedPort,
-            );
+            const pub = container.Publishers.find((p: Record<string, unknown>) => p.PublishedPort);
             if (pub) port = pub.PublishedPort as number;
           }
 
@@ -110,11 +106,8 @@ export class RuntimeManager {
             containerId: container.ID,
             status: statusValue,
             port,
-            healthCheck: health === "healthy"
-              ? "passing"
-              : health === "unhealthy"
-                ? "failing"
-                : "none",
+            healthCheck:
+              health === "healthy" ? "passing" : health === "unhealthy" ? "failing" : "none",
           });
         } catch {
           // Skip malformed JSON lines
@@ -130,12 +123,7 @@ export class RuntimeManager {
   /**
    * Get logs for a specific service or all services.
    */
-  logs(
-    opts: RuntimeOptions,
-    service?: string,
-    tail = 50,
-    follow = false,
-  ): string {
+  logs(opts: RuntimeOptions, service?: string, tail = 50, follow = false): string {
     try {
       const serviceArg = service || "";
       const followFlag = follow ? " -f" : "";
@@ -162,10 +150,7 @@ export class RuntimeManager {
       const services = this.status(opts);
       const hasServices = services.length > 0;
       const allHealthy = services.every(
-        (s) =>
-          s.status === "healthy" ||
-          s.status === "running" ||
-          s.healthCheck === "none",
+        (s) => s.status === "healthy" || s.status === "running" || s.healthCheck === "none",
       );
 
       if (hasServices && allHealthy) {
@@ -187,10 +172,7 @@ export class RuntimeManager {
   /**
    * Build RuntimeState from current container status.
    */
-  getRuntimeState(
-    projectId: string,
-    opts: RuntimeOptions,
-  ): RuntimeState {
+  getRuntimeState(projectId: string, opts: RuntimeOptions): RuntimeState {
     return {
       projectId,
       services: this.status(opts),
@@ -203,12 +185,7 @@ export class RuntimeManager {
    * Check if docker compose file exists at path.
    */
   composeExists(projectDir: string): string | null {
-    const candidates = [
-      "docker-compose.yml",
-      "docker-compose.yaml",
-      "compose.yml",
-      "compose.yaml",
-    ];
+    const candidates = ["docker-compose.yml", "docker-compose.yaml", "compose.yml", "compose.yaml"];
     for (const name of candidates) {
       const p = path.join(projectDir, name);
       if (fs.existsSync(p)) return p;

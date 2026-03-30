@@ -2,9 +2,9 @@
  * stackpilot export <stack-id> — Export a stack definition to YAML or JSON.
  */
 
+import * as fs from "node:fs";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as fs from "fs";
 import { stringify as yamlStringify } from "yaml";
 import { getStackEngine } from "../ui/context.js";
 

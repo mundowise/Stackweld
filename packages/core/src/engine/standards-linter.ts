@@ -3,9 +3,9 @@
  * Reads .stackpilotrc config and checks compliance.
  */
 
-import * as fs from "fs";
-import * as path from "path";
-import type { StackDefinition, StackProfile } from "../types/index.js";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import type { StackDefinition } from "../types/index.js";
 
 // ─── Types ────────────────────────────────────────────
 

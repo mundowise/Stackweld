@@ -2,10 +2,10 @@
  * stackpilot up — Start Docker services for the current project.
  */
 
+import * as path from "node:path";
 import chalk from "chalk";
 import { Command } from "commander";
 import ora from "ora";
-import * as path from "path";
 import { getRuntimeManager } from "../ui/context.js";
 import { error, formatServiceStatus } from "../ui/format.js";
 
@@ -27,7 +27,7 @@ export const upCommand = new Command("up")
 
     const composePath = runtime.composeExists(projectDir);
     if (!composePath) {
-      console.error(error("No docker-compose.yml found in " + projectDir));
+      console.error(error(`No docker-compose.yml found in ${projectDir}`));
       console.error(chalk.dim("  Run `stackpilot scaffold` to generate one from a stack."));
       process.exit(1);
     }

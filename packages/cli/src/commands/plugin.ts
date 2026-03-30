@@ -31,10 +31,9 @@ const pluginListCommand = new Command("list")
     console.log(`\n  ${gradientHeader("StackPilot")} ${chalk.dim("/ Plugins")}\n`);
 
     if (plugins.length === 0) {
-      console.log(emptyState(
-        "No plugins installed.",
-        "Install one with: stackpilot plugin install <path>",
-      ));
+      console.log(
+        emptyState("No plugins installed.", "Install one with: stackpilot plugin install <path>"),
+      );
       return;
     }
 
@@ -42,7 +41,7 @@ const pluginListCommand = new Command("list")
       name: p.name,
       version: p.version,
       type: p.type,
-      description: p.description.length > 40 ? p.description.slice(0, 37) + "..." : p.description,
+      description: p.description.length > 40 ? `${p.description.slice(0, 37)}...` : p.description,
     }));
 
     const tbl = table(data, [
@@ -73,14 +72,18 @@ const pluginInstallCommand = new Command("install")
       }
 
       console.log(`\n  ${gradientHeader("StackPilot")} ${chalk.dim("/ Plugin Install")}\n`);
-      console.log(`  ${chalk.green("\u2714")} Plugin ${chalk.cyan.bold(manifest.name)} v${manifest.version} installed successfully.`);
+      console.log(
+        `  ${chalk.green("\u2714")} Plugin ${chalk.cyan.bold(manifest.name)} v${manifest.version} installed successfully.`,
+      );
       console.log(`  ${chalk.dim("Type:")} ${manifest.type}`);
       console.log(`  ${chalk.dim("Description:")} ${manifest.description}`);
       console.log(`  ${chalk.dim("Location:")} ${getPluginDir()}/${manifest.name}`);
       console.log("");
     } catch (err) {
       if (opts.json) {
-        console.log(formatJson({ installed: false, error: err instanceof Error ? err.message : String(err) }));
+        console.log(
+          formatJson({ installed: false, error: err instanceof Error ? err.message : String(err) }),
+        );
         process.exit(1);
       }
       console.error(chalk.red(`\u2716 ${err instanceof Error ? err.message : String(err)}`));
@@ -106,7 +109,9 @@ const pluginRemoveCommand = new Command("remove")
       console.log(`\n  ${chalk.green("\u2714")} Plugin ${chalk.cyan.bold(name)} removed.\n`);
     } catch (err) {
       if (opts.json) {
-        console.log(formatJson({ removed: false, error: err instanceof Error ? err.message : String(err) }));
+        console.log(
+          formatJson({ removed: false, error: err instanceof Error ? err.message : String(err) }),
+        );
         process.exit(1);
       }
       console.error(chalk.red(`\u2716 ${err instanceof Error ? err.message : String(err)}`));

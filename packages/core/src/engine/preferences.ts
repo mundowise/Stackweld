@@ -54,22 +54,17 @@ export function getPreferences(): UserPreferences {
 export function getPreference(key: keyof UserPreferences): string {
   ensureTable();
   const db = getDatabase();
-  const row = db
-    .prepare("SELECT value FROM preferences WHERE key = ?")
-    .get(key) as { value: string } | undefined;
+  const row = db.prepare("SELECT value FROM preferences WHERE key = ?").get(key) as
+    | { value: string }
+    | undefined;
   return row?.value ?? DEFAULTS[key];
 }
 
 /** Set a single preference. */
-export function setPreference(
-  key: keyof UserPreferences,
-  value: string,
-): void {
+export function setPreference(key: keyof UserPreferences, value: string): void {
   ensureTable();
   const db = getDatabase();
-  db.prepare(
-    "INSERT OR REPLACE INTO preferences (key, value) VALUES (?, ?)",
-  ).run(key, value);
+  db.prepare("INSERT OR REPLACE INTO preferences (key, value) VALUES (?, ?)").run(key, value);
 }
 
 /** Reset all preferences to defaults. */

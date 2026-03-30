@@ -2,10 +2,10 @@
  * stackpilot doctor — Detect system capabilities and issues.
  */
 
+import { execSync } from "node:child_process";
+import * as os from "node:os";
 import chalk from "chalk";
-import { execSync } from "child_process";
 import { Command } from "commander";
-import * as os from "os";
 import {
   box,
   formatJson,
@@ -147,7 +147,7 @@ export const doctorCommand = new Command("doctor")
     const missing = results.filter((r) => r.status === "not_found").length;
     console.log(
       sectionHeader(
-        `  Tools (${chalk.green(String(found) + " found")}, ${missing > 0 ? chalk.red(String(missing) + " missing") : chalk.dim("0 missing")})`,
+        `  Tools (${chalk.green(`${String(found)} found`)}, ${missing > 0 ? chalk.red(`${String(missing)} missing`) : chalk.dim("0 missing")})`,
       ),
     );
     for (const r of results) {
@@ -160,7 +160,7 @@ export const doctorCommand = new Command("doctor")
     const portsInUse = portChecks.filter((p) => p.status === "warning");
     console.log(
       sectionHeader(
-        `  Ports (${portsInUse.length > 0 ? chalk.yellow(String(portsInUse.length) + " in use") : chalk.green("all available")})`,
+        `  Ports (${portsInUse.length > 0 ? chalk.yellow(`${String(portsInUse.length)} in use`) : chalk.green("all available")})`,
       ),
     );
     for (const p of portChecks) {

@@ -33,18 +33,48 @@ const DATABASE_COSTS: Record<string, CostEntry> = {
     min: 0,
     max: 30,
     items: [
-      { service: "PostgreSQL", provider: "Neon (free tier)", monthlyCost: "$0", notes: "500MB storage, 0.25 CU" },
-      { service: "PostgreSQL", provider: "Supabase (free)", monthlyCost: "$0", notes: "500MB, 2 projects" },
-      { service: "PostgreSQL", provider: "Self-hosted VPS", monthlyCost: "$0-5", notes: "Included in VPS cost" },
-      { service: "PostgreSQL", provider: "AWS RDS", monthlyCost: "$15-30/mo", notes: "db.t3.micro, single-AZ" },
+      {
+        service: "PostgreSQL",
+        provider: "Neon (free tier)",
+        monthlyCost: "$0",
+        notes: "500MB storage, 0.25 CU",
+      },
+      {
+        service: "PostgreSQL",
+        provider: "Supabase (free)",
+        monthlyCost: "$0",
+        notes: "500MB, 2 projects",
+      },
+      {
+        service: "PostgreSQL",
+        provider: "Self-hosted VPS",
+        monthlyCost: "$0-5",
+        notes: "Included in VPS cost",
+      },
+      {
+        service: "PostgreSQL",
+        provider: "AWS RDS",
+        monthlyCost: "$15-30/mo",
+        notes: "db.t3.micro, single-AZ",
+      },
     ],
   },
   mysql: {
     min: 0,
     max: 25,
     items: [
-      { service: "MySQL", provider: "PlanetScale (free)", monthlyCost: "$0", notes: "5GB, 1B row reads/mo" },
-      { service: "MySQL", provider: "Self-hosted VPS", monthlyCost: "$0-5", notes: "Included in VPS cost" },
+      {
+        service: "MySQL",
+        provider: "PlanetScale (free)",
+        monthlyCost: "$0",
+        notes: "5GB, 1B row reads/mo",
+      },
+      {
+        service: "MySQL",
+        provider: "Self-hosted VPS",
+        monthlyCost: "$0-5",
+        notes: "Included in VPS cost",
+      },
       { service: "MySQL", provider: "AWS RDS", monthlyCost: "$15-25/mo", notes: "db.t3.micro" },
     ],
   },
@@ -52,7 +82,12 @@ const DATABASE_COSTS: Record<string, CostEntry> = {
     min: 0,
     max: 25,
     items: [
-      { service: "MariaDB", provider: "Self-hosted VPS", monthlyCost: "$0-5", notes: "Included in VPS cost" },
+      {
+        service: "MariaDB",
+        provider: "Self-hosted VPS",
+        monthlyCost: "$0-5",
+        notes: "Included in VPS cost",
+      },
       { service: "MariaDB", provider: "AWS RDS", monthlyCost: "$15-25/mo", notes: "db.t3.micro" },
     ],
   },
@@ -60,24 +95,54 @@ const DATABASE_COSTS: Record<string, CostEntry> = {
     min: 0,
     max: 10,
     items: [
-      { service: "MongoDB", provider: "Atlas (free M0)", monthlyCost: "$0", notes: "512MB, shared cluster" },
-      { service: "MongoDB", provider: "Self-hosted VPS", monthlyCost: "$5-10", notes: "Needs 1GB+ RAM" },
+      {
+        service: "MongoDB",
+        provider: "Atlas (free M0)",
+        monthlyCost: "$0",
+        notes: "512MB, shared cluster",
+      },
+      {
+        service: "MongoDB",
+        provider: "Self-hosted VPS",
+        monthlyCost: "$5-10",
+        notes: "Needs 1GB+ RAM",
+      },
     ],
   },
   redis: {
     min: 0,
     max: 25,
     items: [
-      { service: "Redis", provider: "Upstash (free)", monthlyCost: "$0", notes: "10k commands/day" },
-      { service: "Redis", provider: "Self-hosted VPS", monthlyCost: "$0-5", notes: "Included in VPS cost" },
-      { service: "Redis", provider: "AWS ElastiCache", monthlyCost: "$10-25/mo", notes: "cache.t3.micro" },
+      {
+        service: "Redis",
+        provider: "Upstash (free)",
+        monthlyCost: "$0",
+        notes: "10k commands/day",
+      },
+      {
+        service: "Redis",
+        provider: "Self-hosted VPS",
+        monthlyCost: "$0-5",
+        notes: "Included in VPS cost",
+      },
+      {
+        service: "Redis",
+        provider: "AWS ElastiCache",
+        monthlyCost: "$10-25/mo",
+        notes: "cache.t3.micro",
+      },
     ],
   },
   sqlite: {
     min: 0,
     max: 0,
     items: [
-      { service: "SQLite", provider: "Embedded", monthlyCost: "$0", notes: "File-based, no server needed" },
+      {
+        service: "SQLite",
+        provider: "Embedded",
+        monthlyCost: "$0",
+        notes: "File-based, no server needed",
+      },
     ],
   },
 };
@@ -87,30 +152,60 @@ const HOSTING_COSTS: Record<string, CostEntry> = {
     min: 5,
     max: 50,
     items: [
-      { service: "Docker VPS", provider: "Basic (Hetzner/DO)", monthlyCost: "$5-10/mo", notes: "2GB RAM, shared CPU" },
-      { service: "Docker VPS", provider: "Production", monthlyCost: "$20-50/mo", notes: "4-8GB RAM, dedicated CPU" },
+      {
+        service: "Docker VPS",
+        provider: "Basic (Hetzner/DO)",
+        monthlyCost: "$5-10/mo",
+        notes: "2GB RAM, shared CPU",
+      },
+      {
+        service: "Docker VPS",
+        provider: "Production",
+        monthlyCost: "$20-50/mo",
+        notes: "4-8GB RAM, dedicated CPU",
+      },
     ],
   },
   vercel: {
     min: 0,
     max: 20,
     items: [
-      { service: "Vercel", provider: "Hobby", monthlyCost: "$0", notes: "Personal projects, 100GB bandwidth" },
-      { service: "Vercel", provider: "Pro", monthlyCost: "$20/mo", notes: "Team features, 1TB bandwidth" },
+      {
+        service: "Vercel",
+        provider: "Hobby",
+        monthlyCost: "$0",
+        notes: "Personal projects, 100GB bandwidth",
+      },
+      {
+        service: "Vercel",
+        provider: "Pro",
+        monthlyCost: "$20/mo",
+        notes: "Team features, 1TB bandwidth",
+      },
     ],
   },
   aws: {
     min: 25,
     max: 60,
     items: [
-      { service: "AWS ECS Fargate", provider: "AWS", monthlyCost: "$25-60/mo", notes: "0.25 vCPU, 512MB task" },
+      {
+        service: "AWS ECS Fargate",
+        provider: "AWS",
+        monthlyCost: "$25-60/mo",
+        notes: "0.25 vCPU, 512MB task",
+      },
     ],
   },
   gcp: {
     min: 0,
     max: 30,
     items: [
-      { service: "Cloud Run", provider: "GCP", monthlyCost: "$0-30/mo", notes: "Pay per use, generous free tier" },
+      {
+        service: "Cloud Run",
+        provider: "GCP",
+        monthlyCost: "$0-30/mo",
+        notes: "Pay per use, generous free tier",
+      },
     ],
   },
 };
@@ -132,45 +227,90 @@ const SERVICE_COSTS: Record<string, CostEntry> = {
     min: 0,
     max: 10,
     items: [
-      { service: "Grafana", provider: "Self-hosted", monthlyCost: "$0", notes: "OSS, included in VPS" },
-      { service: "Grafana", provider: "Grafana Cloud (free)", monthlyCost: "$0", notes: "10k metrics, 50GB logs" },
+      {
+        service: "Grafana",
+        provider: "Self-hosted",
+        monthlyCost: "$0",
+        notes: "OSS, included in VPS",
+      },
+      {
+        service: "Grafana",
+        provider: "Grafana Cloud (free)",
+        monthlyCost: "$0",
+        notes: "10k metrics, 50GB logs",
+      },
     ],
   },
   prometheus: {
     min: 0,
     max: 5,
     items: [
-      { service: "Prometheus", provider: "Self-hosted", monthlyCost: "$0", notes: "OSS, included in VPS" },
+      {
+        service: "Prometheus",
+        provider: "Self-hosted",
+        monthlyCost: "$0",
+        notes: "OSS, included in VPS",
+      },
     ],
   },
   elasticsearch: {
     min: 0,
     max: 30,
     items: [
-      { service: "Elasticsearch", provider: "Elastic Cloud (free)", monthlyCost: "$0", notes: "14-day trial" },
-      { service: "Elasticsearch", provider: "Self-hosted", monthlyCost: "$10-30/mo", notes: "Needs 2-4GB RAM" },
+      {
+        service: "Elasticsearch",
+        provider: "Elastic Cloud (free)",
+        monthlyCost: "$0",
+        notes: "14-day trial",
+      },
+      {
+        service: "Elasticsearch",
+        provider: "Self-hosted",
+        monthlyCost: "$10-30/mo",
+        notes: "Needs 2-4GB RAM",
+      },
     ],
   },
   rabbitmq: {
     min: 0,
     max: 20,
     items: [
-      { service: "RabbitMQ", provider: "CloudAMQP (free)", monthlyCost: "$0", notes: "Little Lemur, 1M msgs/mo" },
-      { service: "RabbitMQ", provider: "Self-hosted", monthlyCost: "$5-20/mo", notes: "Needs 512MB+ RAM" },
+      {
+        service: "RabbitMQ",
+        provider: "CloudAMQP (free)",
+        monthlyCost: "$0",
+        notes: "Little Lemur, 1M msgs/mo",
+      },
+      {
+        service: "RabbitMQ",
+        provider: "Self-hosted",
+        monthlyCost: "$5-20/mo",
+        notes: "Needs 512MB+ RAM",
+      },
     ],
   },
   nginx: {
     min: 0,
     max: 0,
     items: [
-      { service: "Nginx", provider: "Self-hosted", monthlyCost: "$0", notes: "Included in VPS, minimal resources" },
+      {
+        service: "Nginx",
+        provider: "Self-hosted",
+        monthlyCost: "$0",
+        notes: "Included in VPS, minimal resources",
+      },
     ],
   },
   traefik: {
     min: 0,
     max: 0,
     items: [
-      { service: "Traefik", provider: "Self-hosted", monthlyCost: "$0", notes: "Included in Docker setup" },
+      {
+        service: "Traefik",
+        provider: "Self-hosted",
+        monthlyCost: "$0",
+        notes: "Included in Docker setup",
+      },
     ],
   },
 };
@@ -270,8 +410,6 @@ export function estimateCost(technologies: Technology[]): CostEstimate {
 
     // Runtime / backend frameworks — no direct cost, but need hosting
     if (tech.category === "runtime" || tech.category === "backend") {
-      // Hosting cost will be added below if no platform is specified
-      continue;
     }
   }
 
@@ -282,15 +420,35 @@ export function estimateCost(technologies: Technology[]): CostEstimate {
       totalMin += 5;
       totalMax += 50;
       breakdown.push(
-        { service: "Docker VPS", provider: "Basic (Hetzner/DO)", monthlyCost: "$5-10/mo", notes: "2GB RAM, shared CPU" },
-        { service: "Docker VPS", provider: "Production", monthlyCost: "$20-50/mo", notes: "4-8GB RAM, dedicated CPU" },
+        {
+          service: "Docker VPS",
+          provider: "Basic (Hetzner/DO)",
+          monthlyCost: "$5-10/mo",
+          notes: "2GB RAM, shared CPU",
+        },
+        {
+          service: "Docker VPS",
+          provider: "Production",
+          monthlyCost: "$20-50/mo",
+          notes: "4-8GB RAM, dedicated CPU",
+        },
       );
     } else {
       totalMin += 0;
       totalMax += 20;
       breakdown.push(
-        { service: "Hosting", provider: "Vercel/Netlify (free)", monthlyCost: "$0", notes: "Serverless, limited" },
-        { service: "Hosting", provider: "VPS (basic)", monthlyCost: "$5-20/mo", notes: "Small cloud instance" },
+        {
+          service: "Hosting",
+          provider: "Vercel/Netlify (free)",
+          monthlyCost: "$0",
+          notes: "Serverless, limited",
+        },
+        {
+          service: "Hosting",
+          provider: "VPS (basic)",
+          monthlyCost: "$5-20/mo",
+          notes: "Small cloud instance",
+        },
       );
     }
   }

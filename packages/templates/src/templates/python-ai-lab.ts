@@ -3,15 +3,8 @@ import type { Template } from "@stackpilot/core";
 export const pythonAiLab: Template = {
   id: "python-ai-lab",
   name: "Python AI Lab",
-  description:
-    "Python ML/AI development environment with FastAPI, PostgreSQL, Redis, and Docker",
-  technologyIds: [
-    "python",
-    "fastapi",
-    "postgresql",
-    "redis",
-    "docker",
-  ],
+  description: "Python ML/AI development environment with FastAPI, PostgreSQL, Redis, and Docker",
+  technologyIds: ["python", "fastapi", "postgresql", "redis", "docker"],
   profile: "production",
   scaffoldSteps: [
     {
@@ -30,8 +23,7 @@ export const pythonAiLab: Template = {
     },
     {
       name: "Install ML dependencies",
-      command:
-        "{{projectName}}/.venv/bin/pip install numpy pandas scikit-learn jupyter matplotlib",
+      command: "{{projectName}}/.venv/bin/pip install numpy pandas scikit-learn jupyter matplotlib",
     },
   ],
   overrides: [
@@ -145,8 +137,7 @@ export const pythonAiLab: Template = {
     {
       timing: "post-scaffold",
       name: "Freeze requirements",
-      command:
-        "cd {{projectName}} && .venv/bin/pip freeze > requirements.lock",
+      command: "cd {{projectName}} && .venv/bin/pip freeze > requirements.lock",
       description: "Generate locked requirements file",
       requiresConfirmation: false,
     },

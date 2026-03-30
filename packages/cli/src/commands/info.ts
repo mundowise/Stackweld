@@ -29,7 +29,7 @@ export const infoCommand = new Command("info")
           const tech = rules.getTechnology(t.technologyId);
           if (tech) {
             console.log(
-              `  ${chalk.cyan(tech.name)} ${chalk.dim("v" + t.version)} ${t.port ? chalk.dim(":" + t.port) : ""}`,
+              `  ${chalk.cyan(tech.name)} ${chalk.dim(`v${t.version}`)} ${t.port ? chalk.dim(`:${t.port}`) : ""}`,
             );
           }
         }
@@ -39,7 +39,7 @@ export const infoCommand = new Command("info")
         if (history.length > 1) {
           console.log(chalk.bold("\nVersion history:"));
           for (const v of history.slice(0, 5)) {
-            console.log(`  ${chalk.dim("v" + v.version)} ${chalk.dim(v.timestamp)} ${v.changelog}`);
+            console.log(`  ${chalk.dim(`v${v.version}`)} ${chalk.dim(v.timestamp)} ${v.changelog}`);
           }
         }
       }

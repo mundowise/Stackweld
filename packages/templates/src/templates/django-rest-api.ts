@@ -5,12 +5,7 @@ export const djangoRestApi: Template = {
   name: "Django REST API",
   description:
     "Production-ready REST API with Django, Django REST Framework, PostgreSQL, and Redis",
-  technologyIds: [
-    "django",
-    "python",
-    "postgresql",
-    "redis",
-  ],
+  technologyIds: ["django", "python", "postgresql", "redis"],
   profile: "standard",
   scaffoldSteps: [
     {
@@ -93,8 +88,7 @@ export const djangoRestApi: Template = {
     {
       timing: "post-scaffold",
       name: "Freeze requirements",
-      command:
-        "cd {{projectName}} && .venv/bin/pip freeze > requirements.lock",
+      command: "cd {{projectName}} && .venv/bin/pip freeze > requirements.lock",
       description: "Generate locked requirements file",
       requiresConfirmation: false,
     },

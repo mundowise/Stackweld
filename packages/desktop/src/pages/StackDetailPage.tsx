@@ -1,12 +1,12 @@
-import { useAppStore } from "@/stores/app-store";
-import { Card } from "@/components/ui/Card";
+import { ArrowLeft, Download, History, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { ArrowLeft, Download, Trash2, History } from "lucide-react";
+import { Card } from "@/components/ui/Card";
+import { useAppStore } from "@/stores/app-store";
 
 export function StackDetailPage() {
   const { selectedStackId, stacks, technologies, setPage, selectStack } = useAppStore();
-  const stack = stacks.find(s => s.id === selectedStackId);
+  const stack = stacks.find((s) => s.id === selectedStackId);
 
   if (!stack) {
     return (
@@ -19,15 +19,18 @@ export function StackDetailPage() {
     );
   }
 
-  const stackTechs = stack.technologies.map(st => {
-    const tech = technologies.find(t => t.id === st.technologyId);
+  const stackTechs = stack.technologies.map((st) => {
+    const tech = technologies.find((t) => t.id === st.technologyId);
     return { ...st, tech };
   });
 
   return (
     <div className="space-y-6">
       {/* Back button */}
-      <button onClick={() => selectStack(null)} className="flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-200">
+      <button
+        onClick={() => selectStack(null)}
+        className="flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-200"
+      >
         <ArrowLeft className="w-4 h-4" /> Back
       </button>
 
@@ -38,17 +41,27 @@ export function StackDetailPage() {
           <p className="text-sm text-zinc-500 mt-1">{stack.description || "No description"}</p>
         </div>
         <div className="flex gap-2">
-          <Button size="sm" variant="secondary"><Download className="w-4 h-4" /> Export</Button>
-          <Button size="sm" variant="secondary"><History className="w-4 h-4" /> History</Button>
-          <Button size="sm" variant="danger"><Trash2 className="w-4 h-4" /> Delete</Button>
+          <Button size="sm" variant="secondary">
+            <Download className="w-4 h-4" /> Export
+          </Button>
+          <Button size="sm" variant="secondary">
+            <History className="w-4 h-4" /> History
+          </Button>
+          <Button size="sm" variant="danger">
+            <Trash2 className="w-4 h-4" /> Delete
+          </Button>
         </div>
       </div>
 
       {/* Meta */}
       <div className="flex gap-4">
-        <Badge variant={stack.profile === "production" ? "success" : "default"}>{stack.profile}</Badge>
+        <Badge variant={stack.profile === "production" ? "success" : "default"}>
+          {stack.profile}
+        </Badge>
         <span className="text-sm text-zinc-500">Version {stack.version}</span>
-        <span className="text-sm text-zinc-500">Created {new Date(stack.createdAt).toLocaleDateString()}</span>
+        <span className="text-sm text-zinc-500">
+          Created {new Date(stack.createdAt).toLocaleDateString()}
+        </span>
       </div>
 
       {/* Technologies */}

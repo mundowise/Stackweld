@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { loadAllTechnologies, loadTechnology, listTechnologyIds } from "../loader.js";
+import { describe, expect, it } from "vitest";
+import { listTechnologyIds, loadAllTechnologies, loadTechnology } from "../loader.js";
 
 describe("Registry Loader", () => {
   it("loads all 50 technologies", () => {
@@ -25,9 +25,9 @@ describe("Registry Loader", () => {
   it("loads a specific technology by ID", () => {
     const tech = loadTechnology("nextjs");
     expect(tech).not.toBeNull();
-    expect(tech!.name).toBe("Next.js");
-    expect(tech!.category).toBe("frontend");
-    expect(tech!.requires).toContain("nodejs");
+    expect(tech?.name).toBe("Next.js");
+    expect(tech?.category).toBe("frontend");
+    expect(tech?.requires).toContain("nodejs");
   });
 
   it("returns null for unknown technology", () => {
@@ -139,10 +139,7 @@ describe("Registry Loader", () => {
     const techs = loadAllTechnologies();
 
     for (const tech of techs) {
-      expect(
-        tech.versions.length,
-        `${tech.id} has no versions defined`,
-      ).toBeGreaterThan(0);
+      expect(tech.versions.length, `${tech.id} has no versions defined`).toBeGreaterThan(0);
     }
   });
 
@@ -160,9 +157,6 @@ describe("Registry Loader", () => {
       }
     }
 
-    expect(
-      asymmetric,
-      `Asymmetric incompatibilities found: ${asymmetric.join(", ")}`,
-    ).toEqual([]);
+    expect(asymmetric, `Asymmetric incompatibilities found: ${asymmetric.join(", ")}`).toEqual([]);
   });
 });

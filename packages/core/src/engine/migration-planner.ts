@@ -36,26 +36,33 @@ const MIGRATION_KNOWLEDGE: Record<string, MigrationKnowledge> = {
       {
         title: "Install Fastify",
         description: "Install Fastify and its ecosystem plugins.",
-        commands: ["npm install fastify @fastify/cors @fastify/helmet @fastify/sensible", "npm uninstall express cors helmet"],
+        commands: [
+          "npm install fastify @fastify/cors @fastify/helmet @fastify/sensible",
+          "npm uninstall express cors helmet",
+        ],
       },
       {
         title: "Update Server Entry",
-        description: "Rewrite the Express app initialization to use Fastify's createServer pattern. Replace app.listen() with fastify.listen().",
+        description:
+          "Rewrite the Express app initialization to use Fastify's createServer pattern. Replace app.listen() with fastify.listen().",
         files: ["src/server.ts", "src/app.ts", "src/index.ts"],
       },
       {
         title: "Convert Route Handlers",
-        description: "Replace Express (req, res, next) handlers with Fastify's (request, reply) pattern. Add JSON schema validation for request/response.",
+        description:
+          "Replace Express (req, res, next) handlers with Fastify's (request, reply) pattern. Add JSON schema validation for request/response.",
         files: ["src/routes/*.ts"],
       },
       {
         title: "Update Middleware",
-        description: "Replace Express middleware with Fastify plugins. Use fastify.register() instead of app.use().",
+        description:
+          "Replace Express middleware with Fastify plugins. Use fastify.register() instead of app.use().",
         files: ["src/middleware/*.ts", "src/plugins/*.ts"],
       },
       {
         title: "Update Error Handling",
-        description: "Replace Express error middleware with Fastify's setErrorHandler() and setNotFoundHandler().",
+        description:
+          "Replace Express error middleware with Fastify's setErrorHandler() and setNotFoundHandler().",
         files: ["src/errors.ts"],
       },
       {
@@ -73,31 +80,39 @@ const MIGRATION_KNOWLEDGE: Record<string, MigrationKnowledge> = {
       {
         title: "Install NestJS",
         description: "Install the NestJS CLI and core packages.",
-        commands: ["npm install -g @nestjs/cli", "npm install @nestjs/common @nestjs/core @nestjs/platform-express reflect-metadata rxjs"],
+        commands: [
+          "npm install -g @nestjs/cli",
+          "npm install @nestjs/common @nestjs/core @nestjs/platform-express reflect-metadata rxjs",
+        ],
       },
       {
         title: "Set Up Module Structure",
-        description: "Create the root AppModule and restructure the project into NestJS modules. Each feature area becomes a module with its own controller and service.",
+        description:
+          "Create the root AppModule and restructure the project into NestJS modules. Each feature area becomes a module with its own controller and service.",
         files: ["src/app.module.ts", "src/main.ts"],
       },
       {
         title: "Convert Routes to Controllers",
-        description: "Replace Express route handlers with NestJS controllers using decorators (@Get, @Post, etc.).",
+        description:
+          "Replace Express route handlers with NestJS controllers using decorators (@Get, @Post, etc.).",
         files: ["src/*/*.controller.ts"],
       },
       {
         title: "Extract Business Logic to Services",
-        description: "Move business logic from route handlers into injectable service classes. Use NestJS dependency injection.",
+        description:
+          "Move business logic from route handlers into injectable service classes. Use NestJS dependency injection.",
         files: ["src/*/*.service.ts"],
       },
       {
         title: "Convert Middleware",
-        description: "Replace Express middleware with NestJS guards, interceptors, and pipes as appropriate.",
+        description:
+          "Replace Express middleware with NestJS guards, interceptors, and pipes as appropriate.",
         files: ["src/common/*.ts"],
       },
       {
         title: "Update Configuration",
-        description: "Use @nestjs/config for environment variables. Replace any custom config loading.",
+        description:
+          "Use @nestjs/config for environment variables. Replace any custom config loading.",
         commands: ["npm install @nestjs/config"],
         files: ["src/config/*.ts"],
       },
@@ -120,27 +135,32 @@ const MIGRATION_KNOWLEDGE: Record<string, MigrationKnowledge> = {
       },
       {
         title: "Create FastAPI App Entry",
-        description: "Create the main FastAPI application file with CORS, middleware, and router includes.",
+        description:
+          "Create the main FastAPI application file with CORS, middleware, and router includes.",
         files: ["app/main.py"],
       },
       {
         title: "Convert Models",
-        description: "Rewrite Django ORM models as SQLAlchemy models. Create Pydantic schemas for request/response validation.",
+        description:
+          "Rewrite Django ORM models as SQLAlchemy models. Create Pydantic schemas for request/response validation.",
         files: ["app/models/*.py", "app/schemas/*.py"],
       },
       {
         title: "Rewrite Views as Endpoints",
-        description: "Convert Django views/viewsets to FastAPI async route functions. Replace DRF serializers with Pydantic models.",
+        description:
+          "Convert Django views/viewsets to FastAPI async route functions. Replace DRF serializers with Pydantic models.",
         files: ["app/routers/*.py"],
       },
       {
         title: "Update Authentication",
-        description: "Replace Django auth with FastAPI security utilities (OAuth2, JWT). Implement dependency injection for auth.",
+        description:
+          "Replace Django auth with FastAPI security utilities (OAuth2, JWT). Implement dependency injection for auth.",
         files: ["app/auth.py", "app/dependencies.py"],
       },
       {
         title: "Migrate Database Setup",
-        description: "Replace Django migrations with Alembic. Set up SQLAlchemy session management.",
+        description:
+          "Replace Django migrations with Alembic. Set up SQLAlchemy session management.",
         commands: ["alembic init alembic", "alembic revision --autogenerate -m 'initial'"],
         files: ["alembic.ini", "alembic/env.py"],
       },
@@ -168,17 +188,20 @@ const MIGRATION_KNOWLEDGE: Record<string, MigrationKnowledge> = {
       },
       {
         title: "Convert Routes",
-        description: "Replace @app.route() decorators with @app.get()/@app.post() etc. Add type hints and Pydantic models for request validation.",
+        description:
+          "Replace @app.route() decorators with @app.get()/@app.post() etc. Add type hints and Pydantic models for request validation.",
         files: ["app/routes/*.py"],
       },
       {
         title: "Make Endpoints Async",
-        description: "Convert synchronous route functions to async where beneficial. Update database calls accordingly.",
+        description:
+          "Convert synchronous route functions to async where beneficial. Update database calls accordingly.",
         files: ["app/routes/*.py"],
       },
       {
         title: "Update Extensions",
-        description: "Replace Flask extensions (Flask-CORS, Flask-SQLAlchemy) with FastAPI equivalents or middleware.",
+        description:
+          "Replace Flask extensions (Flask-CORS, Flask-SQLAlchemy) with FastAPI equivalents or middleware.",
         files: ["app/extensions.py", "app/config.py"],
       },
       {
@@ -196,7 +219,10 @@ const MIGRATION_KNOWLEDGE: Record<string, MigrationKnowledge> = {
       {
         title: "Install Vue",
         description: "Install Vue 3 and its ecosystem.",
-        commands: ["npm install vue @vitejs/plugin-vue", "npm uninstall react react-dom @types/react @types/react-dom"],
+        commands: [
+          "npm install vue @vitejs/plugin-vue",
+          "npm uninstall react react-dom @types/react @types/react-dom",
+        ],
       },
       {
         title: "Update Build Config",
@@ -205,17 +231,20 @@ const MIGRATION_KNOWLEDGE: Record<string, MigrationKnowledge> = {
       },
       {
         title: "Convert Components",
-        description: "Rewrite JSX/TSX components as Vue Single File Components (.vue). Replace props/state with Vue's defineProps/ref/reactive.",
+        description:
+          "Rewrite JSX/TSX components as Vue Single File Components (.vue). Replace props/state with Vue's defineProps/ref/reactive.",
         files: ["src/components/*.vue"],
       },
       {
         title: "Replace Hooks with Composition API",
-        description: "Convert React hooks (useState, useEffect, useMemo) to Vue Composition API (ref, watch, computed).",
+        description:
+          "Convert React hooks (useState, useEffect, useMemo) to Vue Composition API (ref, watch, computed).",
         files: ["src/composables/*.ts"],
       },
       {
         title: "Update Routing",
-        description: "Replace react-router with vue-router. Update route definitions and navigation guards.",
+        description:
+          "Replace react-router with vue-router. Update route definitions and navigation guards.",
         commands: ["npm install vue-router@4", "npm uninstall react-router-dom"],
         files: ["src/router/index.ts"],
       },
@@ -240,16 +269,21 @@ const MIGRATION_KNOWLEDGE: Record<string, MigrationKnowledge> = {
       {
         title: "Install Vitest",
         description: "Install Vitest and remove Jest.",
-        commands: ["npm install -D vitest @vitest/coverage-v8", "npm uninstall jest ts-jest @types/jest babel-jest"],
+        commands: [
+          "npm install -D vitest @vitest/coverage-v8",
+          "npm uninstall jest ts-jest @types/jest babel-jest",
+        ],
       },
       {
         title: "Create Vitest Config",
-        description: "Create vitest.config.ts or add test config to vite.config.ts. Migrate Jest config options.",
+        description:
+          "Create vitest.config.ts or add test config to vite.config.ts. Migrate Jest config options.",
         files: ["vitest.config.ts", "vite.config.ts"],
       },
       {
         title: "Update Test Globals",
-        description: "Replace jest.fn() with vi.fn(), jest.mock() with vi.mock(), jest.spyOn() with vi.spyOn(). Enable globals in config or add imports.",
+        description:
+          "Replace jest.fn() with vi.fn(), jest.mock() with vi.mock(), jest.spyOn() with vi.spyOn(). Enable globals in config or add imports.",
         files: ["src/**/*.test.ts", "src/**/*.spec.ts"],
       },
       {
@@ -272,21 +306,28 @@ const MIGRATION_KNOWLEDGE: Record<string, MigrationKnowledge> = {
       {
         title: "Install Drizzle",
         description: "Install Drizzle ORM and its kit.",
-        commands: ["npm install drizzle-orm", "npm install -D drizzle-kit", "npm uninstall prisma @prisma/client"],
+        commands: [
+          "npm install drizzle-orm",
+          "npm install -D drizzle-kit",
+          "npm uninstall prisma @prisma/client",
+        ],
       },
       {
         title: "Convert Schema",
-        description: "Rewrite Prisma schema (.prisma) as Drizzle TypeScript schema definitions using table() and column helpers.",
+        description:
+          "Rewrite Prisma schema (.prisma) as Drizzle TypeScript schema definitions using table() and column helpers.",
         files: ["src/db/schema.ts"],
       },
       {
         title: "Set Up Database Client",
-        description: "Create the Drizzle database client instance. Replace PrismaClient initialization.",
+        description:
+          "Create the Drizzle database client instance. Replace PrismaClient initialization.",
         files: ["src/db/index.ts", "src/db/client.ts"],
       },
       {
         title: "Update Queries",
-        description: "Rewrite Prisma queries (findMany, create, update, delete) to Drizzle's SQL-like builder pattern (select, insert, update, delete).",
+        description:
+          "Rewrite Prisma queries (findMany, create, update, delete) to Drizzle's SQL-like builder pattern (select, insert, update, delete).",
         files: ["src/**/*.ts"],
       },
       {
@@ -346,23 +387,27 @@ const MIGRATION_KNOWLEDGE: Record<string, MigrationKnowledge> = {
       },
       {
         title: "Create tsconfig.json",
-        description: "Initialize TypeScript configuration with appropriate settings (strict mode recommended).",
+        description:
+          "Initialize TypeScript configuration with appropriate settings (strict mode recommended).",
         commands: ["npx tsc --init"],
         files: ["tsconfig.json"],
       },
       {
         title: "Rename Files",
-        description: "Rename .js files to .ts (and .jsx to .tsx). Start with entry points and work outward.",
+        description:
+          "Rename .js files to .ts (and .jsx to .tsx). Start with entry points and work outward.",
         files: ["src/**/*.ts"],
       },
       {
         title: "Add Type Annotations",
-        description: "Add type annotations to function parameters, return types, and variables. Create interfaces for data structures.",
+        description:
+          "Add type annotations to function parameters, return types, and variables. Create interfaces for data structures.",
         files: ["src/**/*.ts"],
       },
       {
         title: "Fix Type Errors",
-        description: "Run the TypeScript compiler and fix all type errors. Use 'any' sparingly as a last resort.",
+        description:
+          "Run the TypeScript compiler and fix all type errors. Use 'any' sparingly as a last resort.",
         commands: ["npx tsc --noEmit"],
       },
       {

@@ -1,10 +1,12 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { scoreCompatibility, scoreStack } from "../engine/compatibility-scorer.js";
 import type { Technology } from "../types/index.js";
 
 // ─── Test fixtures ────────────────────────────────────
 
-function makeTech(overrides: Partial<Technology> & Pick<Technology, "id" | "name" | "category">): Technology {
+function makeTech(
+  overrides: Partial<Technology> & Pick<Technology, "id" | "name" | "category">,
+): Technology {
   return {
     description: "",
     website: "",
@@ -22,12 +24,17 @@ function makeTech(overrides: Partial<Technology> & Pick<Technology, "id" | "name
 }
 
 const nodejs = makeTech({
-  id: "nodejs", name: "Node.js", category: "runtime",
-  defaultPort: 3000, suggestedWith: ["typescript"],
+  id: "nodejs",
+  name: "Node.js",
+  category: "runtime",
+  defaultPort: 3000,
+  suggestedWith: ["typescript"],
 });
 
 const nextjs = makeTech({
-  id: "nextjs", name: "Next.js", category: "frontend",
+  id: "nextjs",
+  name: "Next.js",
+  category: "frontend",
   defaultPort: 3000,
   requires: ["nodejs", "react"],
   incompatibleWith: ["nuxt", "sveltekit", "remix", "astro", "angular", "qwik", "solidjs"],
@@ -35,34 +42,44 @@ const nextjs = makeTech({
 });
 
 const nuxt = makeTech({
-  id: "nuxt", name: "Nuxt", category: "frontend",
+  id: "nuxt",
+  name: "Nuxt",
+  category: "frontend",
   defaultPort: 3000,
   requires: ["nodejs"],
   incompatibleWith: ["nextjs"],
 });
 
 const react = makeTech({
-  id: "react", name: "React", category: "frontend",
+  id: "react",
+  name: "React",
+  category: "frontend",
   defaultPort: 3000,
   requires: ["nodejs"],
   suggestedWith: ["tailwindcss"],
 });
 
 const tailwindcss = makeTech({
-  id: "tailwindcss", name: "Tailwind CSS", category: "styling",
+  id: "tailwindcss",
+  name: "Tailwind CSS",
+  category: "styling",
   requires: ["nodejs"],
   suggestedWith: ["react", "nextjs", "vue"],
 });
 
 const prisma = makeTech({
-  id: "prisma", name: "Prisma ORM", category: "orm",
+  id: "prisma",
+  name: "Prisma ORM",
+  category: "orm",
   requires: ["nodejs"],
   incompatibleWith: ["typeorm", "drizzle", "mongoose"],
   suggestedWith: ["postgresql", "nextjs", "typescript"],
 });
 
 const express = makeTech({
-  id: "express", name: "Express", category: "backend",
+  id: "express",
+  name: "Express",
+  category: "backend",
   defaultPort: 3001,
   requires: ["nodejs"],
   incompatibleWith: ["nestjs", "hono", "fastify"],
@@ -70,7 +87,9 @@ const express = makeTech({
 });
 
 const fastify = makeTech({
-  id: "fastify", name: "Fastify", category: "backend",
+  id: "fastify",
+  name: "Fastify",
+  category: "backend",
   defaultPort: 3001,
   requires: ["nodejs"],
   incompatibleWith: ["nestjs", "hono", "express"],
@@ -78,18 +97,24 @@ const fastify = makeTech({
 });
 
 const postgresql = makeTech({
-  id: "postgresql", name: "PostgreSQL", category: "database",
+  id: "postgresql",
+  name: "PostgreSQL",
+  category: "database",
   defaultPort: 5432,
   suggestedWith: ["prisma", "drizzle", "sqlalchemy"],
 });
 
 const redis = makeTech({
-  id: "redis", name: "Redis", category: "database",
+  id: "redis",
+  name: "Redis",
+  category: "database",
   defaultPort: 6379,
 });
 
 const typescript = makeTech({
-  id: "typescript", name: "TypeScript", category: "devops",
+  id: "typescript",
+  name: "TypeScript",
+  category: "devops",
   requires: [],
 });
 
@@ -147,12 +172,16 @@ describe("scoreCompatibility", () => {
   it("never exceeds 100", () => {
     // Artificial case: two techs that suggest each other, share runtime, complementary
     const techA = makeTech({
-      id: "superA", name: "Super A", category: "frontend",
+      id: "superA",
+      name: "Super A",
+      category: "frontend",
       requires: ["nodejs"],
       suggestedWith: ["superB"],
     });
     const techB = makeTech({
-      id: "superB", name: "Super B", category: "backend",
+      id: "superB",
+      name: "Super B",
+      category: "backend",
       requires: ["nodejs"],
       suggestedWith: ["superA"],
     });
@@ -218,7 +247,7 @@ describe("scoreStack", () => {
       (p) => (p.a === "nextjs" && p.b === "nuxt") || (p.a === "nuxt" && p.b === "nextjs"),
     );
     expect(badPair).toBeDefined();
-    expect(badPair!.score).toBe(0);
+    expect(badPair?.score).toBe(0);
 
     // Overall should be lower than a stack without incompatible techs
     const goodStack = [nodejs, nextjs, postgresql];

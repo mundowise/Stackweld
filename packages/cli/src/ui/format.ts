@@ -58,7 +58,7 @@ export function dim(message: string): string {
 }
 
 export function label(key: string, value: string): string {
-  return `  ${chalk.dim(key + ":")} ${value}`;
+  return `  ${chalk.dim(`${key}:`)} ${value}`;
 }
 
 // ─── Banner & Headers ──────────────────────────────────
@@ -181,7 +181,7 @@ export function stepIndicator(current: number, total: number, label: string): st
 
 export function formatStackRow(stack: StackDefinition): string {
   const techs = stack.technologies.map((t) => t.technologyId).join(", ");
-  return `${chalk.cyan.bold(stack.name)} ${chalk.dim(`(${stack.profile})`)}  ${chalk.dim("v" + stack.version)}
+  return `${chalk.cyan.bold(stack.name)} ${chalk.dim(`(${stack.profile})`)}  ${chalk.dim(`v${stack.version}`)}
   ${chalk.dim("ID:")} ${stack.id}
   ${chalk.dim("Technologies:")} ${techs}
   ${chalk.dim("Updated:")} ${stack.updatedAt}`;
@@ -192,7 +192,7 @@ export function formatStackTable(stacks: StackDefinition[]): string {
     name: s.name,
     profile: s.profile,
     techs: s.technologies.map((t) => t.technologyId).join(", "),
-    version: "v" + s.version,
+    version: `v${s.version}`,
     updated: typeof s.updatedAt === "string" ? s.updatedAt.split("T")[0] : String(s.updatedAt),
   }));
 

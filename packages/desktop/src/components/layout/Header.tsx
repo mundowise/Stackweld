@@ -1,5 +1,5 @@
-import { useAppStore } from "@/stores/app-store";
 import { Search } from "lucide-react";
+import { useAppStore } from "@/stores/app-store";
 
 const pageTitles: Record<string, string> = {
   dashboard: "Dashboard",

@@ -5,15 +5,7 @@ export const expressApi: Template = {
   name: "Express API",
   description:
     "Production-ready Express.js REST API with TypeScript, Prisma, PostgreSQL, Redis, and Docker",
-  technologyIds: [
-    "express",
-    "nodejs",
-    "typescript",
-    "prisma",
-    "postgresql",
-    "redis",
-    "docker",
-  ],
+  technologyIds: ["express", "nodejs", "typescript", "prisma", "postgresql", "redis", "docker"],
   profile: "production",
   scaffoldSteps: [
     {
@@ -36,7 +28,8 @@ export const expressApi: Template = {
     },
     {
       name: "Initialize TypeScript",
-      command: "cd {{projectName}} && npx tsc --init --outDir dist --rootDir src --strict --esModuleInterop --resolveJsonModule",
+      command:
+        "cd {{projectName}} && npx tsc --init --outDir dist --rootDir src --strict --esModuleInterop --resolveJsonModule",
     },
     {
       name: "Initialize Prisma",

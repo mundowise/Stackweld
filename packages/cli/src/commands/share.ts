@@ -6,11 +6,11 @@
  */
 
 import {
-  type StackProfile,
-  type StackTechnology,
   deserializeStack,
   extractFromShareUrl,
   generateShareUrl,
+  type StackProfile,
+  type StackTechnology,
 } from "@stackpilot/core";
 import chalk from "chalk";
 import { Command } from "commander";
@@ -69,7 +69,9 @@ export const importUrlCommand = new Command("import-url")
     try {
       encoded = extractFromShareUrl(url);
     } catch {
-      console.error(chalk.red("Invalid share URL. Expected format: https://stackpilot.dev/s/#<data>"));
+      console.error(
+        chalk.red("Invalid share URL. Expected format: https://stackpilot.dev/s/#<data>"),
+      );
       process.exit(1);
     }
 

@@ -66,7 +66,9 @@ export const benchmarkCommand = new Command("benchmark")
 
     const lines: string[] = [];
     lines.push("");
-    lines.push(`  ${chalk.dim("Rating:")}      ${ratingIcon} ${ratingColor(profile.rating.toUpperCase())}`);
+    lines.push(
+      `  ${chalk.dim("Rating:")}      ${ratingIcon} ${ratingColor(profile.rating.toUpperCase())}`,
+    );
     lines.push(`  ${chalk.dim("Req/s:")}       ${chalk.bold(profile.estimatedReqPerSec)}`);
     lines.push(`  ${chalk.dim("Cold start:")}  ${profile.estimatedColdStart}`);
     lines.push(`  ${chalk.dim("Memory:")}      ${profile.estimatedMemory}`);

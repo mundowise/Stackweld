@@ -3,10 +3,16 @@
  * Handles creation, validation, versioning, and persistence.
  */
 
-import { randomUUID } from "crypto";
-import type { StackDefinition, StackTechnology, StackProfile, StackVersion, ValidationResult } from "../types/index.js";
-import { RulesEngine } from "./rules-engine.js";
+import { randomUUID } from "node:crypto";
 import { getDatabase } from "../db/database.js";
+import type {
+  StackDefinition,
+  StackProfile,
+  StackTechnology,
+  StackVersion,
+  ValidationResult,
+} from "../types/index.js";
+import type { RulesEngine } from "./rules-engine.js";
 
 export class StackEngine {
   private rules: RulesEngine;
@@ -73,10 +79,14 @@ export class StackEngine {
    */
   get(id: string): StackDefinition | null {
     const db = getDatabase();
-    const row = db.prepare("SELECT * FROM stacks WHERE id = ?").get(id) as Record<string, unknown> | undefined;
+    const row = db.prepare("SELECT * FROM stacks WHERE id = ?").get(id) as
+      | Record<string, unknown>
+      | undefined;
     if (!row) return null;
 
-    const techRows = db.prepare("SELECT * FROM stack_technologies WHERE stack_id = ?").all(id) as Record<string, unknown>[];
+    const techRows = db
+      .prepare("SELECT * FROM stack_technologies WHERE stack_id = ?")
+      .all(id) as Record<string, unknown>[];
 
     return {
       id: row.id as string,
@@ -101,7 +111,9 @@ export class StackEngine {
    */
   list(): StackDefinition[] {
     const db = getDatabase();
-    const rows = db.prepare("SELECT id FROM stacks ORDER BY updated_at DESC").all() as { id: string }[];
+    const rows = db.prepare("SELECT id FROM stacks ORDER BY updated_at DESC").all() as {
+      id: string;
+    }[];
     return rows.map((r) => this.get(r.id)!).filter(Boolean);
   }
 
@@ -117,8 +129,14 @@ export class StackEngine {
   /**
    * Update a stack. Auto-increments version and saves snapshot.
    */
-  update(id: string, changes: Partial<Pick<StackDefinition, "name" | "description" | "profile" | "technologies" | "tags">>): {
-    stack: StackDefinition; validation: ValidationResult;
+  update(
+    id: string,
+    changes: Partial<
+      Pick<StackDefinition, "name" | "description" | "profile" | "technologies" | "tags">
+    >,
+  ): {
+    stack: StackDefinition;
+    validation: ValidationResult;
   } | null {
     const existing = this.get(id);
     if (!existing) return null;
@@ -166,9 +184,9 @@ export class StackEngine {
    */
   getVersionHistory(stackId: string): StackVersion[] {
     const db = getDatabase();
-    const rows = db.prepare(
-      "SELECT * FROM stack_versions WHERE stack_id = ? ORDER BY version DESC"
-    ).all(stackId) as Record<string, unknown>[];
+    const rows = db
+      .prepare("SELECT * FROM stack_versions WHERE stack_id = ? ORDER BY version DESC")
+      .all(stackId) as Record<string, unknown>[];
 
     return rows.map((r) => ({
       version: r.version as number,
@@ -183,9 +201,9 @@ export class StackEngine {
    */
   rollback(stackId: string, targetVersion: number): StackDefinition | null {
     const db = getDatabase();
-    const versionRow = db.prepare(
-      "SELECT snapshot FROM stack_versions WHERE stack_id = ? AND version = ?"
-    ).get(stackId, targetVersion) as { snapshot: string } | undefined;
+    const versionRow = db
+      .prepare("SELECT snapshot FROM stack_versions WHERE stack_id = ? AND version = ?")
+      .get(stackId, targetVersion) as { snapshot: string } | undefined;
 
     if (!versionRow) return null;
 
@@ -210,8 +228,14 @@ export class StackEngine {
       INSERT INTO stacks (id, name, description, profile, version, created_at, updated_at, tags)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
-      stack.id, stack.name, stack.description, stack.profile,
-      stack.version, stack.createdAt, stack.updatedAt, JSON.stringify(stack.tags),
+      stack.id,
+      stack.name,
+      stack.description,
+      stack.profile,
+      stack.version,
+      stack.createdAt,
+      stack.updatedAt,
+      JSON.stringify(stack.tags),
     );
 
     for (const t of stack.technologies) {

@@ -1,24 +1,50 @@
+import {
+  AlertTriangle,
+  Check,
+  CheckCircle2,
+  ChevronRight,
+  FolderOpen,
+  Loader2,
+  X,
+} from "lucide-react";
 import { useMemo, useState } from "react";
-import { useAppStore } from "@/stores/app-store";
-import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import { cn } from "@/lib/cn";
-import { isTauri, execCommand } from "@/lib/tauri";
-import { Check, X, AlertTriangle, ChevronRight, FolderOpen, Loader2, CheckCircle2 } from "lucide-react";
+import { execCommand, isTauri } from "@/lib/tauri";
+import { useAppStore } from "@/stores/app-store";
 
 const PROFILES = ["rapid", "standard", "production", "enterprise", "lightweight"] as const;
-const CATEGORIES = ["runtime", "frontend", "backend", "database", "orm", "auth", "styling", "service", "devops"] as const;
+const CATEGORIES = [
+  "runtime",
+  "frontend",
+  "backend",
+  "database",
+  "orm",
+  "auth",
+  "styling",
+  "service",
+  "devops",
+] as const;
 
 export function BuilderPage() {
   const {
-    technologies, builderTechs, builderProfile, builderName,
-    toggleBuilderTech, setBuilderProfile, setBuilderName, resetBuilder
+    technologies,
+    builderTechs,
+    builderProfile,
+    builderName,
+    toggleBuilderTech,
+    setBuilderProfile,
+    setBuilderName,
+    resetBuilder,
   } = useAppStore();
 
   const [projectPath, setProjectPath] = useState("");
   const [creating, setCreating] = useState(false);
-  const [createResult, setCreateResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [createResult, setCreateResult] = useState<{ success: boolean; message: string } | null>(
+    null,
+  );
 
   // Open native folder picker
   async function handleSelectFolder() {
@@ -65,8 +91,12 @@ export function BuilderPage() {
           try {
             const data = JSON.parse(result.stdout);
             if (data.success) {
-              const fileList = (data.filesGenerated || []).map((f: string) => `  - ${f}`).join("\n");
-              const cmdList = (data.scaffoldCommands || []).map((c: { name: string; command: string }) => `  ${c.name}: ${c.command}`).join("\n");
+              const fileList = (data.filesGenerated || [])
+                .map((f: string) => `  - ${f}`)
+                .join("\n");
+              const cmdList = (data.scaffoldCommands || [])
+                .map((c: { name: string; command: string }) => `  ${c.name}: ${c.command}`)
+                .join("\n");
 
               let msg = `Project "${builderName}" created at:\n${data.path}\n\nFiles generated:\n${fileList}`;
 
@@ -82,7 +112,10 @@ export function BuilderPage() {
 
               setCreateResult({ success: true, message: msg });
             } else {
-              setCreateResult({ success: false, message: `Validation failed:\n${JSON.stringify(data.errors, null, 2)}` });
+              setCreateResult({
+                success: false,
+                message: `Validation failed:\n${JSON.stringify(data.errors, null, 2)}`,
+              });
             }
           } catch {
             setCreateResult({ success: true, message: result.stdout });
@@ -91,7 +124,10 @@ export function BuilderPage() {
           setCreateResult({ success: false, message: result.stderr || "Generation failed" });
         }
       } catch (e) {
-        setCreateResult({ success: false, message: e instanceof Error ? e.message : "Unknown error" });
+        setCreateResult({
+          success: false,
+          message: e instanceof Error ? e.message : "Unknown error",
+        });
       }
     } else {
       setCreateResult({
@@ -110,30 +146,30 @@ export function BuilderPage() {
     const autoAdded: string[] = [];
 
     for (const techId of builderTechs) {
-      const tech = technologies.find(t => t.id === techId);
+      const tech = technologies.find((t) => t.id === techId);
       if (!tech) continue;
 
       for (const incomp of tech.incompatibleWith) {
         if (selected.has(incomp)) {
-          const other = technologies.find(t => t.id === incomp);
+          const other = technologies.find((t) => t.id === incomp);
           errors.push(`${tech.name} is incompatible with ${other?.name || incomp}`);
         }
       }
 
       for (const req of tech.requires) {
         if (!selected.has(req)) {
-          const dep = technologies.find(t => t.id === req);
+          const dep = technologies.find((t) => t.id === req);
           autoAdded.push(`${dep?.name || req} (required by ${tech.name})`);
         }
       }
     }
 
     for (const techId of builderTechs) {
-      const tech = technologies.find(t => t.id === techId);
+      const tech = technologies.find((t) => t.id === techId);
       if (!tech) continue;
       for (const sug of tech.suggestedWith) {
         if (!selected.has(sug)) {
-          const other = technologies.find(t => t.id === sug);
+          const other = technologies.find((t) => t.id === sug);
           if (other) warnings.push(`Consider adding ${other.name} (pairs well with ${tech.name})`);
         }
       }
@@ -147,7 +183,7 @@ export function BuilderPage() {
     };
   }, [builderTechs, technologies]);
 
-  const selectedTechs = technologies.filter(t => builderTechs.includes(t.id));
+  const selectedTechs = technologies.filter((t) => builderTechs.includes(t.id));
 
   return (
     <div className="flex gap-6 h-full">
@@ -208,7 +244,7 @@ export function BuilderPage() {
                       "px-2.5 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors",
                       builderProfile === p
                         ? "bg-indigo-500/20 text-indigo-400 border border-indigo-500/40"
-                        : "bg-zinc-800 text-zinc-500 border border-zinc-700 hover:text-zinc-300"
+                        : "bg-zinc-800 text-zinc-500 border border-zinc-700 hover:text-zinc-300",
                     )}
                   >
                     {p}
@@ -221,7 +257,7 @@ export function BuilderPage() {
 
         {/* Category sections */}
         {CATEGORIES.map((cat) => {
-          const catTechs = technologies.filter(t => t.category === cat);
+          const catTechs = technologies.filter((t) => t.category === cat);
           if (catTechs.length === 0) return null;
 
           return (
@@ -232,8 +268,8 @@ export function BuilderPage() {
               <div className="grid grid-cols-3 gap-2">
                 {catTechs.map((tech) => {
                   const isSelected = builderTechs.includes(tech.id);
-                  const isIncompatible = builderTechs.some(bt => {
-                    const sel = technologies.find(t => t.id === bt);
+                  const isIncompatible = builderTechs.some((bt) => {
+                    const sel = technologies.find((t) => t.id === bt);
                     return sel?.incompatibleWith.includes(tech.id);
                   });
 
@@ -248,13 +284,15 @@ export function BuilderPage() {
                           ? "bg-indigo-500/15 border-indigo-500/40 text-indigo-300"
                           : isIncompatible
                             ? "bg-zinc-900 border-zinc-800 text-zinc-600 cursor-not-allowed opacity-50"
-                            : "bg-zinc-900 border-zinc-800 text-zinc-300 hover:border-zinc-700"
+                            : "bg-zinc-900 border-zinc-800 text-zinc-300 hover:border-zinc-700",
                       )}
                     >
-                      <div className={cn(
-                        "w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center",
-                        isSelected ? "bg-indigo-500 border-indigo-500" : "border-zinc-600"
-                      )}>
+                      <div
+                        className={cn(
+                          "w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center",
+                          isSelected ? "bg-indigo-500 border-indigo-500" : "border-zinc-600",
+                        )}
+                      >
                         {isSelected && <Check className="w-3 h-3 text-white" />}
                         {isIncompatible && <X className="w-3 h-3 text-zinc-600" />}
                       </div>
@@ -282,7 +320,9 @@ export function BuilderPage() {
           </h3>
 
           {selectedTechs.length === 0 ? (
-            <p className="text-sm text-zinc-500 py-4 text-center">Select technologies to start building</p>
+            <p className="text-sm text-zinc-500 py-4 text-center">
+              Select technologies to start building
+            </p>
           ) : (
             <>
               <div className="space-y-1.5 mb-4 max-h-48 overflow-y-auto">
@@ -292,7 +332,10 @@ export function BuilderPage() {
                       <Badge variant={tech.category as any}>{tech.category}</Badge>
                       <span className="text-xs">{tech.name}</span>
                     </div>
-                    <button onClick={() => toggleBuilderTech(tech.id)} className="text-zinc-600 hover:text-red-400">
+                    <button
+                      onClick={() => toggleBuilderTech(tech.id)}
+                      className="text-zinc-600 hover:text-red-400"
+                    >
                       <X className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -304,7 +347,8 @@ export function BuilderPage() {
                 <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-3 mb-3">
                   {validation.errors.map((e, i) => (
                     <p key={i} className="text-xs text-red-400 flex items-start gap-1.5">
-                      <X className="w-3 h-3 mt-0.5 flex-shrink-0" />{e}
+                      <X className="w-3 h-3 mt-0.5 flex-shrink-0" />
+                      {e}
                     </p>
                   ))}
                 </div>
@@ -315,7 +359,8 @@ export function BuilderPage() {
                   <p className="text-xs text-blue-400 font-medium mb-1">Auto-added dependencies:</p>
                   {validation.autoAdded.map((a, i) => (
                     <p key={i} className="text-xs text-blue-300 flex items-start gap-1.5">
-                      <ChevronRight className="w-3 h-3 mt-0.5 flex-shrink-0" />{a}
+                      <ChevronRight className="w-3 h-3 mt-0.5 flex-shrink-0" />
+                      {a}
                     </p>
                   ))}
                 </div>
@@ -325,7 +370,8 @@ export function BuilderPage() {
                 <div className="rounded-lg bg-amber-500/10 border border-amber-500/20 p-3 mb-3">
                   {validation.warnings.map((w, i) => (
                     <p key={i} className="text-xs text-amber-400 flex items-start gap-1.5">
-                      <AlertTriangle className="w-3 h-3 mt-0.5 flex-shrink-0" />{w}
+                      <AlertTriangle className="w-3 h-3 mt-0.5 flex-shrink-0" />
+                      {w}
                     </p>
                   ))}
                 </div>
@@ -333,17 +379,21 @@ export function BuilderPage() {
 
               {/* Create result */}
               {createResult && (
-                <div className={cn(
-                  "rounded-lg p-3 mb-3 border",
-                  createResult.success
-                    ? "bg-green-500/10 border-green-500/20"
-                    : "bg-red-500/10 border-red-500/20"
-                )}>
+                <div
+                  className={cn(
+                    "rounded-lg p-3 mb-3 border",
+                    createResult.success
+                      ? "bg-green-500/10 border-green-500/20"
+                      : "bg-red-500/10 border-red-500/20",
+                  )}
+                >
                   {createResult.success && <CheckCircle2 className="w-4 h-4 text-green-400 mb-1" />}
-                  <pre className={cn(
-                    "text-xs whitespace-pre-wrap",
-                    createResult.success ? "text-green-400" : "text-red-400"
-                  )}>
+                  <pre
+                    className={cn(
+                      "text-xs whitespace-pre-wrap",
+                      createResult.success ? "text-green-400" : "text-red-400",
+                    )}
+                  >
                     {createResult.message}
                   </pre>
                 </div>
@@ -353,7 +403,9 @@ export function BuilderPage() {
               <div className="flex gap-2 mt-4">
                 <Button
                   size="sm"
-                  disabled={!validation.valid || !builderName.trim() || !projectPath.trim() || creating}
+                  disabled={
+                    !validation.valid || !builderName.trim() || !projectPath.trim() || creating
+                  }
                   className="flex-1"
                   onClick={handleCreateStack}
                 >
@@ -366,7 +418,15 @@ export function BuilderPage() {
                     "Create Project"
                   )}
                 </Button>
-                <Button size="sm" variant="ghost" onClick={() => { resetBuilder(); setCreateResult(null); setProjectPath(""); }}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => {
+                    resetBuilder();
+                    setCreateResult(null);
+                    setProjectPath("");
+                  }}
+                >
                   Clear
                 </Button>
               </div>

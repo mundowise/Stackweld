@@ -5,13 +5,7 @@ export const htmxDjango: Template = {
   name: "HTMX + Django",
   description:
     "Server-rendered Django app with HTMX for interactivity, Tailwind CSS, and PostgreSQL — minimal JavaScript",
-  technologyIds: [
-    "htmx",
-    "django",
-    "python",
-    "postgresql",
-    "tailwindcss",
-  ],
+  technologyIds: ["htmx", "django", "python", "postgresql", "tailwindcss"],
   profile: "lightweight",
   scaffoldSteps: [
     {
@@ -29,8 +23,7 @@ export const htmxDjango: Template = {
     },
     {
       name: "Create Django project",
-      command:
-        "{{projectName}}/.venv/bin/django-admin startproject config {{projectName}}",
+      command: "{{projectName}}/.venv/bin/django-admin startproject config {{projectName}}",
     },
     {
       name: "Install Tailwind standalone CLI",
@@ -89,16 +82,14 @@ export const htmxDjango: Template = {
     {
       timing: "post-scaffold",
       name: "Run initial migrations",
-      command:
-        "cd {{projectName}} && .venv/bin/python manage.py migrate",
+      command: "cd {{projectName}} && .venv/bin/python manage.py migrate",
       description: "Run Django migrations (requires running PostgreSQL)",
       requiresConfirmation: true,
     },
     {
       timing: "post-scaffold",
       name: "Freeze requirements",
-      command:
-        "cd {{projectName}} && .venv/bin/pip freeze > requirements.lock",
+      command: "cd {{projectName}} && .venv/bin/pip freeze > requirements.lock",
       description: "Generate locked requirements file",
       requiresConfirmation: false,
     },

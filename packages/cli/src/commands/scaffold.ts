@@ -3,10 +3,10 @@
  * Generates docker-compose.yml, .env.example, README.md, .gitignore, devcontainer.json.
  */
 
+import * as fs from "node:fs";
+import * as path from "node:path";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as fs from "fs";
-import * as path from "path";
 import { getScaffoldOrchestrator, getStackEngine } from "../ui/context.js";
 
 export const scaffoldCommand = new Command("scaffold")

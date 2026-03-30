@@ -4,10 +4,10 @@
  * This avoids needing Node.js 'fs' in the browser.
  */
 
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
-import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const registryDir = path.join(__dirname, "../../registry/src/technologies");
@@ -22,9 +22,7 @@ function loadTechnologies() {
     const catPath = path.join(registryDir, cat);
     if (!fs.statSync(catPath).isDirectory()) continue;
 
-    const files = fs
-      .readdirSync(catPath)
-      .filter((f) => f.endsWith(".yaml") || f.endsWith(".yml"));
+    const files = fs.readdirSync(catPath).filter((f) => f.endsWith(".yaml") || f.endsWith(".yml"));
 
     for (const file of files) {
       const raw = fs.readFileSync(path.join(catPath, file), "utf-8");
@@ -39,10 +37,7 @@ function loadTechnologies() {
 // Load templates from the built templates package
 async function loadTemplates() {
   try {
-    const templatesIndex = path.join(
-      __dirname,
-      "../../templates/dist/index.js",
-    );
+    const templatesIndex = path.join(__dirname, "../../templates/dist/index.js");
     const mod = await import(templatesIndex);
     return mod.getAllTemplates();
   } catch {

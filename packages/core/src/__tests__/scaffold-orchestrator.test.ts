@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { ScaffoldOrchestrator } from "../engine/scaffold-orchestrator.js";
 import type { StackDefinition, Technology } from "../types/index.js";
 
@@ -140,15 +140,11 @@ describe("ScaffoldOrchestrator", () => {
   });
 
   it("generates devcontainer.json", () => {
-    const devcontainer = JSON.parse(
-      orchestrator.generateDevcontainer(mockStack, mockTechs),
-    );
+    const devcontainer = JSON.parse(orchestrator.generateDevcontainer(mockStack, mockTechs));
     expect(devcontainer.name).toBe("Test Stack");
     expect(devcontainer.forwardPorts).toContain(3000);
     expect(devcontainer.forwardPorts).toContain(5432);
-    expect(devcontainer.features).toHaveProperty(
-      "ghcr.io/devcontainers/features/node:1",
-    );
+    expect(devcontainer.features).toHaveProperty("ghcr.io/devcontainers/features/node:1");
     expect(devcontainer.features).toHaveProperty(
       "ghcr.io/devcontainers/features/docker-in-docker:2",
     );

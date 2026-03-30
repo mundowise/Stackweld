@@ -14,7 +14,6 @@ import {
   gradientHeader,
   nextSteps,
   stepIndicator,
-  success,
   warning,
 } from "../ui/format.js";
 
@@ -67,7 +66,7 @@ export const initCommand = new Command("init")
       const template = templates.find((t) => t.id === templateId);
       if (!template) {
         console.error(chalk.red(`\u2716 Template "${templateId}" not found.`));
-        console.error(chalk.dim("  Available templates: " + templates.map((t) => t.id).join(", ")));
+        console.error(chalk.dim(`  Available templates: ${templates.map((t) => t.id).join(", ")}`));
         process.exit(1);
       }
 
@@ -91,7 +90,7 @@ export const initCommand = new Command("init")
       // Steps 4-5 skipped for template mode
       console.log(`\n${stepIndicator(4, 5, chalk.dim("Profile: ") + profile)}`);
       console.log(
-        `${stepIndicator(5, 5, chalk.dim("Technologies: ") + technologies.length + " from template")}`,
+        `${stepIndicator(5, 5, `${chalk.dim("Technologies: ") + technologies.length} from template`)}`,
       );
     } else {
       // ── Step 2: Name ──

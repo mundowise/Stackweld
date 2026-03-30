@@ -3,15 +3,8 @@ import type { Template } from "@stackpilot/core";
 export const laravelApp: Template = {
   id: "laravel-app",
   name: "Laravel App",
-  description:
-    "Full-stack Laravel application with MySQL, Redis, and Docker",
-  technologyIds: [
-    "laravel",
-    "php",
-    "mysql",
-    "redis",
-    "docker",
-  ],
+  description: "Full-stack Laravel application with MySQL, Redis, and Docker",
+  technologyIds: ["laravel", "php", "mysql", "redis", "docker"],
   profile: "standard",
   scaffoldSteps: [
     {

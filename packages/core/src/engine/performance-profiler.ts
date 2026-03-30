@@ -73,7 +73,10 @@ const SERVICE_PERF: Record<string, { perf: TechPerformance["perf"]; note: string
   traefik: { perf: "fast", note: "Go-based reverse proxy, auto-discovery" },
 };
 
-const ALL_PERF_MAPS: Record<string, Record<string, { perf: TechPerformance["perf"]; note: string }>> = {
+const ALL_PERF_MAPS: Record<
+  string,
+  Record<string, { perf: TechPerformance["perf"]; note: string }>
+> = {
   runtime: RUNTIME_PERF,
   backend: FRAMEWORK_PERF,
   frontend: FRAMEWORK_PERF,
@@ -89,24 +92,109 @@ interface BenchmarkKey {
   database?: string;
 }
 
-const BENCHMARKS: Array<{ match: BenchmarkKey; reqPerSec: string; coldStart: string; memory: string }> = [
-  { match: { runtime: "rust", framework: "actix", database: "postgresql" }, reqPerSec: "~30k req/s", coldStart: "~50ms", memory: "~32MB" },
-  { match: { runtime: "go", framework: "gin", database: "postgresql" }, reqPerSec: "~25k req/s", coldStart: "~80ms", memory: "~48MB" },
-  { match: { runtime: "go", framework: "echo", database: "postgresql" }, reqPerSec: "~25k req/s", coldStart: "~80ms", memory: "~48MB" },
-  { match: { runtime: "bun", framework: "hono", database: "postgresql" }, reqPerSec: "~20k req/s", coldStart: "~100ms", memory: "~64MB" },
-  { match: { runtime: "nodejs", framework: "fastify", database: "postgresql" }, reqPerSec: "~15k req/s", coldStart: "~200ms", memory: "~128MB" },
-  { match: { runtime: "nodejs", framework: "express", database: "postgresql" }, reqPerSec: "~8k req/s", coldStart: "~300ms", memory: "~128MB" },
-  { match: { runtime: "nodejs", framework: "nestjs", database: "postgresql" }, reqPerSec: "~6k req/s", coldStart: "~500ms", memory: "~192MB" },
-  { match: { runtime: "python", framework: "fastapi", database: "postgresql" }, reqPerSec: "~5k req/s", coldStart: "~400ms", memory: "~128MB" },
-  { match: { runtime: "python", framework: "django", database: "postgresql" }, reqPerSec: "~2k req/s", coldStart: "~600ms", memory: "~192MB" },
-  { match: { runtime: "python", framework: "flask", database: "postgresql" }, reqPerSec: "~3k req/s", coldStart: "~400ms", memory: "~128MB" },
-  { match: { runtime: "php", framework: "laravel", database: "mysql" }, reqPerSec: "~1.5k req/s", coldStart: "~500ms", memory: "~192MB" },
+const BENCHMARKS: Array<{
+  match: BenchmarkKey;
+  reqPerSec: string;
+  coldStart: string;
+  memory: string;
+}> = [
+  {
+    match: { runtime: "rust", framework: "actix", database: "postgresql" },
+    reqPerSec: "~30k req/s",
+    coldStart: "~50ms",
+    memory: "~32MB",
+  },
+  {
+    match: { runtime: "go", framework: "gin", database: "postgresql" },
+    reqPerSec: "~25k req/s",
+    coldStart: "~80ms",
+    memory: "~48MB",
+  },
+  {
+    match: { runtime: "go", framework: "echo", database: "postgresql" },
+    reqPerSec: "~25k req/s",
+    coldStart: "~80ms",
+    memory: "~48MB",
+  },
+  {
+    match: { runtime: "bun", framework: "hono", database: "postgresql" },
+    reqPerSec: "~20k req/s",
+    coldStart: "~100ms",
+    memory: "~64MB",
+  },
+  {
+    match: { runtime: "nodejs", framework: "fastify", database: "postgresql" },
+    reqPerSec: "~15k req/s",
+    coldStart: "~200ms",
+    memory: "~128MB",
+  },
+  {
+    match: { runtime: "nodejs", framework: "express", database: "postgresql" },
+    reqPerSec: "~8k req/s",
+    coldStart: "~300ms",
+    memory: "~128MB",
+  },
+  {
+    match: { runtime: "nodejs", framework: "nestjs", database: "postgresql" },
+    reqPerSec: "~6k req/s",
+    coldStart: "~500ms",
+    memory: "~192MB",
+  },
+  {
+    match: { runtime: "python", framework: "fastapi", database: "postgresql" },
+    reqPerSec: "~5k req/s",
+    coldStart: "~400ms",
+    memory: "~128MB",
+  },
+  {
+    match: { runtime: "python", framework: "django", database: "postgresql" },
+    reqPerSec: "~2k req/s",
+    coldStart: "~600ms",
+    memory: "~192MB",
+  },
+  {
+    match: { runtime: "python", framework: "flask", database: "postgresql" },
+    reqPerSec: "~3k req/s",
+    coldStart: "~400ms",
+    memory: "~128MB",
+  },
+  {
+    match: { runtime: "php", framework: "laravel", database: "mysql" },
+    reqPerSec: "~1.5k req/s",
+    coldStart: "~500ms",
+    memory: "~192MB",
+  },
   // Partial matches (no database)
-  { match: { runtime: "go", framework: "gin" }, reqPerSec: "~40k req/s", coldStart: "~50ms", memory: "~32MB" },
-  { match: { runtime: "rust", framework: "actix" }, reqPerSec: "~50k req/s", coldStart: "~30ms", memory: "~16MB" },
-  { match: { runtime: "nodejs", framework: "fastify" }, reqPerSec: "~25k req/s", coldStart: "~150ms", memory: "~96MB" },
-  { match: { runtime: "nodejs", framework: "express" }, reqPerSec: "~12k req/s", coldStart: "~200ms", memory: "~96MB" },
-  { match: { runtime: "python", framework: "fastapi" }, reqPerSec: "~8k req/s", coldStart: "~300ms", memory: "~96MB" },
+  {
+    match: { runtime: "go", framework: "gin" },
+    reqPerSec: "~40k req/s",
+    coldStart: "~50ms",
+    memory: "~32MB",
+  },
+  {
+    match: { runtime: "rust", framework: "actix" },
+    reqPerSec: "~50k req/s",
+    coldStart: "~30ms",
+    memory: "~16MB",
+  },
+  {
+    match: { runtime: "nodejs", framework: "fastify" },
+    reqPerSec: "~25k req/s",
+    coldStart: "~150ms",
+    memory: "~96MB",
+  },
+  {
+    match: { runtime: "nodejs", framework: "express" },
+    reqPerSec: "~12k req/s",
+    coldStart: "~200ms",
+    memory: "~96MB",
+  },
+  {
+    match: { runtime: "python", framework: "fastapi" },
+    reqPerSec: "~8k req/s",
+    coldStart: "~300ms",
+    memory: "~96MB",
+  },
 ];
 
 // ─── Rating Logic ─────────────────────────────────────
@@ -119,9 +207,12 @@ const PERF_RANK: Record<TechPerformance["perf"], number> = {
 
 function perfToRating(perf: TechPerformance["perf"]): PerformanceProfile["rating"] {
   switch (perf) {
-    case "fast": return "blazing";
-    case "moderate": return "fast";
-    case "heavy": return "moderate";
+    case "fast":
+      return "blazing";
+    case "moderate":
+      return "fast";
+    case "heavy":
+      return "moderate";
   }
 }
 
@@ -160,7 +251,11 @@ export function profilePerformance(technologies: Technology[]): PerformanceProfi
       });
 
       // Track critical path components
-      if (tech.category === "runtime" || tech.category === "backend" || tech.category === "database") {
+      if (
+        tech.category === "runtime" ||
+        tech.category === "backend" ||
+        tech.category === "database"
+      ) {
         criticalPerfs.push(entry.perf);
       }
     } else {
@@ -192,7 +287,11 @@ export function profilePerformance(technologies: Technology[]): PerformanceProfi
   let estimatedMemory = "N/A";
 
   // Try exact match first, then partial
-  const matchKey: BenchmarkKey = { runtime: runtimeId, framework: frameworkId, database: databaseId };
+  const matchKey: BenchmarkKey = {
+    runtime: runtimeId,
+    framework: frameworkId,
+    database: databaseId,
+  };
 
   let bestMatch: (typeof BENCHMARKS)[number] | undefined;
   let bestMatchScore = 0;

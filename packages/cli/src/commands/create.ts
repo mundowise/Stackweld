@@ -3,14 +3,14 @@
  * Uses official CLI tools when available and fills gaps.
  */
 
+import { execSync } from "node:child_process";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import type { Template } from "@stackpilot/core";
 import { getAllTemplates, getTemplate } from "@stackpilot/templates";
 import chalk from "chalk";
-import { execSync } from "child_process";
 import { Command } from "commander";
-import * as fs from "fs";
 import ora from "ora";
-import * as path from "path";
 import { getStackEngine } from "../ui/context.js";
 
 export const createCommand = new Command("create")

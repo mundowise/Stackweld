@@ -1,13 +1,13 @@
 import { AppLayout } from "@/components/layout/AppLayout";
-import { useAppStore } from "@/stores/app-store";
 import { useLoadData } from "@/hooks/use-data";
-import { DashboardPage } from "@/pages/DashboardPage";
+import { AiPage } from "@/pages/AiPage";
 import { BuilderPage } from "@/pages/BuilderPage";
 import { CatalogPage } from "@/pages/CatalogPage";
+import { DashboardPage } from "@/pages/DashboardPage";
 import { RuntimePage } from "@/pages/RuntimePage";
-import { StackDetailPage } from "@/pages/StackDetailPage";
 import { SettingsPage } from "@/pages/SettingsPage";
-import { AiPage } from "@/pages/AiPage";
+import { StackDetailPage } from "@/pages/StackDetailPage";
+import { useAppStore } from "@/stores/app-store";
 
 function PageRouter() {
   const { currentPage } = useAppStore();

@@ -3,16 +3,8 @@ import type { Template } from "@stackpilot/core";
 export const nuxt3App: Template = {
   id: "nuxt3-app",
   name: "Nuxt 3 App",
-  description:
-    "Full-stack Nuxt 3 application with Vue, Tailwind CSS, and PostgreSQL",
-  technologyIds: [
-    "nuxt",
-    "vue",
-    "nodejs",
-    "typescript",
-    "tailwindcss",
-    "postgresql",
-  ],
+  description: "Full-stack Nuxt 3 application with Vue, Tailwind CSS, and PostgreSQL",
+  technologyIds: ["nuxt", "vue", "nodejs", "typescript", "tailwindcss", "postgresql"],
   profile: "standard",
   scaffoldSteps: [
     {

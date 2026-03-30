@@ -1,11 +1,11 @@
-import { describe, it, expect } from "vitest";
+import { loadAllTechnologies } from "@stackpilot/registry";
+import { describe, expect, it } from "vitest";
 import {
+  findTemplatesByTechnologies,
   getAllTemplates,
   getTemplate,
   listTemplateIds,
-  findTemplatesByTechnologies,
 } from "../index.js";
-import { loadAllTechnologies } from "@stackpilot/registry";
 
 describe("Templates Registry", () => {
   it("has 5 built-in templates", () => {
@@ -31,7 +31,7 @@ describe("Templates Registry", () => {
   it("gets template by ID", () => {
     const t = getTemplate("t3-stack");
     expect(t).not.toBeNull();
-    expect(t!.name).toBe("T3 Stack");
+    expect(t?.name).toBe("T3 Stack");
   });
 
   it("returns null for unknown template", () => {

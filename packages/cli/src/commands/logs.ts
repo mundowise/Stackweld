@@ -2,9 +2,9 @@
  * stackpilot logs [service] — Show logs from Docker services.
  */
 
+import * as path from "node:path";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as path from "path";
 import { getRuntimeManager } from "../ui/context.js";
 import { error } from "../ui/format.js";
 
@@ -26,7 +26,7 @@ export const logsCommand = new Command("logs")
 
     const composePath = runtime.composeExists(projectDir);
     if (!composePath) {
-      console.error(error("No docker-compose.yml found in " + projectDir));
+      console.error(error(`No docker-compose.yml found in ${projectDir}`));
       console.error(chalk.dim("  Run `stackpilot scaffold` to generate one from a stack."));
       process.exit(1);
     }

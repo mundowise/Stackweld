@@ -35,13 +35,7 @@ const PLACEHOLDER_PATTERNS = [
 const SENSITIVE_KEY_PATTERNS = [/SECRET/i, /KEY/i, /PASSWORD/i, /TOKEN/i];
 const MIN_SECRET_LENGTH = 16;
 
-const DEFAULT_PASSWORDS = new Set([
-  "postgres",
-  "admin",
-  "root",
-  "password",
-  "123456",
-]);
+const DEFAULT_PASSWORDS = new Set(["postgres", "admin", "root", "password", "123456"]);
 
 // ─── Public functions ──────────────────────────────────
 
@@ -143,10 +137,7 @@ function detectDanger(v: EnvVar): string | null {
   }
 
   // Check DEBUG enabled
-  if (
-    v.key.toUpperCase().includes("DEBUG") &&
-    (v.value === "true" || v.value === "1")
-  ) {
+  if (v.key.toUpperCase().includes("DEBUG") && (v.value === "true" || v.value === "1")) {
     return "Debug enabled";
   }
 

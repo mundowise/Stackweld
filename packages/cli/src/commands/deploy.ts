@@ -2,12 +2,12 @@
  * stackpilot deploy <stackId> --target <vps|aws|gcp> — Generate infrastructure files.
  */
 
+import * as fs from "node:fs";
+import * as path from "node:path";
 import type { DeployTarget } from "@stackpilot/core";
 import { generateInfra } from "@stackpilot/core";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as fs from "fs";
-import * as path from "path";
 import { getRulesEngine, getStackEngine } from "../ui/context.js";
 import { box, formatJson, gradientHeader, nextSteps } from "../ui/format.js";
 
@@ -68,7 +68,9 @@ export const deployCommand = new Command("deploy")
 
     for (const file of result.files) {
       const sizeKB = (Buffer.byteLength(file.content, "utf-8") / 1024).toFixed(1);
-      lines.push(`  ${chalk.green("\u2713")} ${chalk.white(file.path)} ${chalk.dim(`(${sizeKB}KB)`)}`);
+      lines.push(
+        `  ${chalk.green("\u2713")} ${chalk.white(file.path)} ${chalk.dim(`(${sizeKB}KB)`)}`,
+      );
     }
     lines.push("");
 

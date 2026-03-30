@@ -2,12 +2,12 @@
  * stackpilot env [sync|check] — Environment variable sync and safety checks.
  */
 
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { checkDangerous, parseEnvFile, syncEnv } from "@stackpilot/core";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as fs from "fs";
-import * as path from "path";
-import { box, error, formatJson, info, success, warning } from "../ui/format.js";
+import { box, error, formatJson } from "../ui/format.js";
 
 export const envCommand = new Command("env")
   .description("Sync .env files and check for dangerous values")
@@ -32,12 +32,12 @@ function runSync(projectDir: string, json: boolean): void {
   const envPath = path.join(projectDir, ".env");
 
   if (!fs.existsSync(examplePath)) {
-    console.error(error("No .env.example found in " + projectDir));
+    console.error(error(`No .env.example found in ${projectDir}`));
     process.exit(1);
   }
 
   if (!fs.existsSync(envPath)) {
-    console.error(error("No .env found in " + projectDir));
+    console.error(error(`No .env found in ${projectDir}`));
     console.error(chalk.dim("  Create one from the example: cp .env.example .env"));
     process.exit(1);
   }
@@ -48,7 +48,9 @@ function runSync(projectDir: string, json: boolean): void {
     exampleContent = fs.readFileSync(examplePath, "utf-8");
     envContent = fs.readFileSync(envPath, "utf-8");
   } catch (err) {
-    console.error(error(`Failed to read env files: ${err instanceof Error ? err.message : String(err)}`));
+    console.error(
+      error(`Failed to read env files: ${err instanceof Error ? err.message : String(err)}`),
+    );
     process.exit(1);
   }
 
@@ -105,7 +107,7 @@ function runCheck(projectDir: string, json: boolean): void {
   const envPath = path.join(projectDir, ".env");
 
   if (!fs.existsSync(envPath)) {
-    console.error(error("No .env found in " + projectDir));
+    console.error(error(`No .env found in ${projectDir}`));
     process.exit(1);
   }
 
@@ -113,7 +115,9 @@ function runCheck(projectDir: string, json: boolean): void {
   try {
     envContent = fs.readFileSync(envPath, "utf-8");
   } catch (err) {
-    console.error(error(`Failed to read .env: ${err instanceof Error ? err.message : String(err)}`));
+    console.error(
+      error(`Failed to read .env: ${err instanceof Error ? err.message : String(err)}`),
+    );
     process.exit(1);
   }
 

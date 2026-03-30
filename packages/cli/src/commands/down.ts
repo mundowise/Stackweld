@@ -2,10 +2,10 @@
  * stackpilot down — Stop Docker services.
  */
 
+import * as path from "node:path";
 import chalk from "chalk";
 import { Command } from "commander";
 import ora from "ora";
-import * as path from "path";
 import { getRuntimeManager } from "../ui/context.js";
 import { error } from "../ui/format.js";
 
@@ -25,7 +25,7 @@ export const downCommand = new Command("down")
 
     const composePath = runtime.composeExists(projectDir);
     if (!composePath) {
-      console.error(error("No docker-compose.yml found in " + projectDir));
+      console.error(error(`No docker-compose.yml found in ${projectDir}`));
       process.exit(1);
     }
 

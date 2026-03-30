@@ -3,15 +3,8 @@ import type { Template } from "@stackpilot/core";
 export const solidstartApp: Template = {
   id: "solidstart-app",
   name: "SolidStart App",
-  description:
-    "Full-stack SolidStart application with TypeScript, Tailwind CSS, and PostgreSQL",
-  technologyIds: [
-    "solidjs",
-    "nodejs",
-    "typescript",
-    "tailwindcss",
-    "postgresql",
-  ],
+  description: "Full-stack SolidStart application with TypeScript, Tailwind CSS, and PostgreSQL",
+  technologyIds: ["solidjs", "nodejs", "typescript", "tailwindcss", "postgresql"],
   profile: "standard",
   scaffoldSteps: [
     {
@@ -20,8 +13,7 @@ export const solidstartApp: Template = {
     },
     {
       name: "Install Tailwind",
-      command:
-        "cd {{projectName}} && npm install -D tailwindcss @tailwindcss/vite",
+      command: "cd {{projectName}} && npm install -D tailwindcss @tailwindcss/vite",
     },
     {
       name: "Install PostgreSQL client",

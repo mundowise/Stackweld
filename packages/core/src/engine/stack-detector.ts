@@ -2,8 +2,8 @@
  * Stack Detector — Analyze a project directory to detect its technology stack.
  */
 
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 export interface DetectedStack {
   technologies: DetectedTech[];
@@ -145,7 +145,10 @@ export function detectStack(projectPath: string): DetectedStack {
     packageManagers.push("pip");
     const lines = reqContent.split("\n");
     for (const line of lines) {
-      const dep = line.trim().split(/[=<>!~]/)[0].toLowerCase();
+      const dep = line
+        .trim()
+        .split(/[=<>!~]/)[0]
+        .toLowerCase();
       const mapping = PYTHON_DEPENDENCY_MAP[dep];
       if (mapping) {
         const versionMatch = line.match(/==(\d+[.\d]*)/);
@@ -167,9 +170,7 @@ export function detectStack(projectPath: string): DetectedStack {
     if (!packageManagers.includes("pip")) packageManagers.push("pip");
     for (const [dep, mapping] of Object.entries(PYTHON_DEPENDENCY_MAP)) {
       if (pyprojectContent.includes(`"${dep}`) || pyprojectContent.includes(`'${dep}`)) {
-        const versionMatch = pyprojectContent.match(
-          new RegExp(`["']${dep}[><=~!]*([\\d.]+)?["']`),
-        );
+        const versionMatch = pyprojectContent.match(new RegExp(`["']${dep}[><=~!]*([\\d.]+)?["']`));
         techs.push({
           id: mapping.id,
           name: mapping.name,
@@ -189,7 +190,7 @@ export function detectStack(projectPath: string): DetectedStack {
     for (const [dep, mapping] of Object.entries(GO_DEPENDENCY_MAP)) {
       if (goModContent.includes(dep)) {
         const versionMatch = goModContent.match(
-          new RegExp(`${dep.replace(/\//g, "\\/")}\\s+v(\\d+[.\\d]*)`)
+          new RegExp(`${dep.replace(/\//g, "\\/")}\\s+v(\\d+[.\\d]*)`),
         );
         techs.push({
           id: mapping.id,
@@ -217,15 +218,18 @@ export function detectStack(projectPath: string): DetectedStack {
   }
 
   // ── 5. docker-compose.yml / docker-compose.yaml ──
-  for (const composeName of ["docker-compose.yml", "docker-compose.yaml", "compose.yml", "compose.yaml"]) {
+  for (const composeName of [
+    "docker-compose.yml",
+    "docker-compose.yaml",
+    "compose.yml",
+    "compose.yaml",
+  ]) {
     const composeContent = readFileOr(path.join(projectPath, composeName));
     if (composeContent) {
       for (const [imageKey, mapping] of Object.entries(DOCKER_IMAGE_MAP)) {
         const imagePattern = new RegExp(`image:\\s*["']?[^\\n]*${imageKey}`, "i");
         if (imagePattern.test(composeContent)) {
-          const versionMatch = composeContent.match(
-            new RegExp(`${imageKey}:(\\d+[.\\d]*)`, "i"),
-          );
+          const versionMatch = composeContent.match(new RegExp(`${imageKey}:(\\d+[.\\d]*)`, "i"));
           techs.push({
             id: mapping.id,
             name: mapping.name,

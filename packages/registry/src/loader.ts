@@ -2,13 +2,12 @@
  * Registry Loader — Reads and validates technology YAML files.
  */
 
-import * as fs from "fs";
-import * as path from "path";
-import { parse as parseYaml } from "yaml";
-import Ajv from "ajv";
-import { technologySchema } from "./schema.js";
-
+import * as fs from "node:fs";
+import * as path from "node:path";
 import type { Technology } from "@stackpilot/core";
+import Ajv from "ajv";
+import { parse as parseYaml } from "yaml";
+import { technologySchema } from "./schema.js";
 
 const ajv = new Ajv({ allErrors: true });
 const validate = ajv.compile(technologySchema);
@@ -31,7 +30,9 @@ export function loadAllTechnologies(): Technology[] {
     const categoryPath = path.join(TECH_DIR, category);
     if (!fs.statSync(categoryPath).isDirectory()) continue;
 
-    const files = fs.readdirSync(categoryPath).filter((f) => f.endsWith(".yaml") || f.endsWith(".yml"));
+    const files = fs
+      .readdirSync(categoryPath)
+      .filter((f) => f.endsWith(".yaml") || f.endsWith(".yml"));
 
     for (const file of files) {
       const filePath = path.join(categoryPath, file);

@@ -3,8 +3,7 @@ import type { Template } from "@stackpilot/core";
 export const t3Stack: Template = {
   id: "t3-stack",
   name: "T3 Stack",
-  description:
-    "Full-stack TypeScript app with Next.js, tRPC, Prisma, Tailwind CSS, and NextAuth",
+  description: "Full-stack TypeScript app with Next.js, tRPC, Prisma, Tailwind CSS, and NextAuth",
   technologyIds: [
     "nextjs",
     "react",

@@ -3,9 +3,9 @@
  * Uses better-sqlite3 for synchronous, reliable access.
  */
 
+import * as fs from "node:fs";
+import * as path from "node:path";
 import Database from "better-sqlite3";
-import * as path from "path";
-import * as fs from "fs";
 
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS stacks (

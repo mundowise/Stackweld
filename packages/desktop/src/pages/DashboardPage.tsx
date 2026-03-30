@@ -1,9 +1,9 @@
+import { BookOpen, Box, Code, Database, Layers, PlusCircle, Sparkles, Zap } from "lucide-react";
 import { useMemo } from "react";
-import { useAppStore } from "@/stores/app-store";
-import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { Layers, Database, Code, PlusCircle, BookOpen, Zap, Sparkles, Box } from "lucide-react";
+import { Card } from "@/components/ui/Card";
+import { useAppStore } from "@/stores/app-store";
 
 export function DashboardPage() {
   const { technologies, stacks, templates, setPage, selectStack } = useAppStore();
@@ -20,7 +20,12 @@ export function DashboardPage() {
     { label: "Technologies", value: technologies.length, icon: Code, color: "text-indigo-400" },
     { label: "Saved Stacks", value: stacks.length, icon: Layers, color: "text-green-400" },
     { label: "Templates", value: templates.length, icon: BookOpen, color: "text-amber-400" },
-    { label: "Categories", value: Object.keys(categoryCounts).length, icon: Database, color: "text-cyan-400" },
+    {
+      label: "Categories",
+      value: Object.keys(categoryCounts).length,
+      icon: Database,
+      color: "text-cyan-400",
+    },
   ];
 
   return (
@@ -58,24 +63,35 @@ export function DashboardPage() {
 
       {/* Categories overview */}
       <div>
-        <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Technology Categories</h2>
+        <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">
+          Technology Categories
+        </h2>
         <div className="grid grid-cols-3 gap-2">
-          {Object.entries(categoryCounts).sort((a, b) => b[1] - a[1]).map(([cat, count]) => (
-            <Card key={cat} hoverable onClick={() => setPage("catalog")} className="flex items-center gap-3">
-              <Box className="w-4 h-4 text-zinc-500" />
-              <div className="flex-1">
-                <p className="text-sm font-medium capitalize">{cat}</p>
-              </div>
-              <Badge variant={cat as any}>{count}</Badge>
-            </Card>
-          ))}
+          {Object.entries(categoryCounts)
+            .sort((a, b) => b[1] - a[1])
+            .map(([cat, count]) => (
+              <Card
+                key={cat}
+                hoverable
+                onClick={() => setPage("catalog")}
+                className="flex items-center gap-3"
+              >
+                <Box className="w-4 h-4 text-zinc-500" />
+                <div className="flex-1">
+                  <p className="text-sm font-medium capitalize">{cat}</p>
+                </div>
+                <Badge variant={cat as any}>{count}</Badge>
+              </Card>
+            ))}
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-6">
         {/* Recent Stacks */}
         <div>
-          <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Recent Stacks</h2>
+          <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">
+            Recent Stacks
+          </h2>
           {stacks.length === 0 ? (
             <Card>
               <div className="text-center py-8 text-zinc-500">
@@ -119,12 +135,17 @@ export function DashboardPage() {
                     <p className="text-xs text-zinc-500 mt-0.5 truncate">{template.description}</p>
                   </div>
                   <div className="flex items-center gap-2 ml-2">
-                    <Badge variant={
-                      template.profile === "production" ? "success" :
-                      template.profile === "lightweight" ? "warning" :
-                      template.profile === "enterprise" ? "runtime" :
-                      "default"
-                    }>
+                    <Badge
+                      variant={
+                        template.profile === "production"
+                          ? "success"
+                          : template.profile === "lightweight"
+                            ? "warning"
+                            : template.profile === "enterprise"
+                              ? "runtime"
+                              : "default"
+                      }
+                    >
                       {template.profile}
                     </Badge>
                     <Zap className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />

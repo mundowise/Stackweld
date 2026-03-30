@@ -3,17 +3,8 @@ import type { Template } from "@stackpilot/core";
 export const nestjsApi: Template = {
   id: "nestjs-api",
   name: "NestJS API",
-  description:
-    "Production-ready NestJS REST API with Prisma, PostgreSQL, Redis, and Docker",
-  technologyIds: [
-    "nestjs",
-    "nodejs",
-    "typescript",
-    "prisma",
-    "postgresql",
-    "redis",
-    "docker",
-  ],
+  description: "Production-ready NestJS REST API with Prisma, PostgreSQL, Redis, and Docker",
+  technologyIds: ["nestjs", "nodejs", "typescript", "prisma", "postgresql", "redis", "docker"],
   profile: "production",
   scaffoldSteps: [
     {
@@ -26,18 +17,15 @@ export const nestjsApi: Template = {
     },
     {
       name: "Initialize Prisma",
-      command:
-        "cd {{projectName}} && npx prisma init --datasource-provider postgresql",
+      command: "cd {{projectName}} && npx prisma init --datasource-provider postgresql",
     },
     {
       name: "Install Redis and config",
-      command:
-        "cd {{projectName}} && npm install @nestjs/config ioredis @nestjs-modules/ioredis",
+      command: "cd {{projectName}} && npm install @nestjs/config ioredis @nestjs-modules/ioredis",
     },
     {
       name: "Install validation",
-      command:
-        "cd {{projectName}} && npm install class-validator class-transformer",
+      command: "cd {{projectName}} && npm install class-validator class-transformer",
     },
   ],
   overrides: [

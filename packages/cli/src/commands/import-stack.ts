@@ -2,10 +2,10 @@
  * stackpilot import <file> — Import a stack definition from YAML or JSON.
  */
 
+import * as fs from "node:fs";
 import type { StackProfile, StackTechnology } from "@stackpilot/core";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as fs from "fs";
 import { parse as yamlParse } from "yaml";
 import { getStackEngine } from "../ui/context.js";
 import { formatStackRow, formatValidation } from "../ui/format.js";

@@ -30,8 +30,7 @@ export const saasStarter: Template = {
     },
     {
       name: "Initialize Prisma",
-      command:
-        "cd {{projectName}} && npx prisma init --datasource-provider postgresql",
+      command: "cd {{projectName}} && npx prisma init --datasource-provider postgresql",
     },
     {
       name: "Install NextAuth",

@@ -3,7 +3,7 @@
  * Goes beyond binary compatible/incompatible to show nuanced pairing quality.
  */
 
-import type { Technology, TechnologyCategory } from "../types/index.js";
+import type { Technology } from "../types/index.js";
 
 export interface CompatibilityResult {
   score: number; // 0-100
@@ -95,11 +95,12 @@ export function scoreCompatibility(techA: Technology, techB: Technology): Compat
     factors.push({
       label: "Suggested pairing",
       points: 25,
-      description: aSuggestsB && bSuggestsA
-        ? `${techA.name} and ${techB.name} mutually recommend each other`
-        : aSuggestsB
-          ? `${techA.name} suggests ${techB.name}`
-          : `${techB.name} suggests ${techA.name}`,
+      description:
+        aSuggestsB && bSuggestsA
+          ? `${techA.name} and ${techB.name} mutually recommend each other`
+          : aSuggestsB
+            ? `${techA.name} suggests ${techB.name}`
+            : `${techB.name} suggests ${techA.name}`,
     });
     score += 25;
   }
@@ -135,11 +136,12 @@ export function scoreCompatibility(techA: Technology, techB: Technology): Compat
     factors.push({
       label: "Incompatible",
       points: -50,
-      description: aIncompatB && bIncompatA
-        ? `${techA.name} and ${techB.name} are mutually incompatible`
-        : aIncompatB
-          ? `${techA.name} lists ${techB.name} as incompatible`
-          : `${techB.name} lists ${techA.name} as incompatible`,
+      description:
+        aIncompatB && bIncompatA
+          ? `${techA.name} and ${techB.name} are mutually incompatible`
+          : aIncompatB
+            ? `${techA.name} lists ${techB.name} as incompatible`
+            : `${techB.name} lists ${techA.name} as incompatible`,
     });
     score -= 50;
   }
@@ -148,7 +150,9 @@ export function scoreCompatibility(techA: Technology, techB: Technology): Compat
   if (
     techA.category === techB.category &&
     techA.id !== techB.id &&
-    runtimeA && runtimeB && runtimeA === runtimeB
+    runtimeA &&
+    runtimeB &&
+    runtimeA === runtimeB
   ) {
     factors.push({
       label: "Same category and runtime",
@@ -207,9 +211,8 @@ export function scoreStack(technologies: Technology[]): StackScoreResult {
     }
   }
 
-  const overall = pairs.length > 0
-    ? Math.round(pairs.reduce((sum, p) => sum + p.score, 0) / pairs.length)
-    : 100;
+  const overall =
+    pairs.length > 0 ? Math.round(pairs.reduce((sum, p) => sum + p.score, 0) / pairs.length) : 100;
 
   return {
     overall,

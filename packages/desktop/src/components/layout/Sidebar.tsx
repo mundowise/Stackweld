@@ -1,9 +1,22 @@
-import { cn } from "@/lib/cn";
-import { useAppStore, type Page } from "@/stores/app-store";
-import { LayoutDashboard, Layers, BookOpen, Play, Settings, PlusCircle, Sparkles } from "lucide-react";
+import {
+  BookOpen,
+  Layers,
+  LayoutDashboard,
+  Play,
+  PlusCircle,
+  Settings,
+  Sparkles,
+} from "lucide-react";
 import { stats } from "@/generated/registry-data";
+import { cn } from "@/lib/cn";
+import { type Page, useAppStore } from "@/stores/app-store";
 
-const navItems: { page: Page; label: string; icon: React.ComponentType<{ className?: string }>; badge?: string }[] = [
+const navItems: {
+  page: Page;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
+}[] = [
   { page: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { page: "builder", label: "Stack Builder", icon: PlusCircle },
   { page: "catalog", label: "Catalog", icon: BookOpen, badge: String(stats.totalTechnologies) },
@@ -36,13 +49,15 @@ export function Sidebar() {
               "w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
               currentPage === page
                 ? "bg-indigo-500/15 text-indigo-400"
-                : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
+                : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800",
             )}
           >
             <Icon className="w-4 h-4" />
             <span className="flex-1 text-left">{label}</span>
             {badge && (
-              <span className="text-xs bg-zinc-800 text-zinc-500 px-1.5 py-0.5 rounded">{badge}</span>
+              <span className="text-xs bg-zinc-800 text-zinc-500 px-1.5 py-0.5 rounded">
+                {badge}
+              </span>
             )}
           </button>
         ))}

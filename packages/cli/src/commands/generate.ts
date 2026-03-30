@@ -5,14 +5,14 @@
  * generates per-directory .env files, and leaves everything ready to code.
  */
 
+import { execSync } from "node:child_process";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import type { StackProfile, StackTechnology, Technology } from "@stackpilot/core";
 import { installTechnologies } from "@stackpilot/core";
 import chalk from "chalk";
-import { execSync } from "child_process";
 import { Command } from "commander";
-import * as fs from "fs";
 import ora from "ora";
-import * as path from "path";
 import { getRulesEngine, getScaffoldOrchestrator, getStackEngine } from "../ui/context.js";
 import {
   box,
@@ -21,7 +21,6 @@ import {
   gradientHeader,
   nextSteps,
   stepIndicator,
-  success,
   warning,
 } from "../ui/format.js";
 
@@ -154,7 +153,7 @@ function scaffoldBackend(
       );
       writeFile(
         path.join(backendDir, "requirements.txt"),
-        [
+        `${[
           "django>=5.1",
           "djangorestframework>=3.15",
           "django-cors-headers>=4.4",
@@ -164,7 +163,7 @@ function scaffoldBackend(
           hasRedis ? "django-redis>=5.4" : "",
         ]
           .filter(Boolean)
-          .join("\n") + "\n",
+          .join("\n")}\n`,
       );
       log.push("Django project created");
     } else if (tech.id === "fastapi") {
@@ -175,7 +174,7 @@ function scaffoldBackend(
       );
       writeFile(
         path.join(backendDir, "main.py"),
-        [
+        `${[
           `from fastapi import FastAPI`,
           `from fastapi.middleware.cors import CORSMiddleware`,
           ``,
@@ -196,11 +195,11 @@ function scaffoldBackend(
           `@app.get("/api")`,
           `def root():`,
           `    return {"message": "Welcome to ${projectName} API"}`,
-        ].join("\n") + "\n",
+        ].join("\n")}\n`,
       );
       writeFile(
         path.join(backendDir, "requirements.txt"),
-        [
+        `${[
           "fastapi>=0.115",
           "uvicorn[standard]>=0.30",
           "sqlalchemy>=2.0",
@@ -210,14 +209,14 @@ function scaffoldBackend(
           hasRedis ? "redis>=5.0" : "",
         ]
           .filter(Boolean)
-          .join("\n") + "\n",
+          .join("\n")}\n`,
       );
       log.push("FastAPI project created");
     } else if (tech.id === "flask") {
       run(`${pip} install flask flask-cors python-dotenv`, backendDir, 60_000);
       writeFile(
         path.join(backendDir, "app.py"),
-        [
+        `${[
           `from flask import Flask, jsonify`,
           `from flask_cors import CORS`,
           ``,
@@ -231,18 +230,18 @@ function scaffoldBackend(
           `@app.route("/api")`,
           `def root():`,
           `    return jsonify(message="Welcome to ${projectName} API")`,
-        ].join("\n") + "\n",
+        ].join("\n")}\n`,
       );
       writeFile(
         path.join(backendDir, "requirements.txt"),
-        ["flask>=3.0", "flask-cors>=4.0", "python-dotenv>=1.0"].join("\n") + "\n",
+        `${["flask>=3.0", "flask-cors>=4.0", "python-dotenv>=1.0"].join("\n")}\n`,
       );
       log.push("Flask project created");
     }
 
     writeFile(
       path.join(backendDir, ".env.example"),
-      [
+      `${[
         `# ${projectName} — Backend Environment Variables`,
         ``,
         `DEBUG=True`,
@@ -254,7 +253,7 @@ function scaffoldBackend(
         `PORT=8000`,
       ]
         .filter(Boolean)
-        .join("\n") + "\n",
+        .join("\n")}\n`,
     );
     log.push("backend/.env.example created");
   }
@@ -276,7 +275,7 @@ function scaffoldBackend(
     } else {
       writeFile(
         path.join(backendDir, "package.json"),
-        JSON.stringify(
+        `${JSON.stringify(
           {
             name: `${projectName}-backend`,
             version: "0.1.0",
@@ -290,12 +289,12 @@ function scaffoldBackend(
           },
           null,
           2,
-        ) + "\n",
+        )}\n`,
       );
 
       writeFile(
         path.join(backendDir, "tsconfig.json"),
-        JSON.stringify(
+        `${JSON.stringify(
           {
             compilerOptions: {
               target: "ES2022",
@@ -311,7 +310,7 @@ function scaffoldBackend(
           },
           null,
           2,
-        ) + "\n",
+        )}\n`,
       );
 
       const serverCode =
@@ -330,8 +329,7 @@ function scaffoldBackend(
           : tech.id === "fastify"
             ? "fastify @fastify/cors"
             : "express cors";
-      const devDeps =
-        "typescript tsx @types/node" + (tech.id === "express" ? " @types/express @types/cors" : "");
+      const devDeps = `typescript tsx @types/node${tech.id === "express" ? " @types/express @types/cors" : ""}`;
 
       run(`npm install ${deps}`, backendDir, 60_000);
       run(`npm install -D ${devDeps}`, backendDir, 60_000);
@@ -340,7 +338,7 @@ function scaffoldBackend(
 
     writeFile(
       path.join(backendDir, ".env.example"),
-      [
+      `${[
         `# ${projectName} — Backend Environment Variables`,
         ``,
         `NODE_ENV=development`,
@@ -350,7 +348,7 @@ function scaffoldBackend(
         `CORS_ORIGINS=http://localhost:3000,http://localhost:5173`,
       ]
         .filter(Boolean)
-        .join("\n") + "\n",
+        .join("\n")}\n`,
     );
     log.push("backend/.env.example created");
   }
@@ -370,14 +368,14 @@ function scaffoldBackend(
 
     writeFile(
       path.join(backendDir, ".env.example"),
-      [
+      `${[
         `# ${projectName} — Backend Environment Variables`,
         `PORT=8000`,
         `DATABASE_URL=${dbUrl}`,
         hasRedis ? `REDIS_URL=redis://localhost:6379/0` : "",
       ]
         .filter(Boolean)
-        .join("\n") + "\n",
+        .join("\n")}\n`,
     );
     log.push(`${tech.name} project created`);
     log.push("backend/.env.example created");
@@ -424,7 +422,7 @@ export const generateCommand = new Command("generate")
 
     // SEC-004: Sanitize project name to prevent path traversal
     const safeName = path.basename(opts.name);
-    if (safeName !== opts.name || !/^[a-zA-Z0-9_.\-]+$/.test(safeName)) {
+    if (safeName !== opts.name || !/^[a-zA-Z0-9_.-]+$/.test(safeName)) {
       console.error(
         error("Project name must be alphanumeric (a-z, 0-9, -, _, .). No path separators."),
       );
@@ -562,7 +560,7 @@ export const generateCommand = new Command("generate")
 
     if (isFullStack) {
       if (spinner4)
-        spinner4.text = stepIndicator(4, 5, `Scaffolding ${frontendTech!.name} frontend...`);
+        spinner4.text = stepIndicator(4, 5, `Scaffolding ${frontendTech?.name} frontend...`);
       const fLog = scaffoldFrontend(
         frontendTech!,
         path.join(targetDir, "frontend"),
@@ -572,7 +570,7 @@ export const generateCommand = new Command("generate")
       scaffoldLog.push(...fLog.map((l) => `frontend: ${l}`));
 
       if (spinner4)
-        spinner4.text = stepIndicator(4, 5, `Scaffolding ${backendTech!.name} backend...`);
+        spinner4.text = stepIndicator(4, 5, `Scaffolding ${backendTech?.name} backend...`);
       const bLog = scaffoldBackend(
         backendTech!,
         path.join(targetDir, "backend"),
@@ -582,10 +580,10 @@ export const generateCommand = new Command("generate")
       );
       scaffoldLog.push(...bLog.map((l) => `backend: ${l}`));
     } else if (isFrontendOnly) {
-      if (frontendTech!.officialScaffold) {
-        if (spinner4) spinner4.text = stepIndicator(4, 5, `Scaffolding ${frontendTech!.name}...`);
+      if (frontendTech?.officialScaffold) {
+        if (spinner4) spinner4.text = stepIndicator(4, 5, `Scaffolding ${frontendTech?.name}...`);
         const tempName = ".scaffold-temp";
-        const r = run(`${frontendTech!.officialScaffold} ${tempName}`, targetDir);
+        const r = run(`${frontendTech?.officialScaffold} ${tempName}`, targetDir);
         if (r.success) {
           const tempDir = path.join(targetDir, tempName);
           if (fs.existsSync(tempDir)) {
@@ -598,15 +596,15 @@ export const generateCommand = new Command("generate")
             }
             fs.rmSync(tempDir, { recursive: true, force: true });
           }
-          scaffoldLog.push(`${frontendTech!.name} scaffolded in project root`);
+          scaffoldLog.push(`${frontendTech?.name} scaffolded in project root`);
         } else {
           scaffoldLog.push(
-            `${frontendTech!.name} (run manually: ${frontendTech!.officialScaffold})`,
+            `${frontendTech?.name} (run manually: ${frontendTech?.officialScaffold})`,
           );
         }
       }
     } else if (isBackendOnly) {
-      if (spinner4) spinner4.text = stepIndicator(4, 5, `Scaffolding ${backendTech!.name}...`);
+      if (spinner4) spinner4.text = stepIndicator(4, 5, `Scaffolding ${backendTech?.name}...`);
       const bLog = scaffoldBackend(backendTech!, targetDir, targetDir, projectName, allTechObjects);
       scaffoldLog.push(...bLog);
     }

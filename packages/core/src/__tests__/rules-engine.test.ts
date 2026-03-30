@@ -1,51 +1,108 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { RulesEngine } from "../engine/rules-engine.js";
-import type { Technology, StackTechnology } from "../types/index.js";
+import type { StackTechnology, Technology } from "../types/index.js";
 
 const mockTechs: Technology[] = [
   {
-    id: "nodejs", name: "Node.js", category: "runtime",
-    description: "", website: "", versions: [{ version: "22" }],
-    defaultVersion: "22", defaultPort: 3000,
-    requires: [], incompatibleWith: [], suggestedWith: ["typescript"],
-    envVars: {}, configFiles: [], lastVerified: "2026-03-22", tags: [],
+    id: "nodejs",
+    name: "Node.js",
+    category: "runtime",
+    description: "",
+    website: "",
+    versions: [{ version: "22" }],
+    defaultVersion: "22",
+    defaultPort: 3000,
+    requires: [],
+    incompatibleWith: [],
+    suggestedWith: ["typescript"],
+    envVars: {},
+    configFiles: [],
+    lastVerified: "2026-03-22",
+    tags: [],
   },
   {
-    id: "nextjs", name: "Next.js", category: "frontend",
-    description: "", website: "", versions: [{ version: "15" }],
-    defaultVersion: "15", defaultPort: 3000,
-    requires: ["nodejs", "react"], incompatibleWith: ["nuxt"],
+    id: "nextjs",
+    name: "Next.js",
+    category: "frontend",
+    description: "",
+    website: "",
+    versions: [{ version: "15" }],
+    defaultVersion: "15",
+    defaultPort: 3000,
+    requires: ["nodejs", "react"],
+    incompatibleWith: ["nuxt"],
     suggestedWith: ["typescript", "tailwindcss"],
-    envVars: {}, configFiles: [], lastVerified: "2026-03-22", tags: [],
+    envVars: {},
+    configFiles: [],
+    lastVerified: "2026-03-22",
+    tags: [],
   },
   {
-    id: "react", name: "React", category: "frontend",
-    description: "", website: "", versions: [{ version: "19" }],
-    defaultVersion: "19", defaultPort: 3000,
-    requires: ["nodejs"], incompatibleWith: [], suggestedWith: [],
-    envVars: {}, configFiles: [], lastVerified: "2026-03-22", tags: [],
-  },
-  {
-    id: "nuxt", name: "Nuxt", category: "frontend",
-    description: "", website: "", versions: [{ version: "3" }],
-    defaultVersion: "3", defaultPort: 3000,
-    requires: ["nodejs"], incompatibleWith: ["nextjs"],
+    id: "react",
+    name: "React",
+    category: "frontend",
+    description: "",
+    website: "",
+    versions: [{ version: "19" }],
+    defaultVersion: "19",
+    defaultPort: 3000,
+    requires: ["nodejs"],
+    incompatibleWith: [],
     suggestedWith: [],
-    envVars: {}, configFiles: [], lastVerified: "2026-03-22", tags: [],
+    envVars: {},
+    configFiles: [],
+    lastVerified: "2026-03-22",
+    tags: [],
   },
   {
-    id: "postgresql", name: "PostgreSQL", category: "database",
-    description: "", website: "", versions: [{ version: "17" }],
-    defaultVersion: "17", defaultPort: 5432,
-    requires: [], incompatibleWith: [], suggestedWith: [],
-    envVars: {}, configFiles: [], lastVerified: "2026-03-22", tags: [],
+    id: "nuxt",
+    name: "Nuxt",
+    category: "frontend",
+    description: "",
+    website: "",
+    versions: [{ version: "3" }],
+    defaultVersion: "3",
+    defaultPort: 3000,
+    requires: ["nodejs"],
+    incompatibleWith: ["nextjs"],
+    suggestedWith: [],
+    envVars: {},
+    configFiles: [],
+    lastVerified: "2026-03-22",
+    tags: [],
   },
   {
-    id: "typescript", name: "TypeScript", category: "devops",
-    description: "", website: "", versions: [{ version: "5" }],
+    id: "postgresql",
+    name: "PostgreSQL",
+    category: "database",
+    description: "",
+    website: "",
+    versions: [{ version: "17" }],
+    defaultVersion: "17",
+    defaultPort: 5432,
+    requires: [],
+    incompatibleWith: [],
+    suggestedWith: [],
+    envVars: {},
+    configFiles: [],
+    lastVerified: "2026-03-22",
+    tags: [],
+  },
+  {
+    id: "typescript",
+    name: "TypeScript",
+    category: "devops",
+    description: "",
+    website: "",
+    versions: [{ version: "5" }],
     defaultVersion: "5",
-    requires: [], incompatibleWith: [], suggestedWith: [],
-    envVars: {}, configFiles: [], lastVerified: "2026-03-22", tags: [],
+    requires: [],
+    incompatibleWith: [],
+    suggestedWith: [],
+    envVars: {},
+    configFiles: [],
+    lastVerified: "2026-03-22",
+    tags: [],
   },
 ];
 
@@ -63,9 +120,7 @@ describe("RulesEngine", () => {
   });
 
   it("auto-resolves missing dependencies", () => {
-    const selected: StackTechnology[] = [
-      { technologyId: "nextjs", version: "15" },
-    ];
+    const selected: StackTechnology[] = [{ technologyId: "nextjs", version: "15" }];
     const result = engine.validate(selected);
     expect(result.resolvedDependencies).toContain("nodejs");
     expect(result.resolvedDependencies).toContain("react");
@@ -96,9 +151,7 @@ describe("RulesEngine", () => {
   });
 
   it("detects unknown technologies", () => {
-    const selected: StackTechnology[] = [
-      { technologyId: "doesnotexist", version: "1" },
-    ];
+    const selected: StackTechnology[] = [{ technologyId: "doesnotexist", version: "1" }];
     const result = engine.validate(selected);
     expect(result.valid).toBe(false);
     expect(result.issues.some((i) => i.code === "UNKNOWN_TECHNOLOGY")).toBe(true);

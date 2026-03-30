@@ -15,7 +15,7 @@ export function Card({ children, className, onClick, hoverable }: CardProps) {
         "bg-zinc-900 border border-zinc-800 rounded-xl p-4",
         hoverable && "cursor-pointer hover:border-zinc-700 hover:bg-zinc-900/80 transition-colors",
         onClick && "cursor-pointer",
-        className
+        className,
       )}
     >
       {children}

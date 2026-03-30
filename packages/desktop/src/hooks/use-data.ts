@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAppStore } from "../stores/app-store";
-import { execCommand, isTauri } from "../lib/tauri";
 import {
   technologies as registryTechnologies,
   templates as registryTemplates,
 } from "../generated/registry-data";
+import { execCommand, isTauri } from "../lib/tauri";
+import { useAppStore } from "../stores/app-store";
 
 export function useLoadData() {
   const { setTechnologies, setStacks, setTemplates } = useAppStore();
@@ -22,11 +22,7 @@ export function useLoadData() {
         if (isTauri) {
           // In Tauri mode, also load saved stacks from the CLI
           const stackResult = await execCommand({ action: "ListStacks" });
-          if (
-            stackResult.success &&
-            stackResult.stdout &&
-            stackResult.stdout.trim().startsWith("[")
-          ) {
+          if (stackResult.success && stackResult.stdout?.trim().startsWith("[")) {
             setStacks(JSON.parse(stackResult.stdout));
           }
         } else {

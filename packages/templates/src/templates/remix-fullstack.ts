@@ -3,17 +3,8 @@ import type { Template } from "@stackpilot/core";
 export const remixFullstack: Template = {
   id: "remix-fullstack",
   name: "Remix Fullstack",
-  description:
-    "Full-stack Remix app with Prisma, PostgreSQL, Tailwind CSS, and TypeScript",
-  technologyIds: [
-    "remix",
-    "react",
-    "nodejs",
-    "typescript",
-    "tailwindcss",
-    "prisma",
-    "postgresql",
-  ],
+  description: "Full-stack Remix app with Prisma, PostgreSQL, Tailwind CSS, and TypeScript",
+  technologyIds: ["remix", "react", "nodejs", "typescript", "tailwindcss", "prisma", "postgresql"],
   profile: "standard",
   scaffoldSteps: [
     {
@@ -26,13 +17,11 @@ export const remixFullstack: Template = {
     },
     {
       name: "Initialize Prisma",
-      command:
-        "cd {{projectName}} && npx prisma init --datasource-provider postgresql",
+      command: "cd {{projectName}} && npx prisma init --datasource-provider postgresql",
     },
     {
       name: "Install Tailwind",
-      command:
-        "cd {{projectName}} && npm install -D tailwindcss @tailwindcss/vite",
+      command: "cd {{projectName}} && npm install -D tailwindcss @tailwindcss/vite",
     },
   ],
   overrides: [

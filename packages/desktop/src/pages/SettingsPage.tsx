@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { getSystemInfo } from "@/lib/tauri";
-import { useEffect, useState } from "react";
 
 interface SysInfo {
   os: string;
@@ -25,7 +25,9 @@ export function SettingsPage() {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-zinc-500">OS</span>
-              <span>{sysInfo.os} ({sysInfo.arch})</span>
+              <span>
+                {sysInfo.os} ({sysInfo.arch})
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-zinc-500">CPUs</span>
@@ -33,7 +35,9 @@ export function SettingsPage() {
             </div>
             <div className="flex justify-between">
               <span className="text-zinc-500">Memory</span>
-              <span>{sysInfo.free_memory_gb}GB free / {sysInfo.total_memory_gb}GB total</span>
+              <span>
+                {sysInfo.free_memory_gb}GB free / {sysInfo.total_memory_gb}GB total
+              </span>
             </div>
           </div>
         ) : (

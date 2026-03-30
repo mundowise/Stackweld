@@ -79,13 +79,9 @@ export function generateComposePreview(
     if (tech.healthCheck) {
       lines.push("    healthcheck:");
       if (tech.healthCheck.command) {
-        lines.push(
-          `      test: ["CMD-SHELL", "${tech.healthCheck.command}"]`,
-        );
+        lines.push(`      test: ["CMD-SHELL", "${tech.healthCheck.command}"]`);
       } else if (tech.healthCheck.endpoint) {
-        lines.push(
-          `      test: ["CMD-SHELL", "curl -f ${tech.healthCheck.endpoint} || exit 1"]`,
-        );
+        lines.push(`      test: ["CMD-SHELL", "curl -f ${tech.healthCheck.endpoint} || exit 1"]`);
       }
       if (tech.healthCheck.interval) {
         lines.push(`      interval: ${tech.healthCheck.interval}`);

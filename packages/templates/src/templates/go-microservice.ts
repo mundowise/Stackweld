@@ -3,15 +3,8 @@ import type { Template } from "@stackpilot/core";
 export const goMicroservice: Template = {
   id: "go-microservice",
   name: "Go Microservice",
-  description:
-    "Lightweight Go microservice with Gin, PostgreSQL, Docker, and health checks",
-  technologyIds: [
-    "go",
-    "gin",
-    "postgresql",
-    "redis",
-    "docker",
-  ],
+  description: "Lightweight Go microservice with Gin, PostgreSQL, Docker, and health checks",
+  technologyIds: ["go", "gin", "postgresql", "redis", "docker"],
   profile: "production",
   scaffoldSteps: [
     {
@@ -88,7 +81,7 @@ export const goMicroservice: Template = {
         "RUN apk --no-cache add ca-certificates",
         "WORKDIR /app",
         "COPY --from=builder /app/server .",
-        'EXPOSE 8080',
+        "EXPOSE 8080",
         'CMD ["./server"]',
       ].join("\n"),
     },
@@ -109,7 +102,7 @@ export const goMicroservice: Template = {
         "\tgodotenv.Load()",
         "",
         '\tport := os.Getenv("PORT")',
-        "\tif port == \"\" {",
+        '\tif port == "" {',
         '\t\tport = "8080"',
         "\t}",
         "",

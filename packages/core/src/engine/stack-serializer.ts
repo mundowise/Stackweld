@@ -3,7 +3,7 @@
  * Uses zlib deflate + base64url encoding. No server needed.
  */
 
-import { deflateSync, inflateSync } from "zlib";
+import { deflateSync, inflateSync } from "node:zlib";
 
 export interface ShareableStack {
   name: string;
@@ -82,11 +82,7 @@ export function extractFromShareUrl(url: string): string {
 // ─── Base64url helpers ────────────────────────────────
 
 function toBase64Url(buffer: Buffer): string {
-  return buffer
-    .toString("base64")
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
+  return buffer.toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
 function fromBase64Url(str: string): Buffer {

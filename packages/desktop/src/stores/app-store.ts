@@ -98,16 +98,18 @@ export const useAppStore = create<AppState>((set) => ({
   setStacks: (stacks) => set({ stacks }),
   setTemplates: (templates) => set({ templates }),
   setServices: (services) => set({ services }),
-  selectStack: (selectedStackId) => set({ selectedStackId, currentPage: selectedStackId ? "stack-detail" : "dashboard" }),
+  selectStack: (selectedStackId) =>
+    set({ selectedStackId, currentPage: selectedStackId ? "stack-detail" : "dashboard" }),
 
   builderTechs: [],
   builderProfile: "standard",
   builderName: "",
-  toggleBuilderTech: (id) => set((state) => ({
-    builderTechs: state.builderTechs.includes(id)
-      ? state.builderTechs.filter((t) => t !== id)
-      : [...state.builderTechs, id],
-  })),
+  toggleBuilderTech: (id) =>
+    set((state) => ({
+      builderTechs: state.builderTechs.includes(id)
+        ? state.builderTechs.filter((t) => t !== id)
+        : [...state.builderTechs, id],
+    })),
   setBuilderProfile: (builderProfile) => set({ builderProfile }),
   setBuilderName: (builderName) => set({ builderName }),
   resetBuilder: () => set({ builderTechs: [], builderProfile: "standard", builderName: "" }),
@@ -116,4 +118,4 @@ export const useAppStore = create<AppState>((set) => ({
   setSearchQuery: (searchQuery) => set({ searchQuery }),
 }));
 
-export type { Technology, StackDefinition, Template, ServiceStatus, StackTechnology, Page };
+export type { Page, ServiceStatus, StackDefinition, StackTechnology, Technology, Template };

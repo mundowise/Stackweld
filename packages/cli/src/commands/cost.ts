@@ -63,11 +63,13 @@ export const costCommand = new Command("cost")
 
     // Cost range
     const { min, max, currency } = estimate.monthly;
-    const rangeStr = min === max
-      ? `$${min}/mo`
-      : `$${min} - $${max}/mo`;
-    lines.push(`  ${chalk.dim("Estimated:")}  ${chalk.bold.green(rangeStr)} ${chalk.dim(`(${currency})`)}`);
-    lines.push(`  ${chalk.dim("Tier:")}       ${tierIcon} ${tierColor(estimate.tier.toUpperCase())}`);
+    const rangeStr = min === max ? `$${min}/mo` : `$${min} - $${max}/mo`;
+    lines.push(
+      `  ${chalk.dim("Estimated:")}  ${chalk.bold.green(rangeStr)} ${chalk.dim(`(${currency})`)}`,
+    );
+    lines.push(
+      `  ${chalk.dim("Tier:")}       ${tierIcon} ${tierColor(estimate.tier.toUpperCase())}`,
+    );
     lines.push("");
 
     // Breakdown table
@@ -84,7 +86,7 @@ export const costCommand = new Command("cost")
       service: item.service,
       provider: item.provider,
       cost: item.monthlyCost,
-      notes: item.notes.length > 35 ? item.notes.slice(0, 32) + "..." : item.notes,
+      notes: item.notes.length > 35 ? `${item.notes.slice(0, 32)}...` : item.notes,
     }));
 
     if (tableData.length > 0) {

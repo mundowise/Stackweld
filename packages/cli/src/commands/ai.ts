@@ -9,7 +9,7 @@ import chalk from "chalk";
 import { Command } from "commander";
 import ora from "ora";
 import { getRulesEngine, getStackEngine } from "../ui/context.js";
-import { box, error, info, sectionHeader } from "../ui/format.js";
+import { box, error } from "../ui/format.js";
 
 function getClient(): Anthropic | null {
   const apiKey = process.env.ANTHROPIC_API_KEY;

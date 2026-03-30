@@ -1,17 +1,41 @@
+import { Brain, Check, Copy, FileText, Sparkles, Terminal } from "lucide-react";
 import { useState } from "react";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import { cn } from "@/lib/cn";
-import { execCommand, isTauri, type CliResult } from "@/lib/tauri";
-import { Sparkles, FileText, Brain, Terminal, Copy, Check } from "lucide-react";
+import { type CliResult, execCommand, isTauri } from "@/lib/tauri";
 
 type AiMode = "suggest" | "readme" | "explain";
 
-const modes: { id: AiMode; name: string; icon: React.ComponentType<{ className?: string }>; description: string; placeholder: string }[] = [
-  { id: "suggest", name: "Suggest Stack", icon: Sparkles, description: "Describe what you want to build and get a suggested stack", placeholder: 'e.g., "I want to build a SaaS with payments and auth"' },
-  { id: "readme", name: "Generate README", icon: FileText, description: "Generate a professional README from a saved stack", placeholder: "Enter the Stack ID" },
-  { id: "explain", name: "Explain Stack", icon: Brain, description: "Get an architectural explanation of a stack's decisions", placeholder: "Enter the Stack ID" },
+const modes: {
+  id: AiMode;
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+  description: string;
+  placeholder: string;
+}[] = [
+  {
+    id: "suggest",
+    name: "Suggest Stack",
+    icon: Sparkles,
+    description: "Describe what you want to build and get a suggested stack",
+    placeholder: 'e.g., "I want to build a SaaS with payments and auth"',
+  },
+  {
+    id: "readme",
+    name: "Generate README",
+    icon: FileText,
+    description: "Generate a professional README from a saved stack",
+    placeholder: "Enter the Stack ID",
+  },
+  {
+    id: "explain",
+    name: "Explain Stack",
+    icon: Brain,
+    description: "Get an architectural explanation of a stack's decisions",
+    placeholder: "Enter the Stack ID",
+  },
 ];
 
 export function AiPage() {
@@ -53,9 +77,9 @@ export function AiPage() {
         // Browser mode — show instructions
         setError(
           "AI features require the Tauri desktop app with ANTHROPIC_API_KEY configured.\n\n" +
-          "To use from CLI:\n" +
-          `export ANTHROPIC_API_KEY=sk-ant-...\n` +
-          `stackpilot ai ${activeMode} "${input}"`
+            "To use from CLI:\n" +
+            `export ANTHROPIC_API_KEY=sk-ant-...\n` +
+            `stackpilot ai ${activeMode} "${input}"`,
         );
       }
     } catch (e) {
@@ -83,8 +107,8 @@ export function AiPage() {
           <Badge variant="default">Anthropic API</Badge>
         </div>
         <p className="text-sm text-zinc-500">
-          AI-powered utilities for stack suggestions, documentation, and architectural analysis.
-          The AI is a utility — the rules engine remains the source of truth for compatibility.
+          AI-powered utilities for stack suggestions, documentation, and architectural analysis. The
+          AI is a utility — the rules engine remains the source of truth for compatibility.
         </p>
       </div>
 
@@ -93,15 +117,25 @@ export function AiPage() {
         {modes.map((mode) => (
           <button
             key={mode.id}
-            onClick={() => { setActiveMode(mode.id); setResult(null); setError(null); setInput(""); }}
+            onClick={() => {
+              setActiveMode(mode.id);
+              setResult(null);
+              setError(null);
+              setInput("");
+            }}
             className={cn(
               "flex flex-col items-start gap-2 p-4 rounded-xl border transition-all text-left",
               activeMode === mode.id
                 ? "bg-indigo-500/10 border-indigo-500/40 text-indigo-300"
-                : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700"
+                : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700",
             )}
           >
-            <mode.icon className={cn("w-5 h-5", activeMode === mode.id ? "text-indigo-400" : "text-zinc-500")} />
+            <mode.icon
+              className={cn(
+                "w-5 h-5",
+                activeMode === mode.id ? "text-indigo-400" : "text-zinc-500",
+              )}
+            />
             <div>
               <p className="font-medium text-sm">{mode.name}</p>
               <p className="text-xs text-zinc-500 mt-0.5">{mode.description}</p>
@@ -137,11 +171,7 @@ export function AiPage() {
             <p className="text-xs text-zinc-600">
               Powered by Anthropic API — requires ANTHROPIC_API_KEY
             </p>
-            <Button
-              onClick={handleSubmit}
-              disabled={!input.trim() || loading}
-              size="sm"
-            >
+            <Button onClick={handleSubmit} disabled={!input.trim() || loading} size="sm">
               {loading ? (
                 <>
                   <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -150,7 +180,11 @@ export function AiPage() {
               ) : (
                 <>
                   <Sparkles className="w-3.5 h-3.5" />
-                  {activeMode === "suggest" ? "Suggest" : activeMode === "readme" ? "Generate" : "Explain"}
+                  {activeMode === "suggest"
+                    ? "Suggest"
+                    : activeMode === "readme"
+                      ? "Generate"
+                      : "Explain"}
                 </>
               )}
             </Button>
@@ -188,9 +222,15 @@ export function AiPage() {
           <h3 className="text-sm font-semibold text-zinc-400">CLI Commands</h3>
         </div>
         <div className="space-y-2 text-xs font-mono text-zinc-500">
-          <p><span className="text-indigo-400">stackpilot ai suggest</span> "describe your project"</p>
-          <p><span className="text-indigo-400">stackpilot ai readme</span> &lt;stack-id&gt;</p>
-          <p><span className="text-indigo-400">stackpilot ai explain</span> &lt;stack-id&gt;</p>
+          <p>
+            <span className="text-indigo-400">stackpilot ai suggest</span> "describe your project"
+          </p>
+          <p>
+            <span className="text-indigo-400">stackpilot ai readme</span> &lt;stack-id&gt;
+          </p>
+          <p>
+            <span className="text-indigo-400">stackpilot ai explain</span> &lt;stack-id&gt;
+          </p>
         </div>
       </Card>
     </div>

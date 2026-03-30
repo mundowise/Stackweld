@@ -5,11 +5,11 @@
  * One tech: top 5 best and top 3 worst pairings from the catalog.
  */
 
-import { scoreCompatibility, scoreStack } from "@stackpilot/core";
+import { scoreCompatibility } from "@stackpilot/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine } from "../ui/context.js";
-import { box, progressBar } from "../ui/format.js";
+import { box } from "../ui/format.js";
 
 export const scoreCommand = new Command("score")
   .description("Show compatibility score between technologies")
@@ -43,7 +43,8 @@ export const scoreCommand = new Command("score")
       const barWidth = 20;
       const filled = Math.round((result.score / 100) * barWidth);
       const empty = barWidth - filled;
-      const barColor = result.score >= 75 ? chalk.green : result.score >= 45 ? chalk.yellow : chalk.red;
+      const barColor =
+        result.score >= 75 ? chalk.green : result.score >= 45 ? chalk.yellow : chalk.red;
       const bar = barColor("\u2588".repeat(filled)) + chalk.dim("\u2591".repeat(empty));
 
       const lines: string[] = [];
@@ -57,15 +58,14 @@ export const scoreCommand = new Command("score")
         for (const f of result.factors) {
           const icon = f.points >= 0 ? chalk.green("\u2713") : chalk.red("\u2717");
           const sign = f.points >= 0 ? "+" : "";
-          const pointStr = f.points >= 0
-            ? chalk.green(`${sign}${f.points}`)
-            : chalk.red(`${f.points}`);
+          const pointStr =
+            f.points >= 0 ? chalk.green(`${sign}${f.points}`) : chalk.red(`${f.points}`);
           lines.push(`  ${icon} ${pointStr}  ${f.description}`);
         }
         lines.push("");
       }
 
-      lines.push(`  ${chalk.dim('"' + result.recommendation + '"')}`);
+      lines.push(`  ${chalk.dim(`"${result.recommendation}"`)}`);
       lines.push("");
 
       const title = `Compatibility Score: ${a.name} + ${b.name}`;
@@ -107,7 +107,7 @@ export const scoreCommand = new Command("score")
         const bar = chalk.green("\u2588".repeat(filled)) + chalk.dim("\u2591".repeat(empty));
         console.log(
           `    ${bar} ${chalk.bold(String(item.result.score).padStart(3))}/100  ` +
-          `${chalk.yellow(item.result.grade)}  ${chalk.cyan(item.tech.name)} ${chalk.dim(`(${item.tech.category})`)}`,
+            `${chalk.yellow(item.result.grade)}  ${chalk.cyan(item.tech.name)} ${chalk.dim(`(${item.tech.category})`)}`,
         );
       }
       console.log("");
@@ -123,7 +123,7 @@ export const scoreCommand = new Command("score")
         const bar = chalk.red("\u2588".repeat(filled)) + chalk.dim("\u2591".repeat(empty));
         console.log(
           `    ${bar} ${chalk.bold(String(item.result.score).padStart(3))}/100  ` +
-          `${chalk.yellow(item.result.grade)}  ${chalk.cyan(item.tech.name)} ${chalk.dim(`(${item.tech.category})`)}`,
+            `${chalk.yellow(item.result.grade)}  ${chalk.cyan(item.tech.name)} ${chalk.dim(`(${item.tech.category})`)}`,
         );
       }
       console.log("");

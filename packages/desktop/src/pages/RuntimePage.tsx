@@ -1,9 +1,9 @@
+import { Play, RefreshCw, Square, Terminal } from "lucide-react";
 import { useState } from "react";
-import { useAppStore, type ServiceStatus } from "@/stores/app-store";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { Play, Square, RefreshCw, Terminal } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { type ServiceStatus, useAppStore } from "@/stores/app-store";
 
 export function RuntimePage() {
   const { services } = useAppStore();
@@ -32,7 +32,9 @@ export function RuntimePage() {
           <div className="text-center py-12 text-zinc-500">
             <Terminal className="w-12 h-12 mx-auto mb-3 opacity-40" />
             <p className="font-medium">No services running</p>
-            <p className="text-sm mt-1">Create and scaffold a stack, then use `stackpilot up` to start services</p>
+            <p className="text-sm mt-1">
+              Create and scaffold a stack, then use `stackpilot up` to start services
+            </p>
           </div>
         </Card>
       ) : (
@@ -70,20 +72,18 @@ function ServiceCard({
   };
 
   return (
-    <Card
-      hoverable
-      onClick={onClick}
-      className={isSelected ? "border-indigo-500/40" : undefined}
-    >
+    <Card hoverable onClick={onClick} className={isSelected ? "border-indigo-500/40" : undefined}>
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <div className={`w-2 h-2 rounded-full ${
-            service.status === "running" || service.status === "healthy"
-              ? "bg-green-400"
-              : service.status === "exited" || service.status === "stopped"
-                ? "bg-red-400"
-                : "bg-zinc-500"
-          }`} />
+          <div
+            className={`w-2 h-2 rounded-full ${
+              service.status === "running" || service.status === "healthy"
+                ? "bg-green-400"
+                : service.status === "exited" || service.status === "stopped"
+                  ? "bg-red-400"
+                  : "bg-zinc-500"
+            }`}
+          />
           <p className="font-medium">{service.name}</p>
         </div>
         <Badge variant={statusColor[service.status]}>{service.status}</Badge>

@@ -1,9 +1,9 @@
+import { randomUUID } from "node:crypto";
 import { input } from "@inquirer/prompts";
 import { getDatabase } from "@stackpilot/core";
 import { getAllTemplates, getTemplate } from "@stackpilot/templates";
 import chalk from "chalk";
 import { Command } from "commander";
-import { randomUUID } from "crypto";
 import { getRulesEngine, getStackEngine } from "../ui/context.js";
 import { formatJson, formatStackRow, formatTemplate, formatValidation } from "../ui/format.js";
 
@@ -67,7 +67,7 @@ export const templateCommand = new Command("template")
           description: template.description,
           profile: template.profile as any,
           technologies,
-          tags: ["template:" + template.id],
+          tags: [`template:${template.id}`],
         });
 
         console.log(formatValidation(validation));
@@ -191,7 +191,7 @@ export const templateCommand = new Command("template")
           description: row.description,
           profile: row.profile,
           technologies,
-          tags: ["custom-template:" + row.name],
+          tags: [`custom-template:${row.name}`],
         });
 
         console.log(formatValidation(validation));

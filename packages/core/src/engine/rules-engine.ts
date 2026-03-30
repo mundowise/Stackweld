@@ -3,7 +3,12 @@
  * Source of truth for what can coexist in a stack.
  */
 
-import type { Technology, ValidationResult, ValidationIssue, StackTechnology } from "../types/index.js";
+import type {
+  StackTechnology,
+  Technology,
+  ValidationIssue,
+  ValidationResult,
+} from "../types/index.js";
 
 export class RulesEngine {
   private techMap: Map<string, Technology>;
@@ -122,7 +127,7 @@ export class RulesEngine {
     const sortedTechIds = [...selectedIds].sort();
     for (const techId of sortedTechIds) {
       const tech = this.techMap.get(techId);
-      if (!tech || !tech.defaultPort) continue;
+      if (!tech?.defaultPort) continue;
 
       let port = tech.defaultPort;
 

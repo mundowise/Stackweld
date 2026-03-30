@@ -6,9 +6,7 @@
  */
 
 const isTauri =
-  "__TAURI__" in window ||
-  "__TAURI_INTERNALS__" in window ||
-  navigator.userAgent.includes("Tauri");
+  "__TAURI__" in window || "__TAURI_INTERNALS__" in window || navigator.userAgent.includes("Tauri");
 
 interface SystemInfo {
   os: string;
@@ -82,5 +80,5 @@ export async function execCommand(action: CliAction): Promise<CliResult> {
   return invoke<CliResult>("exec_command", { action });
 }
 
+export type { CliAction, CliResult, SystemInfo, ToolCheck };
 export { isTauri };
-export type { CliAction, CliResult, ToolCheck, SystemInfo };

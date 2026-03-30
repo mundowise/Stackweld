@@ -2,18 +2,20 @@
  * stackpilot lint — Validate a stack against team standards (.stackpilotrc).
  */
 
-import { detectStack, lintStack, loadStandards } from "@stackpilot/core";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import type { LintResult, StackStandards } from "@stackpilot/core";
+import { detectStack, lintStack, loadStandards } from "@stackpilot/core";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as fs from "fs";
-import * as path from "path";
 import { getStackEngine } from "../ui/context.js";
 import { box, formatJson, gradientHeader } from "../ui/format.js";
 
-function buildStackFromDetected(
-  detected: ReturnType<typeof detectStack>,
-): { technologies: Array<{ technologyId: string }>; profile: string; name: string } {
+function buildStackFromDetected(detected: ReturnType<typeof detectStack>): {
+  technologies: Array<{ technologyId: string }>;
+  profile: string;
+  name: string;
+} {
   return {
     name: "detected",
     profile: "standard",
@@ -77,7 +79,9 @@ export const lintCommand = new Command("lint")
       // Detect from current directory
       const detected = detectStack(process.cwd());
       if (detected.technologies.length === 0) {
-        console.error(chalk.red("\u2716 Could not detect any technologies in the current directory."));
+        console.error(
+          chalk.red("\u2716 Could not detect any technologies in the current directory."),
+        );
         console.error(chalk.dim("  Use --stack <id> to lint a saved stack instead."));
         process.exit(1);
       }
@@ -120,10 +124,14 @@ export const lintCommand = new Command("lint")
       const techIds = new Set(stackLike.technologies.map((t) => t.technologyId));
       for (const blocked of standards.blockedTechnologies) {
         if (techIds.has(blocked)) {
-          lines.push(`  ${chalk.red("\u2717")} Blocked: ${blocked} found ${chalk.red("\u2014 remove it")}`);
+          lines.push(
+            `  ${chalk.red("\u2717")} Blocked: ${blocked} found ${chalk.red("\u2014 remove it")}`,
+          );
           failCount++;
         } else {
-          lines.push(`  ${chalk.green("\u2713")} Blocked: ${blocked} ${chalk.dim("(not present)")}`);
+          lines.push(
+            `  ${chalk.green("\u2713")} Blocked: ${blocked} ${chalk.dim("(not present)")}`,
+          );
           passCount++;
         }
       }
@@ -133,10 +141,14 @@ export const lintCommand = new Command("lint")
     if (standards.minProfile) {
       const profileViolation = result.warnings.find((w) => w.rule === "minProfile");
       if (profileViolation) {
-        lines.push(`  ${chalk.yellow("\u26A0")} Profile: ${stackLike.profile} < ${standards.minProfile}`);
+        lines.push(
+          `  ${chalk.yellow("\u26A0")} Profile: ${stackLike.profile} < ${standards.minProfile}`,
+        );
         failCount++;
       } else {
-        lines.push(`  ${chalk.green("\u2713")} Profile: ${stackLike.profile} \u2265 ${standards.minProfile}`);
+        lines.push(
+          `  ${chalk.green("\u2713")} Profile: ${stackLike.profile} \u2265 ${standards.minProfile}`,
+        );
         passCount++;
       }
     }
@@ -193,10 +205,12 @@ export const lintCommand = new Command("lint")
 
     lines.push("");
     lines.push(
-      `  ${chalk.green(String(passCount) + " passed")} ${chalk.dim("\u00B7")} ` +
-        `${failCount > 0 ? chalk.red(String(failCount) + " violation(s)") : chalk.dim("0 violations")}`,
+      `  ${chalk.green(`${String(passCount)} passed`)} ${chalk.dim("\u00B7")} ` +
+        `${failCount > 0 ? chalk.red(`${String(failCount)} violation(s)`) : chalk.dim("0 violations")}`,
     );
-    lines.push(`  Status: ${result.passed ? chalk.green.bold("PASSED") : chalk.red.bold("FAILED")}`);
+    lines.push(
+      `  Status: ${result.passed ? chalk.green.bold("PASSED") : chalk.red.bold("FAILED")}`,
+    );
     lines.push("");
 
     console.log(`\n  ${gradientHeader("StackPilot")} ${chalk.dim("/ Lint")}\n`);

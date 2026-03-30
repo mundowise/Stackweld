@@ -1,10 +1,10 @@
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import * as fs from "fs";
-import * as path from "path";
-import * as os from "os";
+import * as fs from "node:fs";
+import * as os from "node:os";
+import * as path from "node:path";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { closeDatabase, getDatabase } from "../db/database.js";
 import { RulesEngine } from "../engine/rules-engine.js";
 import { StackEngine } from "../engine/stack-engine.js";
-import { getDatabase, closeDatabase } from "../db/database.js";
 import type { Technology } from "../types/technology.js";
 
 // Minimal technology fixtures for testing
@@ -71,7 +71,7 @@ describe("StackEngine", () => {
       // Verify it's actually persisted
       const retrieved = engine.get(stack.id);
       expect(retrieved).not.toBeNull();
-      expect(retrieved!.name).toBe("test-stack");
+      expect(retrieved?.name).toBe("test-stack");
     });
 
     it("auto-resolves dependencies", () => {
@@ -98,8 +98,8 @@ describe("StackEngine", () => {
       });
 
       expect(validation.valid).toBe(true);
-      expect(validation.portAssignments["postgresql"]).toBe(5432);
-      expect(validation.portAssignments["redis"]).toBe(6379);
+      expect(validation.portAssignments.postgresql).toBe(5432);
+      expect(validation.portAssignments.redis).toBe(6379);
     });
 
     it("sets default profile to standard", () => {
@@ -156,9 +156,9 @@ describe("StackEngine", () => {
 
       const retrieved = engine.get(created.id);
       expect(retrieved).not.toBeNull();
-      expect(retrieved!.id).toBe(created.id);
-      expect(retrieved!.name).toBe("get-test");
-      expect(retrieved!.description).toBe("Testing get");
+      expect(retrieved?.id).toBe(created.id);
+      expect(retrieved?.name).toBe("get-test");
+      expect(retrieved?.description).toBe("Testing get");
     });
 
     it("returns null for non-existent ID", () => {
@@ -176,8 +176,8 @@ describe("StackEngine", () => {
       });
 
       const retrieved = engine.get(created.id);
-      expect(retrieved!.technologies.length).toBe(2);
-      const ids = retrieved!.technologies.map((t) => t.technologyId);
+      expect(retrieved?.technologies.length).toBe(2);
+      const ids = retrieved?.technologies.map((t) => t.technologyId);
       expect(ids).toContain("postgresql");
       expect(ids).toContain("redis");
     });
@@ -233,8 +233,8 @@ describe("StackEngine", () => {
       });
 
       expect(result).not.toBeNull();
-      expect(result!.stack.name).toBe("updated-name");
-      expect(result!.stack.description).toBe("new desc");
+      expect(result?.stack.name).toBe("updated-name");
+      expect(result?.stack.description).toBe("new desc");
     });
 
     it("increments version number on update", () => {
@@ -246,10 +246,10 @@ describe("StackEngine", () => {
       expect(stack.version).toBe(1);
 
       const result = engine.update(stack.id, { name: "versioned-v2" });
-      expect(result!.stack.version).toBe(2);
+      expect(result?.stack.version).toBe(2);
 
       const result2 = engine.update(stack.id, { name: "versioned-v3" });
-      expect(result2!.stack.version).toBe(3);
+      expect(result2?.stack.version).toBe(3);
     });
 
     it("returns null for non-existent stack", () => {
@@ -270,7 +270,7 @@ describe("StackEngine", () => {
         ],
       });
 
-      const techIds = result!.stack.technologies.map((t) => t.technologyId);
+      const techIds = result?.stack.technologies.map((t) => t.technologyId);
       expect(techIds).toContain("nodejs");
       expect(techIds).toContain("redis");
     });

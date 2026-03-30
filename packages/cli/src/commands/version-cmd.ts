@@ -33,7 +33,7 @@ export const versionCommand = new Command("version")
         console.log(chalk.bold(`Version history for "${stack.name}":\n`));
         for (const v of history) {
           console.log(
-            `  ${chalk.cyan("v" + v.version)} ${chalk.dim(v.timestamp)} — ${v.changelog}`,
+            `  ${chalk.cyan(`v${v.version}`)} ${chalk.dim(v.timestamp)} — ${v.changelog}`,
           );
         }
       }),

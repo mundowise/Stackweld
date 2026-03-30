@@ -33,13 +33,11 @@ export const djangoReact: Template = {
     },
     {
       name: "Create React frontend",
-      command:
-        "npx create-vite@latest {{projectName}}/frontend -- --template react-ts",
+      command: "npx create-vite@latest {{projectName}}/frontend -- --template react-ts",
     },
     {
       name: "Install Tailwind in frontend",
-      command:
-        "cd {{projectName}}/frontend && npm install -D tailwindcss @tailwindcss/vite",
+      command: "cd {{projectName}}/frontend && npm install -D tailwindcss @tailwindcss/vite",
     },
   ],
   overrides: [
@@ -118,8 +116,7 @@ export const djangoReact: Template = {
     {
       timing: "post-scaffold",
       name: "Freeze backend requirements",
-      command:
-        "cd {{projectName}}/backend && .venv/bin/pip freeze > requirements.lock",
+      command: "cd {{projectName}}/backend && .venv/bin/pip freeze > requirements.lock",
       description: "Generate locked requirements file for the backend",
       requiresConfirmation: false,
     },

@@ -3,14 +3,8 @@ import type { Template } from "@stackpilot/core";
 export const astroLanding: Template = {
   id: "astro-landing",
   name: "Astro Landing Page",
-  description:
-    "Fast static landing page with Astro, Tailwind CSS, and TypeScript",
-  technologyIds: [
-    "astro",
-    "nodejs",
-    "typescript",
-    "tailwindcss",
-  ],
+  description: "Fast static landing page with Astro, Tailwind CSS, and TypeScript",
+  technologyIds: ["astro", "nodejs", "typescript", "tailwindcss"],
   profile: "lightweight",
   scaffoldSteps: [
     {
@@ -26,10 +20,9 @@ export const astroLanding: Template = {
   overrides: [
     {
       path: ".env.example",
-      content: [
-        "PUBLIC_SITE_URL=http://localhost:4321",
-        "PUBLIC_SITE_TITLE={{projectName}}",
-      ].join("\n"),
+      content: ["PUBLIC_SITE_URL=http://localhost:4321", "PUBLIC_SITE_TITLE={{projectName}}"].join(
+        "\n",
+      ),
     },
   ],
   hooks: [

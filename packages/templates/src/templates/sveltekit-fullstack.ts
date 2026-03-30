@@ -3,8 +3,7 @@ import type { Template } from "@stackpilot/core";
 export const sveltekitFullstack: Template = {
   id: "sveltekit-fullstack",
   name: "SvelteKit Full-Stack",
-  description:
-    "Full-stack SvelteKit app with Prisma ORM, PostgreSQL, and Tailwind CSS",
+  description: "Full-stack SvelteKit app with Prisma ORM, PostgreSQL, and Tailwind CSS",
   technologyIds: [
     "sveltekit",
     "svelte",

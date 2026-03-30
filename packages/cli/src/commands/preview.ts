@@ -45,9 +45,7 @@ export const previewCommand = new Command("preview")
 
     if (dockerTechs.length === 0) {
       console.log(warning("No Docker services in this stack."));
-      console.log(
-        chalk.dim("  This stack only contains runtimes/frameworks that run locally."),
-      );
+      console.log(chalk.dim("  This stack only contains runtimes/frameworks that run locally."));
       process.exit(0);
     }
 
@@ -81,7 +79,7 @@ export const previewCommand = new Command("preview")
     console.log("");
     console.log(info("This is a preview. No files were created."));
     console.log(
-      chalk.dim(`  Use ${chalk.white("stackpilot scaffold " + id)} to generate project files.`),
+      chalk.dim(`  Use ${chalk.white(`stackpilot scaffold ${id}`)} to generate project files.`),
     );
     console.log("");
   });

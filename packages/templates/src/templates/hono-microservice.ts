@@ -3,15 +3,8 @@ import type { Template } from "@stackpilot/core";
 export const honoMicroservice: Template = {
   id: "hono-microservice",
   name: "Hono Microservice",
-  description:
-    "Lightweight Hono microservice with Bun runtime, PostgreSQL, and Docker",
-  technologyIds: [
-    "hono",
-    "nodejs",
-    "typescript",
-    "postgresql",
-    "docker",
-  ],
+  description: "Lightweight Hono microservice with Bun runtime, PostgreSQL, and Docker",
+  technologyIds: ["hono", "nodejs", "typescript", "postgresql", "docker"],
   profile: "lightweight",
   scaffoldSteps: [
     {

@@ -2,9 +2,9 @@
  * stackpilot status — Show status of Docker services.
  */
 
+import * as path from "node:path";
 import chalk from "chalk";
 import { Command } from "commander";
-import * as path from "path";
 import { getRuntimeManager } from "../ui/context.js";
 import { emptyState, error, formatJson, formatServiceStatus } from "../ui/format.js";
 
@@ -24,7 +24,7 @@ export const statusCommand = new Command("status")
 
     const composePath = runtime.composeExists(projectDir);
     if (!composePath) {
-      console.error(error("No docker-compose.yml found in " + projectDir));
+      console.error(error(`No docker-compose.yml found in ${projectDir}`));
       process.exit(1);
     }
 

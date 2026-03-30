@@ -382,7 +382,7 @@ echo "=> Deploy complete"
 
   files.push({
     path: ".env.production.example",
-    content: envLines.join("\n") + "\n",
+    content: `${envLines.join("\n")}\n`,
   });
 
   return files;
@@ -391,7 +391,7 @@ echo "=> Deploy complete"
 // ─── AWS Target ───────────────────────────────────────
 
 function generateAwsFiles(
-  technologies: InfraTechnology[],
+  _technologies: InfraTechnology[],
   projectName: string,
   runtime: RuntimeKind,
   appPort: number,
@@ -408,7 +408,7 @@ function generateAwsFiles(
   // ECS Task Definition
   files.push({
     path: "aws/task-definition.json",
-    content: JSON.stringify(
+    content: `${JSON.stringify(
       {
         family: slug,
         networkMode: "awsvpc",
@@ -448,7 +448,7 @@ function generateAwsFiles(
       },
       null,
       2,
-    ) + "\n",
+    )}\n`,
   });
 
   // CloudFormation template
@@ -600,34 +600,34 @@ set -euo pipefail
 # ── ${projectName} — AWS ECS Deploy Script ──
 
 AWS_REGION="\${AWS_REGION:-us-east-1}"
-AWS_ACCOUNT_ID="\$(aws sts get-caller-identity --query Account --output text)"
+AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
 ECR_REPO="\${AWS_ACCOUNT_ID}.dkr.ecr.\${AWS_REGION}.amazonaws.com/${slug}"
 CLUSTER="${slug}-cluster"
 SERVICE="${slug}-service"
 
 echo "=> Authenticating with ECR"
-aws ecr get-login-password --region "\$AWS_REGION" | \\
-  docker login --username AWS --password-stdin "\$ECR_REPO"
+aws ecr get-login-password --region "$AWS_REGION" | \\
+  docker login --username AWS --password-stdin "$ECR_REPO"
 
 echo "=> Building Docker image"
 docker build -t "${slug}:latest" .
 
 echo "=> Tagging and pushing to ECR"
-docker tag "${slug}:latest" "\$ECR_REPO:latest"
-docker push "\$ECR_REPO:latest"
+docker tag "${slug}:latest" "$ECR_REPO:latest"
+docker push "$ECR_REPO:latest"
 
 echo "=> Updating ECS service (force new deployment)"
 aws ecs update-service \\
-  --cluster "\$CLUSTER" \\
-  --service "\$SERVICE" \\
+  --cluster "$CLUSTER" \\
+  --service "$SERVICE" \\
   --force-new-deployment \\
-  --region "\$AWS_REGION"
+  --region "$AWS_REGION"
 
 echo "=> Waiting for service to stabilize..."
 aws ecs wait services-stable \\
-  --cluster "\$CLUSTER" \\
-  --services "\$SERVICE" \\
-  --region "\$AWS_REGION"
+  --cluster "$CLUSTER" \\
+  --services "$SERVICE" \\
+  --region "$AWS_REGION"
 
 echo "=> Deploy complete"
 `,
@@ -639,7 +639,7 @@ echo "=> Deploy complete"
 // ─── GCP Target ───────────────────────────────────────
 
 function generateGcpFiles(
-  technologies: InfraTechnology[],
+  _technologies: InfraTechnology[],
   projectName: string,
   runtime: RuntimeKind,
   appPort: number,
@@ -661,20 +661,20 @@ function generateGcpFiles(
     args:
       - "build"
       - "-t"
-      - "gcr.io/\$PROJECT_ID/${slug}:\$SHORT_SHA"
+      - "gcr.io/$PROJECT_ID/${slug}:$SHORT_SHA"
       - "-t"
-      - "gcr.io/\$PROJECT_ID/${slug}:latest"
+      - "gcr.io/$PROJECT_ID/${slug}:latest"
       - "."
 
   - name: "gcr.io/cloud-builders/docker"
     args:
       - "push"
-      - "gcr.io/\$PROJECT_ID/${slug}:\$SHORT_SHA"
+      - "gcr.io/$PROJECT_ID/${slug}:$SHORT_SHA"
 
   - name: "gcr.io/cloud-builders/docker"
     args:
       - "push"
-      - "gcr.io/\$PROJECT_ID/${slug}:latest"
+      - "gcr.io/$PROJECT_ID/${slug}:latest"
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
@@ -683,7 +683,7 @@ function generateGcpFiles(
       - "deploy"
       - "${slug}"
       - "--image"
-      - "gcr.io/\$PROJECT_ID/${slug}:\$SHORT_SHA"
+      - "gcr.io/$PROJECT_ID/${slug}:$SHORT_SHA"
       - "--region"
       - "\${_REGION}"
       - "--platform"
@@ -693,8 +693,8 @@ substitutions:
   _REGION: "us-central1"
 
 images:
-  - "gcr.io/\$PROJECT_ID/${slug}:\$SHORT_SHA"
-  - "gcr.io/\$PROJECT_ID/${slug}:latest"
+  - "gcr.io/$PROJECT_ID/${slug}:$SHORT_SHA"
+  - "gcr.io/$PROJECT_ID/${slug}:latest"
 `,
   });
 
@@ -750,20 +750,20 @@ set -euo pipefail
 
 GCP_PROJECT="\${GCP_PROJECT:?Set GCP_PROJECT}"
 GCP_REGION="\${GCP_REGION:-us-central1}"
-IMAGE="gcr.io/\$GCP_PROJECT/${slug}"
+IMAGE="gcr.io/$GCP_PROJECT/${slug}"
 
 echo "=> Building Docker image"
-docker build -t "\$IMAGE:latest" .
+docker build -t "$IMAGE:latest" .
 
 echo "=> Pushing to GCR"
-docker push "\$IMAGE:latest"
+docker push "$IMAGE:latest"
 
 echo "=> Deploying to Cloud Run"
 gcloud run deploy ${slug} \\
-  --image "\$IMAGE:latest" \\
+  --image "$IMAGE:latest" \\
   --platform managed \\
-  --region "\$GCP_REGION" \\
-  --project "\$GCP_PROJECT" \\
+  --region "$GCP_REGION" \\
+  --project "$GCP_PROJECT" \\
   --allow-unauthenticated \\
   --port ${appPort} \\
   --memory 512Mi \\
@@ -774,8 +774,8 @@ gcloud run deploy ${slug} \\
 echo "=> Deploy complete"
 gcloud run services describe ${slug} \\
   --platform managed \\
-  --region "\$GCP_REGION" \\
-  --project "\$GCP_PROJECT" \\
+  --region "$GCP_REGION" \\
+  --project "$GCP_PROJECT" \\
   --format "value(status.url)"
 `,
   });

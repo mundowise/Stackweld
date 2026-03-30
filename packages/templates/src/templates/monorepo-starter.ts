@@ -35,13 +35,11 @@ export const monorepoStarter: Template = {
     },
     {
       name: "Install Prisma in db package",
-      command:
-        "cd {{projectName}}/packages/db && pnpm init && pnpm add prisma @prisma/client",
+      command: "cd {{projectName}}/packages/db && pnpm init && pnpm add prisma @prisma/client",
     },
     {
       name: "Initialize Prisma",
-      command:
-        "cd {{projectName}}/packages/db && npx prisma init --datasource-provider postgresql",
+      command: "cd {{projectName}}/packages/db && npx prisma init --datasource-provider postgresql",
     },
     {
       name: "Install Biome",

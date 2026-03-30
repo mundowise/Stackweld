@@ -2,17 +2,17 @@
  * stackpilot learn <technology> — Show learning resources for a technology.
  */
 
-import { getLearningResources } from "@stackpilot/registry";
 import type { LearningResource } from "@stackpilot/registry";
+import { getLearningResources } from "@stackpilot/registry";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine } from "../ui/context.js";
 import { box } from "../ui/format.js";
 
 const DIFFICULTY_ICONS: Record<string, string> = {
-  beginner: "\u{1F4D6}",    // open book
+  beginner: "\u{1F4D6}", // open book
   intermediate: "\u{1F4DA}", // books
-  advanced: "\u{1F393}",     // graduation cap
+  advanced: "\u{1F393}", // graduation cap
 };
 
 const DIFFICULTY_ORDER: Record<string, number> = {
@@ -56,7 +56,9 @@ export const learnCommand = new Command("learn")
     }
 
     if (opts.json) {
-      console.log(JSON.stringify({ technology: technologyId, name: displayName, resources }, null, 2));
+      console.log(
+        JSON.stringify({ technology: technologyId, name: displayName, resources }, null, 2),
+      );
       return;
     }
 

@@ -1,15 +1,15 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
-  success,
-  error,
-  warning,
-  info,
   banner,
   box,
-  table,
-  stepIndicator,
   emptyState,
+  error,
+  info,
   progressBar,
+  stepIndicator,
+  success,
+  table,
+  warning,
 } from "../ui/format.js";
 
 // Helper to strip ANSI escape codes for content assertions
@@ -250,7 +250,7 @@ describe("format.ts utility functions", () => {
 
 // ─── Input validation (from generate.ts) ────────────────
 
-import * as nodePath from "path";
+import * as nodePath from "node:path";
 
 describe("Input validation for project names", () => {
   // Replicate the validation logic from generate.ts (lines 426-429):
@@ -260,7 +260,7 @@ describe("Input validation for project names", () => {
 
   function isValidProjectName(name: string): boolean {
     const safeName = path.basename(name);
-    return safeName === name && /^[a-zA-Z0-9_.\-]+$/.test(safeName);
+    return safeName === name && /^[a-zA-Z0-9_.-]+$/.test(safeName);
   }
 
   describe("rejects path traversal attempts", () => {

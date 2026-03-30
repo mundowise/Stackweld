@@ -5,25 +5,16 @@ export const mernStack: Template = {
   name: "MERN Stack",
   description:
     "Full-stack MERN app with React, Express, MongoDB, Node.js, TypeScript, and Tailwind CSS",
-  technologyIds: [
-    "react",
-    "nodejs",
-    "express",
-    "mongodb",
-    "typescript",
-    "tailwindcss",
-  ],
+  technologyIds: ["react", "nodejs", "express", "mongodb", "typescript", "tailwindcss"],
   profile: "standard",
   scaffoldSteps: [
     {
       name: "Create React frontend",
-      command:
-        "npx create-vite@latest {{projectName}}/frontend -- --template react-ts",
+      command: "npx create-vite@latest {{projectName}}/frontend -- --template react-ts",
     },
     {
       name: "Install Tailwind in frontend",
-      command:
-        "cd {{projectName}}/frontend && npm install -D tailwindcss @tailwindcss/vite",
+      command: "cd {{projectName}}/frontend && npm install -D tailwindcss @tailwindcss/vite",
     },
     {
       name: "Create backend directory",
@@ -35,8 +26,7 @@ export const mernStack: Template = {
     },
     {
       name: "Install backend dependencies",
-      command:
-        "cd {{projectName}}/backend && npm install express cors helmet dotenv mongoose",
+      command: "cd {{projectName}}/backend && npm install express cors helmet dotenv mongoose",
     },
     {
       name: "Install backend dev dependencies",

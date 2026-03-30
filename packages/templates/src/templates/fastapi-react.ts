@@ -3,8 +3,7 @@ import type { Template } from "@stackpilot/core";
 export const fastapiReact: Template = {
   id: "fastapi-react",
   name: "FastAPI + React",
-  description:
-    "Full-stack app with FastAPI backend, React frontend, PostgreSQL, and Docker",
+  description: "Full-stack app with FastAPI backend, React frontend, PostgreSQL, and Docker",
   technologyIds: [
     "fastapi",
     "python",
@@ -27,13 +26,11 @@ export const fastapiReact: Template = {
     },
     {
       name: "Create React frontend",
-      command:
-        "npx create-vite@latest {{projectName}}/frontend -- --template react-ts",
+      command: "npx create-vite@latest {{projectName}}/frontend -- --template react-ts",
     },
     {
       name: "Install Tailwind in frontend",
-      command:
-        "cd {{projectName}}/frontend && npm install -D tailwindcss @tailwindcss/vite",
+      command: "cd {{projectName}}/frontend && npm install -D tailwindcss @tailwindcss/vite",
     },
   ],
   overrides: [
@@ -93,7 +90,7 @@ export const fastapiReact: Template = {
         "from fastapi.middleware.cors import CORSMiddleware",
         "import os",
         "",
-        "app = FastAPI(title=\"{{projectName}}\")",
+        'app = FastAPI(title="{{projectName}}")',
         "",
         "app.add_middleware(",
         "    CORSMiddleware,",
