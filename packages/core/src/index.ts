@@ -53,6 +53,27 @@ export type {
   LintViolation,
   LintWarning,
 } from "./engine/standards-linter.js";
+export { profilePerformance } from "./engine/performance-profiler.js";
+export type {
+  PerformanceProfile,
+  TechPerformance,
+} from "./engine/performance-profiler.js";
+export { estimateCost } from "./engine/cost-estimator.js";
+export type { CostEstimate, CostItem } from "./engine/cost-estimator.js";
+export {
+  getPluginDir,
+  listPlugins,
+  installPlugin,
+  removePlugin,
+  loadPlugin,
+  getPluginInfo,
+  loadPluginTechnologies,
+} from "./engine/plugin-loader.js";
+export type {
+  StackPilotPlugin,
+  PluginCommand,
+  PluginManifest,
+} from "./engine/plugin-loader.js";
 
 // Database
 export { getDatabase, closeDatabase, getDefaultDbPath } from "./db/database.js";
