@@ -1,8 +1,8 @@
 /**
- * forgeboard migrate --from <techId> --to <techId> — Generate a migration plan between technologies.
+ * stackweld migrate --from <techId> --to <techId> — Generate a migration plan between technologies.
  */
 
-import { planMigration } from "@forgeboard/core";
+import { planMigration } from "@stackweld/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine } from "../ui/context.js";

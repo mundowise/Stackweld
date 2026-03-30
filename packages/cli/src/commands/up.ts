@@ -1,5 +1,5 @@
 /**
- * forgeboard up — Start Docker services for the current project.
+ * stackweld up — Start Docker services for the current project.
  */
 
 import * as path from "node:path";
@@ -21,14 +21,14 @@ export const upCommand = new Command("up")
     if (!runtime.isDockerAvailable()) {
       console.error(error("Docker is not available."));
       console.error(chalk.dim("  Install Docker: https://docs.docker.com/get-docker/"));
-      console.error(chalk.dim("  Run `forgeboard doctor` to check your environment."));
+      console.error(chalk.dim("  Run `stackweld doctor` to check your environment."));
       process.exit(1);
     }
 
     const composePath = runtime.composeExists(projectDir);
     if (!composePath) {
       console.error(error(`No docker-compose.yml found in ${projectDir}`));
-      console.error(chalk.dim("  Run `forgeboard scaffold` to generate one from a stack."));
+      console.error(chalk.dim("  Run `stackweld scaffold` to generate one from a stack."));
       process.exit(1);
     }
 

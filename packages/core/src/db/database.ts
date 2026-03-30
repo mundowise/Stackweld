@@ -108,5 +108,5 @@ export function closeDatabase(): void {
 
 export function getDefaultDbPath(): string {
   const home = process.env.HOME || process.env.USERPROFILE || ".";
-  return path.join(home, ".forgeboard", "forgeboard.db");
+  return path.join(home, ".stackweld", "stackweld.db");
 }

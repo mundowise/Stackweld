@@ -70,7 +70,7 @@ describe("format.ts utility functions", () => {
     it("returns formatted banner with version", () => {
       const result = banner("1.0.0");
       const plain = stripAnsi(result);
-      expect(plain).toContain("Forgeboard");
+      expect(plain).toContain("Stackweld");
       expect(plain).toContain("v1.0.0");
     });
 
@@ -192,10 +192,10 @@ describe("format.ts utility functions", () => {
     });
 
     it("includes hint when provided", () => {
-      const result = emptyState("No stacks", "Run forgeboard create to get started");
+      const result = emptyState("No stacks", "Run stackweld create to get started");
       const plain = stripAnsi(result);
       expect(plain).toContain("No stacks");
-      expect(plain).toContain("Run forgeboard create to get started");
+      expect(plain).toContain("Run stackweld create to get started");
     });
 
     it("works without hint", () => {

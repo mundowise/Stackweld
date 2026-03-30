@@ -1,4 +1,4 @@
-import { loadAllTechnologies } from "@forgeboard/registry";
+import { loadAllTechnologies } from "@stackweld/registry";
 import { describe, expect, it } from "vitest";
 import {
   findTemplatesByTechnologies,

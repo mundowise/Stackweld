@@ -1,6 +1,6 @@
-# Contributing to Forgeboard
+# Contributing to Stackweld
 
-Thank you for considering a contribution to Forgeboard. This document explains how to set up the project, understand the codebase, and submit changes.
+Thank you for considering a contribution to Stackweld. This document explains how to set up the project, understand the codebase, and submit changes.
 
 ---
 
@@ -17,8 +17,8 @@ Thank you for considering a contribution to Forgeboard. This document explains h
 
 ```bash
 # Clone the repository
-git clone https://github.com/Xplus-technologies-open-in-process/Forgeboard.git
-cd Forgeboard
+git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+cd Stackweld
 
 # Install dependencies
 pnpm install
@@ -42,7 +42,7 @@ pnpm dev
 ## Project Structure
 
 ```
-forgeboard/
+stackweld/
   packages/
     core/          -- Stack engine, SQLite database, Docker integration, types
     registry/      -- Technology definitions (YAML files), JSON Schema validation
@@ -124,7 +124,7 @@ Templates live in `packages/templates/src/templates/` as TypeScript modules.
 Create a new file at `packages/templates/src/templates/<id>.ts`:
 
 ```typescript
-import type { Template } from "@forgeboard/core";
+import type { Template } from "@stackweld/core";
 
 export const myTemplate: Template = {
   id: "my-template",
@@ -197,7 +197,7 @@ Tests use Vitest. Place test files in `__tests__/` directories within each packa
 
 ## Code Style
 
-Forgeboard uses **Biome** for linting and formatting. The configuration is in `biome.json` at the repository root.
+Stackweld uses **Biome** for linting and formatting. The configuration is in `biome.json` at the repository root.
 
 ```bash
 # Check for lint and format issues

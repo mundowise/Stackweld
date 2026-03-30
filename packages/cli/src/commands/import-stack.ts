@@ -1,9 +1,9 @@
 /**
- * forgeboard import <file> — Import a stack definition from YAML or JSON.
+ * stackweld import <file> — Import a stack definition from YAML or JSON.
  */
 
 import * as fs from "node:fs";
-import type { StackProfile, StackTechnology } from "@forgeboard/core";
+import type { StackProfile, StackTechnology } from "@stackweld/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { parse as yamlParse } from "yaml";

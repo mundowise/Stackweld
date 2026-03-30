@@ -1,5 +1,5 @@
 /**
- * forgeboard list — List saved stacks.
+ * stackweld list — List saved stacks.
  */
 
 import chalk from "chalk";
@@ -16,7 +16,7 @@ export const listCommand = new Command("list")
     const stacks = engine.list();
 
     if (stacks.length === 0) {
-      console.log(emptyState("No stacks saved yet.", "Run `forgeboard init` to create one."));
+      console.log(emptyState("No stacks saved yet.", "Run `stackweld init` to create one."));
       return;
     }
 

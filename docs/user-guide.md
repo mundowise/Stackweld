@@ -1,4 +1,4 @@
-# Forgeboard User Guide
+# Stackweld User Guide
 
 ## Table of Contents
 
@@ -46,8 +46,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/Xplus-technologies-open-in-process/Forgeboard.git
-cd Forgeboard
+git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+cd Stackweld
 
 # Install dependencies
 pnpm install
@@ -61,9 +61,9 @@ node packages/cli/dist/index.js --version
 # Option A: use directly
 node packages/cli/dist/index.js --help
 
-# Option B: link globally for the `forgeboard` command
+# Option B: link globally for the `stackweld` command
 cd packages/cli && pnpm link --global
-forgeboard --help
+stackweld --help
 ```
 
 For the desktop app on Linux, install system dependencies first:
@@ -75,7 +75,7 @@ sudo apt install -y libwebkit2gtk-4.1-dev librsvg2-dev patchelf libssl-dev libay
 cd packages/desktop
 pnpm tauri:build
 
-# The binary will be at src-tauri/target/release/forgeboard-desktop
+# The binary will be at src-tauri/target/release/stackweld-desktop
 # .deb, .rpm, and .AppImage packages are generated in src-tauri/target/release/bundle/
 ```
 
@@ -86,8 +86,8 @@ pnpm tauri:build
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # Clone and build
-git clone https://github.com/Xplus-technologies-open-in-process/Forgeboard.git
-cd Forgeboard
+git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+cd Stackweld
 pnpm install
 pnpm build
 
@@ -109,8 +109,8 @@ pnpm tauri:build
 # Install Rust from https://rustup.rs (required for the desktop app only)
 
 # Clone and build (PowerShell or Git Bash)
-git clone https://github.com/Xplus-technologies-open-in-process/Forgeboard.git
-cd Forgeboard
+git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+cd Stackweld
 pnpm install
 pnpm build
 
@@ -133,10 +133,10 @@ pnpm tauri:build
 
 ### CLI: Interactive mode
 
-Run `forgeboard init` to start the interactive wizard:
+Run `stackweld init` to start the interactive wizard:
 
 ```bash
-forgeboard init
+stackweld init
 ```
 
 The wizard walks you through the following steps:
@@ -149,7 +149,7 @@ The wizard walks you through the following steps:
 6. **Database** -- Optionally select a database (PostgreSQL, MySQL, MongoDB, Redis, SQLite, Supabase, MariaDB, PocketBase, Neon, Turso, Kafka).
 7. **Additional technologies** -- Add ORMs, auth providers, styling libraries, infrastructure services, and devops tools.
 8. **Profile** -- Choose a scaffold profile (minimal, standard, or production).
-9. **Review** -- Forgeboard validates your selections, resolves dependencies, and flags incompatibilities. You can go back and adjust.
+9. **Review** -- Stackweld validates your selections, resolves dependencies, and flags incompatibilities. You can go back and adjust.
 10. **Scaffold** -- The project is generated on disk with all files, dependencies, and configurations.
 
 ### CLI: One-shot generation
@@ -157,7 +157,7 @@ The wizard walks you through the following steps:
 If you already know what you want, skip the wizard entirely:
 
 ```bash
-forgeboard generate \
+stackweld generate \
   --name "my-saas" \
   --path "/home/user/projects" \
   --techs "nextjs,fastapi,postgresql,redis,prisma,tailwindcss,nextauth,vitest,docker" \
@@ -169,7 +169,7 @@ This creates the project, installs all dependencies, initializes git, and genera
 
 ### What gets generated
 
-When you select both a frontend and backend framework, Forgeboard creates a full-stack project with separate directories:
+When you select both a frontend and backend framework, Stackweld creates a full-stack project with separate directories:
 
 ```
 my-saas/
@@ -237,7 +237,7 @@ View system information (Node.js version, pnpm version, Docker status) and confi
 
 ### Built-in templates (20)
 
-Templates are pre-composed stacks of technologies that work well together. Forgeboard ships with 20 built-in templates:
+Templates are pre-composed stacks of technologies that work well together. Stackweld ships with 20 built-in templates:
 
 | Template | Technologies |
 |----------|-------------|
@@ -266,13 +266,13 @@ Templates are pre-composed stacks of technologies that work well together. Forge
 
 ```bash
 # List all available templates
-forgeboard template list
+stackweld template list
 
 # Or browse interactively
-forgeboard browse --templates
+stackweld browse --templates
 
 # Create a project from a template
-forgeboard create t3-stack --path /home/user/projects
+stackweld create t3-stack --path /home/user/projects
 ```
 
 This loads the template definition, resolves all technologies, saves the stack, and scaffolds the project.
@@ -283,13 +283,13 @@ Save any stack as a reusable custom template:
 
 ```bash
 # Save a stack as a custom template
-forgeboard template save my-stack-id
+stackweld template save my-stack-id
 
 # List your saved custom templates
-forgeboard template saved
+stackweld template saved
 
 # Create a project from a custom template
-forgeboard template use-custom my-custom-template
+stackweld template use-custom my-custom-template
 ```
 
 Custom templates are stored locally and persist across sessions.
@@ -301,7 +301,7 @@ Custom templates are stored locally and persist across sessions.
 Explore all 83 technologies in the registry interactively:
 
 ```bash
-forgeboard browse
+stackweld browse
 ```
 
 This opens a navigable catalog grouped by category (runtime, frontend, backend, database, orm, auth, styling, service, devops). Select any technology to see its details: supported versions, default port, dependencies, suggested companions, and Docker image.
@@ -309,26 +309,26 @@ This opens a navigable catalog grouped by category (runtime, frontend, backend, 
 To view details about a specific technology or saved stack:
 
 ```bash
-forgeboard info nextjs
-forgeboard info my-stack
+stackweld info nextjs
+stackweld info my-stack
 ```
 
 To list all saved stacks:
 
 ```bash
-forgeboard list
+stackweld list
 ```
 
 ---
 
 ## Docker Runtime Management
 
-Forgeboard generates `docker-compose.yml` files for stacks that include databases and services. Only databases and infrastructure services get Docker containers -- runtimes (Node.js, Python, Go, etc.) run natively on the host.
+Stackweld generates `docker-compose.yml` files for stacks that include databases and services. Only databases and infrastructure services get Docker containers -- runtimes (Node.js, Python, Go, etc.) run natively on the host.
 
 ### Start services
 
 ```bash
-forgeboard up
+stackweld up
 ```
 
 Starts all Docker services defined in the stack's compose file. Runs in detached mode by default.
@@ -337,16 +337,16 @@ Starts all Docker services defined in the stack's compose file. Runs in detached
 
 ```bash
 # Stop and remove containers
-forgeboard down
+stackweld down
 
 # Stop and remove containers AND volumes (deletes data)
-forgeboard down --volumes
+stackweld down --volumes
 ```
 
 ### Check status
 
 ```bash
-forgeboard status
+stackweld status
 ```
 
 Shows the running state of each service (container name, image, status, ports).
@@ -355,25 +355,25 @@ Shows the running state of each service (container name, image, status, ports).
 
 ```bash
 # All services
-forgeboard logs
+stackweld logs
 
 # Specific service
-forgeboard logs postgresql
+stackweld logs postgresql
 
 # Follow log output
-forgeboard logs -f
+stackweld logs -f
 ```
 
 ---
 
 ## Version Management
 
-Forgeboard tracks changes to your stack definitions over time.
+Stackweld tracks changes to your stack definitions over time.
 
 ### Save a version snapshot
 
 ```bash
-forgeboard save my-stack
+stackweld save my-stack
 ```
 
 Creates a versioned snapshot of the current stack state. Each save increments the version number.
@@ -381,7 +381,7 @@ Creates a versioned snapshot of the current stack state. Each save increments th
 ### View version history
 
 ```bash
-forgeboard version list my-stack
+stackweld version list my-stack
 ```
 
 Shows all saved versions with timestamps and summaries of what changed.
@@ -389,7 +389,7 @@ Shows all saved versions with timestamps and summaries of what changed.
 ### Compare versions
 
 ```bash
-forgeboard version diff my-stack 1 3
+stackweld version diff my-stack 1 3
 ```
 
 Shows the differences between version 1 and version 3 -- technologies added, removed, or changed.
@@ -397,7 +397,7 @@ Shows the differences between version 1 and version 3 -- technologies added, rem
 ### Rollback to a previous version
 
 ```bash
-forgeboard version rollback my-stack --to 2
+stackweld version rollback my-stack --to 2
 ```
 
 Restores the stack to the state it was in at version 2.
@@ -411,7 +411,7 @@ Restores the stack to the state it was in at version 2.
 Export a saved stack to a portable file for sharing with teammates or storing in version control:
 
 ```bash
-forgeboard export my-stack --output my-stack.yaml
+stackweld export my-stack --output my-stack.yaml
 ```
 
 The exported file contains the full stack definition: technologies, versions, configuration, and metadata. Both YAML and JSON formats are supported.
@@ -421,7 +421,7 @@ The exported file contains the full stack definition: technologies, versions, co
 Import a stack from a file:
 
 ```bash
-forgeboard import my-stack.yaml
+stackweld import my-stack.yaml
 ```
 
 The stack is validated against the current registry and saved to your local database. If any technology in the file is not present in your registry, the import reports the issue.
@@ -431,7 +431,7 @@ The stack is validated against the current registry and saved to your local data
 Duplicate an existing stack:
 
 ```bash
-forgeboard clone my-stack
+stackweld clone my-stack
 ```
 
 Creates a copy of the stack with a new ID, useful for experimenting with variations without modifying the original.
@@ -440,7 +440,7 @@ Creates a copy of the stack with a new ID, useful for experimenting with variati
 
 ## AI Commands
 
-Forgeboard includes optional commands that use the Anthropic API for suggestions and documentation generation. These commands do not affect the deterministic rules engine -- they are a convenience layer.
+Stackweld includes optional commands that use the Anthropic API for suggestions and documentation generation. These commands do not affect the deterministic rules engine -- they are a convenience layer.
 
 ### Setup
 
@@ -457,7 +457,7 @@ Add it to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.) to persist across s
 Describe your project in natural language and get a recommended stack:
 
 ```bash
-forgeboard ai suggest "SaaS app with user authentication, payments, and a dashboard"
+stackweld ai suggest "SaaS app with user authentication, payments, and a dashboard"
 ```
 
 Returns a list of recommended technologies with reasoning.
@@ -467,7 +467,7 @@ Returns a list of recommended technologies with reasoning.
 Generate project documentation from a stack definition:
 
 ```bash
-forgeboard ai readme my-stack
+stackweld ai readme my-stack
 ```
 
 Produces a README with a technology table, getting started instructions, and architecture overview.
@@ -477,7 +477,7 @@ Produces a README with a technology table, getting started instructions, and arc
 Get an architectural overview of a stack:
 
 ```bash
-forgeboard ai explain my-stack
+stackweld ai explain my-stack
 ```
 
 Describes how the selected technologies fit together, common patterns, and potential considerations.
@@ -489,7 +489,7 @@ Describes how the selected technologies fit together, common patterns, and poten
 The `doctor` command checks that your system has the required tools installed and properly configured:
 
 ```bash
-forgeboard doctor
+stackweld doctor
 ```
 
 It verifies:
@@ -506,7 +506,7 @@ Each check reports a pass/fail status with actionable guidance when something is
 ### Suggested fixes
 
 ```bash
-forgeboard doctor --suggest
+stackweld doctor --suggest
 ```
 
 When a check fails, this flag provides specific installation commands for your platform.
@@ -518,13 +518,13 @@ When a check fails, this flag provides specific installation commands for your p
 View your current configuration:
 
 ```bash
-forgeboard config list
+stackweld config list
 ```
 
 Modify preferences:
 
 ```bash
-forgeboard config set <key> <value>
+stackweld config set <key> <value>
 ```
 
 Available configuration options:
@@ -538,7 +538,7 @@ Available configuration options:
 | `defaultProfile` | Default stack profile (rapid, standard, production, enterprise, lightweight) | `standard` |
 | `theme` | Desktop app theme | `dark` |
 
-Preferences are stored locally in your home directory (`~/.forgeboard/`) and persist across sessions.
+Preferences are stored locally in your home directory (`~/.stackweld/`) and persist across sessions.
 
 ---
 
@@ -548,13 +548,13 @@ Generate completion scripts for your shell:
 
 ```bash
 # Bash
-forgeboard completion bash >> ~/.bashrc
+stackweld completion bash >> ~/.bashrc
 
 # Zsh
-forgeboard completion zsh >> ~/.zshrc
+stackweld completion zsh >> ~/.zshrc
 
 # Fish
-forgeboard completion fish > ~/.config/fish/completions/forgeboard.fish
+stackweld completion fish > ~/.config/fish/completions/stackweld.fish
 ```
 
 After adding the completion script, restart your shell or source the configuration file. Tab completion works for all commands, subcommands, and saved stack names.
@@ -567,7 +567,7 @@ Check how well two technologies work together, or score an entire stack:
 
 ```bash
 # Score compatibility between two technologies (0-100)
-forgeboard score nextjs postgresql
+stackweld score nextjs postgresql
 
 # Example output:
 #   nextjs <-> postgresql
@@ -579,7 +579,7 @@ forgeboard score nextjs postgresql
 #     - No native ORM, needs adapter layer
 
 # Score a full saved stack
-forgeboard score my-stack
+stackweld score my-stack
 ```
 
 **Options:**
@@ -597,10 +597,10 @@ Detect the technology stack of an existing project by inspecting its files:
 
 ```bash
 # Detect stack in current directory
-forgeboard analyze
+stackweld analyze
 
 # Detect stack in a specific path
-forgeboard analyze /home/user/projects/my-app
+stackweld analyze /home/user/projects/my-app
 
 # Example output:
 #   Detected Stack:
@@ -629,7 +629,7 @@ forgeboard analyze /home/user/projects/my-app
 Generate a performance profile for a saved stack:
 
 ```bash
-forgeboard benchmark my-stack
+stackweld benchmark my-stack
 
 # Example output:
 #   Performance Profile: my-stack
@@ -662,7 +662,7 @@ forgeboard benchmark my-stack
 Estimate monthly hosting costs for a stack:
 
 ```bash
-forgeboard cost my-stack
+stackweld cost my-stack
 
 # Example output:
 #   Monthly Cost Estimate: my-stack
@@ -692,7 +692,7 @@ Manage environment variables across `.env.example` and `.env` files:
 
 ```bash
 # Sync .env.example to .env (adds missing keys, preserves existing values)
-forgeboard env sync
+stackweld env sync
 
 # Example output:
 #   Syncing .env.example -> .env
@@ -702,7 +702,7 @@ forgeboard env sync
 #   Done: 2 added, 1 unchanged
 
 # Check for dangerous values in .env files
-forgeboard env check
+stackweld env check
 
 # Example output:
 #   Environment Check:
@@ -726,10 +726,10 @@ forgeboard env check
 Run a comprehensive health audit on a project:
 
 ```bash
-forgeboard health
+stackweld health
 
 # Or specify a path
-forgeboard health /home/user/projects/my-app
+stackweld health /home/user/projects/my-app
 
 # Example output:
 #   Project Health: my-app
@@ -759,7 +759,7 @@ forgeboard health /home/user/projects/my-app
 Preview the generated docker-compose.yml without writing any files:
 
 ```bash
-forgeboard preview my-stack
+stackweld preview my-stack
 
 # Example output (prints YAML to stdout):
 #   version: "3.8"
@@ -796,13 +796,13 @@ Generate deployment configurations for a target platform:
 
 ```bash
 # Generate for a VPS (Dockerfile + nginx config + systemd unit)
-forgeboard deploy my-stack --target vps
+stackweld deploy my-stack --target vps
 
 # Generate for AWS (CloudFormation template)
-forgeboard deploy my-stack --target aws
+stackweld deploy my-stack --target aws
 
 # Generate for GCP (Terraform files)
-forgeboard deploy my-stack --target gcp
+stackweld deploy my-stack --target gcp
 
 # Example output:
 #   Generated Infrastructure as Code:
@@ -829,7 +829,7 @@ forgeboard deploy my-stack --target gcp
 Generate a step-by-step migration plan between two technologies:
 
 ```bash
-forgeboard migrate --from express --to fastify
+stackweld migrate --from express --to fastify
 
 # Example output:
 #   Migration Plan: Express -> Fastify
@@ -868,7 +868,7 @@ forgeboard migrate --from express --to fastify
 Get curated learning resources for any technology in the catalog:
 
 ```bash
-forgeboard learn fastapi
+stackweld learn fastapi
 
 # Example output:
 #   Learning Resources: FastAPI
@@ -903,17 +903,17 @@ Share a stack definition via an encoded URL without any cloud service:
 
 ```bash
 # Generate a shareable URL
-forgeboard share my-stack
+stackweld share my-stack
 
 # Example output:
 #   Shareable URL:
-#   forgeboard://import/eyJuYW1lIjoibXktc2FhcyIsInRlY2hub2xvZ2llcyI6...
+#   stackweld://import/eyJuYW1lIjoibXktc2FhcyIsInRlY2hub2xvZ2llcyI6...
 #
 #   Or copy this command:
-#   forgeboard import-url "forgeboard://import/eyJuYW1lIjoi..."
+#   stackweld import-url "stackweld://import/eyJuYW1lIjoi..."
 
 # Import a stack from a shared URL
-forgeboard import-url "forgeboard://import/eyJuYW1lIjoibXktc2FhcyI..."
+stackweld import-url "stackweld://import/eyJuYW1lIjoibXktc2FhcyI..."
 
 # Example output:
 #   Imported stack: my-saas
@@ -935,7 +935,7 @@ forgeboard import-url "forgeboard://import/eyJuYW1lIjoibXktc2FhcyI..."
 Compare two saved stacks side by side:
 
 ```bash
-forgeboard compare stack-a stack-b
+stackweld compare stack-a stack-b
 
 # Example output:
 #   Comparing: stack-a vs stack-b
@@ -965,12 +965,12 @@ forgeboard compare stack-a stack-b
 
 ## Team Standards (Lint)
 
-Validate a stack against team-defined standards in a `.forgeboardrc` file:
+Validate a stack against team-defined standards in a `.stackweldrc` file:
 
 ```bash
-forgeboard lint
+stackweld lint
 
-# Example .forgeboardrc (JSON):
+# Example .stackweldrc (JSON):
 # {
 #   "required": ["typescript", "docker", "biome"],
 #   "banned": ["webpack", "eslint"],
@@ -981,7 +981,7 @@ forgeboard lint
 # }
 
 # Example output:
-#   Linting stack against .forgeboardrc
+#   Linting stack against .stackweldrc
 #   [PASS] typescript is present
 #   [PASS] docker is present
 #   [FAIL] biome is missing (required by team standards)
@@ -996,35 +996,35 @@ forgeboard lint
 
 | Flag | Description |
 |------|-------------|
-| `--config <path>` | Path to standards file (default: `.forgeboardrc`) |
+| `--config <path>` | Path to standards file (default: `.stackweldrc`) |
 | `--json` | Output as JSON |
 
 ---
 
 ## Plugin Management
 
-Extend Forgeboard with community plugins that add commands, templates, or technology definitions:
+Extend Stackweld with community plugins that add commands, templates, or technology definitions:
 
 ```bash
 # List installed plugins
-forgeboard plugin list
+stackweld plugin list
 
 # Install a plugin
-forgeboard plugin install @forgeboard/plugin-aws
+stackweld plugin install @stackweld/plugin-aws
 
 # Remove a plugin
-forgeboard plugin remove @forgeboard/plugin-aws
+stackweld plugin remove @stackweld/plugin-aws
 
 # Show plugin details
-forgeboard plugin info @forgeboard/plugin-aws
+stackweld plugin info @stackweld/plugin-aws
 
 # Example output (list):
 #   Installed Plugins:
 #   ┌──────────────────────────┬─────────┬──────────────────────────┐
 #   │ Name                     │ Version │ Provides                 │
 #   ├──────────────────────────┼─────────┼──────────────────────────┤
-#   │ @forgeboard/plugin-aws   │ 1.0.0   │ 3 commands, 2 templates  │
-#   │ @forgeboard/plugin-k8s   │ 0.5.0   │ 1 command, 5 tech defs   │
+#   │ @stackweld/plugin-aws   │ 1.0.0   │ 3 commands, 2 templates  │
+#   │ @stackweld/plugin-k8s   │ 0.5.0   │ 1 command, 5 tech defs   │
 #   └──────────────────────────┴─────────┴──────────────────────────┘
 ```
 
@@ -1038,7 +1038,7 @@ forgeboard plugin info @forgeboard/plugin-aws
 
 ## Troubleshooting
 
-### `command not found: forgeboard`
+### `command not found: stackweld`
 
 The CLI is not linked globally. Either:
 - Run `cd packages/cli && pnpm link --global` to create the global link.
@@ -1046,21 +1046,21 @@ The CLI is not linked globally. Either:
 
 ### `pnpm install` fails with version error
 
-Forgeboard requires pnpm 10 or later. Check your version with `pnpm --version` and update with `npm install -g pnpm@latest`.
+Stackweld requires pnpm 10 or later. Check your version with `pnpm --version` and update with `npm install -g pnpm@latest`.
 
-### `forgeboard up` fails with "docker compose not found"
+### `stackweld up` fails with "docker compose not found"
 
-Ensure Docker Desktop (macOS/Windows) or Docker Engine + docker-compose-plugin (Linux) is installed. Forgeboard uses `docker compose` (v2 syntax), not the legacy `docker-compose` binary.
+Ensure Docker Desktop (macOS/Windows) or Docker Engine + docker-compose-plugin (Linux) is installed. Stackweld uses `docker compose` (v2 syntax), not the legacy `docker-compose` binary.
 
 If you use the legacy binary, configure it:
 
 ```bash
-forgeboard config set dockerComposeCommand "docker-compose"
+stackweld config set dockerComposeCommand "docker-compose"
 ```
 
 ### Scaffold fails with "create-next-app not found"
 
-Forgeboard delegates to official CLI tools during scaffolding. Ensure the required tools are available globally. For Node.js frameworks, `npx` is used automatically. For Python frameworks, ensure `pip` or `pipx` is available.
+Stackweld delegates to official CLI tools during scaffolding. Ensure the required tools are available globally. For Node.js frameworks, `npx` is used automatically. For Python frameworks, ensure `pip` or `pipx` is available.
 
 ### Desktop app fails to build on Linux
 
@@ -1078,11 +1078,11 @@ sudo dnf install webkit2gtk4.1-devel librsvg2-devel patchelf openssl-devel libap
 
 ### TypeScript errors during build
 
-Run `pnpm clean && pnpm install && pnpm build` to rebuild from a clean state. Forgeboard uses TypeScript strict mode and ESM -- ensure your Node.js version is 22 or later.
+Run `pnpm clean && pnpm install && pnpm build` to rebuild from a clean state. Stackweld uses TypeScript strict mode and ESM -- ensure your Node.js version is 22 or later.
 
 ### SQLite errors
 
-The local database is stored in `~/.forgeboard/forgeboard.db`. If it becomes corrupted, delete it and Forgeboard will recreate it on next run. Note that this removes all saved stacks.
+The local database is stored in `~/.stackweld/stackweld.db`. If it becomes corrupted, delete it and Stackweld will recreate it on next run. Note that this removes all saved stacks.
 
 ### AI commands return errors
 

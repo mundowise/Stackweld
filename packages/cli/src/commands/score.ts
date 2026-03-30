@@ -1,11 +1,11 @@
 /**
- * forgeboard score <techA> [techB] — Show compatibility score between technologies.
+ * stackweld score <techA> [techB] — Show compatibility score between technologies.
  *
  * Two techs: detailed compatibility report.
  * One tech: top 5 best and top 3 worst pairings from the catalog.
  */
 
-import { scoreCompatibility } from "@forgeboard/core";
+import { scoreCompatibility } from "@stackweld/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine } from "../ui/context.js";

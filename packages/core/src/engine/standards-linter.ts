@@ -1,6 +1,6 @@
 /**
  * Stack Standards Linter — Validates stacks against team-defined standards.
- * Reads .forgeboardrc config and checks compliance.
+ * Reads .stackweldrc config and checks compliance.
  */
 
 import * as fs from "node:fs";
@@ -195,7 +195,7 @@ export function lintStack(stack: StackDefinition, standards: StackStandards): Li
 // ─── Config Loader ────────────────────────────────────
 
 export function loadStandards(projectPath: string): StackStandards | null {
-  const configPath = path.resolve(projectPath, ".forgeboardrc");
+  const configPath = path.resolve(projectPath, ".stackweldrc");
   if (!fs.existsSync(configPath)) {
     return null;
   }

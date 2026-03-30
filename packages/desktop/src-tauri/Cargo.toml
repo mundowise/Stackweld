@@ -1,12 +1,12 @@
 [package]
-name = "forgeboard-desktop"
+name = "stackweld-desktop"
 version = "0.1.0"
-description = "Forgeboard Desktop App"
+description = "Stackweld Desktop App"
 authors = ["Orlando Fernandez"]
 edition = "2021"
 
 [lib]
-name = "forgeboard_desktop_lib"
+name = "stackweld_desktop_lib"
 crate-type = ["lib", "cdylib", "staticlib"]
 
 [build-dependencies]

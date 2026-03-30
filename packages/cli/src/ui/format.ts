@@ -1,9 +1,9 @@
 /**
  * Shared formatting utilities for CLI output.
- * Premium visual design for Forgeboard CLI.
+ * Premium visual design for Stackweld CLI.
  */
 
-import type { StackDefinition, Technology, Template, ValidationResult } from "@forgeboard/core";
+import type { StackDefinition, Technology, Template, ValidationResult } from "@stackweld/core";
 import chalk from "chalk";
 
 // ─── Constants ─────────────────────────────────────────
@@ -66,7 +66,7 @@ export function label(key: string, value: string): string {
 export function banner(version: string): string {
   const lines = [
     "",
-    BRAND_COLOR.bold("  Forgeboard") + chalk.dim(` v${version}`),
+    BRAND_COLOR.bold("  Stackweld") + chalk.dim(` v${version}`),
     chalk.dim("  The operating system for your dev stacks"),
     "",
   ];

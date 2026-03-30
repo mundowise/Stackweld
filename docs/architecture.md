@@ -1,4 +1,4 @@
-# Forgeboard — Architecture Documentation
+# Stackweld — Architecture Documentation
 
 > Version: 0.2.0 | Last updated: 2026-03-30 | Covers: Core, Registry, Templates, CLI, Desktop
 
@@ -6,9 +6,9 @@
 
 ## System Overview
 
-Forgeboard is a local-first developer tool that generates complete, working project structures from a stack definition. It eliminates manual project setup by delegating to official scaffold tools (create-next-app, django-admin, etc.) and layering additional configuration on top.
+Stackweld is a local-first developer tool that generates complete, working project structures from a stack definition. It eliminates manual project setup by delegating to official scaffold tools (create-next-app, django-admin, etc.) and layering additional configuration on top.
 
-**Core principle:** Forgeboard never replaces official CLI tools — it orchestrates them.
+**Core principle:** Stackweld never replaces official CLI tools — it orchestrates them.
 
 ---
 
@@ -27,7 +27,7 @@ View the live diagram: https://excalidraw.com/#json=BP8xETF3JbxkKp41nNR99,K8_-h6
             │ imports                            │ Tauri IPC
             ▼                                   ▼
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│  Core Package (@forgeboard/core)                                             │
+│  Core Package (@stackweld/core)                                             │
 │  ┌────────────────┐  ┌───────────────┐  ┌─────────────────────────────────┐ │
 │  │  Stack Engine  │  │ Rules Engine  │  │  Scaffold Orchestrator          │ │
 │  │  CRUD+version  │  │ BFS validate  │  │  Docker Compose + CI + env      │ │
@@ -43,7 +43,7 @@ View the live diagram: https://excalidraw.com/#json=BP8xETF3JbxkKp41nNR99,K8_-h6
 │  │  learn · plugin                                                        │  │
 │  └────────────────────────────────────────────────────────────────────────┘  │
 │  ┌─────────────────────────┐                                                 │
-│  │  SQLite (better-sqlite3)│  ~/.forgeboard/forgeboard.db                   │
+│  │  SQLite (better-sqlite3)│  ~/.stackweld/stackweld.db                   │
 │  └─────────────────────────┘                                                 │
 └────────────────────────────────┬─────────────────────────────────────────────┘
                                  │ imports
@@ -137,7 +137,7 @@ Thin wrapper around `docker compose` for a project's `docker-compose.yml`. Opera
 | Stack Diff | `engine/diff.ts` | `diffStacks()` | Compare two stack definitions (added, removed, changed, unchanged) |
 | Sharing | `engine/share.ts` | `serializeStack()`, `deserializeStack()` | Encode/decode stacks as base64 URLs for cloudless sharing |
 | Infrastructure | `engine/infra.ts` | `generateInfra()` | Generate IaC files for VPS, AWS, and GCP deployment |
-| Lint | `engine/lint.ts` | `lintStack()` | Validate stacks against team standards (.forgeboardrc) |
+| Lint | `engine/lint.ts` | `lintStack()` | Validate stacks against team standards (.stackweldrc) |
 | Benchmark | `engine/benchmark.ts` | `profilePerformance()` | Heuristic performance estimates (cold start, build time, memory) |
 | Cost | `engine/cost.ts` | `estimateCost()` | Monthly hosting cost estimates across providers |
 | Learn | `engine/learn.ts` | `getResources()` | Curated learning resources per technology |
@@ -157,7 +157,7 @@ Schema (5 tables):
 | `project_instances` | Scaffolded projects on disk (path, template_id, last_opened) |
 | `project_services` | Runtime service state per project (container_id, status, port) |
 
-Database location: `~/.forgeboard/forgeboard.db`
+Database location: `~/.stackweld/stackweld.db`
 
 ---
 
@@ -191,7 +191,7 @@ Templates are TypeScript modules that define a `Template` object. Each template 
 - `hooks[]` — pre/post scaffold actions with optional user confirmation
 - `variables` — template substitution values (`{{projectName}}`)
 
-Custom templates follow the same `Template` interface and are stored locally in `~/.forgeboard/templates/`.
+Custom templates follow the same `Template` interface and are stored locally in `~/.stackweld/templates/`.
 
 ---
 
@@ -221,7 +221,7 @@ Built with Tauri 2 (Rust backend + WebView frontend). The React frontend communi
 
 **Status:** Accepted — 2026-03-28
 
-**Context:** Forgeboard has five distinct packages with a clear dependency graph. A monorepo avoids duplication of types and utilities across packages. The toolchain choice affects developer experience significantly.
+**Context:** Stackweld has five distinct packages with a clear dependency graph. A monorepo avoids duplication of types and utilities across packages. The toolchain choice affects developer experience significantly.
 
 **Decision:** Use Turborepo for build orchestration and pnpm workspaces for package management.
 
@@ -240,7 +240,7 @@ Built with Tauri 2 (Rust backend + WebView frontend). The React frontend communi
 
 **Status:** Accepted — 2026-03-28
 
-**Context:** Forgeboard is a local-first tool. Stack data lives on the developer's machine. The data model is simple (five tables, no complex queries). Writes happen during scaffold (infrequent). Reads happen during validation and list commands (frequent, small datasets).
+**Context:** Stackweld is a local-first tool. Stack data lives on the developer's machine. The data model is simple (five tables, no complex queries). Writes happen during scaffold (infrequent). Reads happen during validation and list commands (frequent, small datasets).
 
 **Decision:** Use `better-sqlite3` with its synchronous API. No async/await for database operations.
 
@@ -278,9 +278,9 @@ Built with Tauri 2 (Rust backend + WebView frontend). The React frontend communi
 
 **Status:** Accepted — 2026-03-28
 
-**Context:** Forgeboard could generate all project files from templates. This would give full control but requires maintaining templates that track every framework's evolving conventions.
+**Context:** Stackweld could generate all project files from templates. This would give full control but requires maintaining templates that track every framework's evolving conventions.
 
-**Decision:** For technologies with an `officialScaffold` command, Forgeboard runs that command and layers configuration on top. Forgeboard never replaces the official generator.
+**Decision:** For technologies with an `officialScaffold` command, Stackweld runs that command and layers configuration on top. Stackweld never replaces the official generator.
 
 **Alternatives considered:**
 1. Full template generation — rejected because maintaining accurate templates for 83 technologies is unsustainable. Official CLIs produce the correct, current structure for their framework.
@@ -288,7 +288,7 @@ Built with Tauri 2 (Rust backend + WebView frontend). The React frontend communi
 
 **Consequences:**
 - Positive: Generated projects use the official structure that framework users expect.
-- Positive: Framework updates are absorbed automatically — Forgeboard does not need to be updated when Next.js changes its default structure.
+- Positive: Framework updates are absorbed automatically — Stackweld does not need to be updated when Next.js changes its default structure.
 - Negative: Scaffold requires network access (npx downloads packages) and takes longer than pure template generation.
 
 ---
@@ -297,12 +297,12 @@ Built with Tauri 2 (Rust backend + WebView frontend). The React frontend communi
 
 **Status:** Accepted — 2026-03-28
 
-**Context:** A visual interface for Forgeboard requires a cross-platform desktop framework. The main candidates are Electron and Tauri.
+**Context:** A visual interface for Stackweld requires a cross-platform desktop framework. The main candidates are Electron and Tauri.
 
 **Decision:** Tauri 2 with React 19 frontend.
 
 **Alternatives considered:**
-1. Electron — rejected because Electron bundles Chromium (~150MB) and a Node.js runtime. A Forgeboard desktop binary would be 200MB+. Tauri uses the system WebView and a Rust backend, producing binaries under 10MB.
+1. Electron — rejected because Electron bundles Chromium (~150MB) and a Node.js runtime. A Stackweld desktop binary would be 200MB+. Tauri uses the system WebView and a Rust backend, producing binaries under 10MB.
 2. Native (Swift/Kotlin/Win32) — rejected because a React frontend can be shared with the CLI's web-based output formats and reduces maintenance to one codebase.
 
 **Consequences:**
@@ -313,7 +313,7 @@ Built with Tauri 2 (Rust backend + WebView frontend). The React frontend communi
 
 ---
 
-## Data Flow: `forgeboard generate`
+## Data Flow: `stackweld generate`
 
 ```
 User input (CLI flags or wizard)
@@ -344,7 +344,7 @@ Project on disk — ready to code
 
 ## Configuration
 
-User preferences are stored in `~/.forgeboard/config.json`. Database is at `~/.forgeboard/forgeboard.db`. Custom templates are stored in `~/.forgeboard/templates/`.
+User preferences are stored in `~/.stackweld/config.json`. Database is at `~/.stackweld/stackweld.db`. Custom templates are stored in `~/.stackweld/templates/`.
 
 | Preference key | Default | Options |
 |---------------|---------|---------|

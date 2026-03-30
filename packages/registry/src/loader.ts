@@ -4,7 +4,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { Technology } from "@forgeboard/core";
+import type { Technology } from "@stackweld/core";
 import Ajv from "ajv";
 import { parse as parseYaml } from "yaml";
 import { technologySchema } from "./schema.js";

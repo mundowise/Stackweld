@@ -38,7 +38,7 @@ let engine: StackEngine;
 
 beforeEach(() => {
   // Use a temp file for the database so tests are isolated
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "forgeboard-test-"));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "stackweld-test-"));
   tmpDbPath = path.join(tmpDir, "test.db");
   // Initialize the database at the temp path
   getDatabase(tmpDbPath);

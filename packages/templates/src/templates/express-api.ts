@@ -1,4 +1,4 @@
-import type { Template } from "@forgeboard/core";
+import type { Template } from "@stackweld/core";
 
 export const expressApi: Template = {
   id: "express-api",

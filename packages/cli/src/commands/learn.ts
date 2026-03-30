@@ -1,9 +1,9 @@
 /**
- * forgeboard learn <technology> — Show learning resources for a technology.
+ * stackweld learn <technology> — Show learning resources for a technology.
  */
 
-import type { LearningResource } from "@forgeboard/registry";
-import { getLearningResources } from "@forgeboard/registry";
+import type { LearningResource } from "@stackweld/registry";
+import { getLearningResources } from "@stackweld/registry";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine } from "../ui/context.js";

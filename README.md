@@ -1,8 +1,8 @@
-# Forgeboard
+# Stackweld
 
-[![CI](https://github.com/mundowise/Forgeboard/actions/workflows/ci.yml/badge.svg)](https://github.com/mundowise/Forgeboard/actions/workflows/ci.yml)
+[![CI](https://github.com/mundowise/Stackweld/actions/workflows/ci.yml/badge.svg)](https://github.com/mundowise/Stackweld/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](https://github.com/mundowise/Forgeboard/releases)
+[![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](https://github.com/mundowise/Stackweld/releases)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 [![Tauri](https://img.shields.io/badge/Tauri-2.0-orange.svg)](https://tauri.app/)
 
@@ -10,7 +10,7 @@ The operating system for your dev stacks. Define, validate, scaffold, launch, ve
 
 ## What it does
 
-Forgeboard eliminates the hours spent setting up new projects. Select your technologies, and it generates a complete, working project with proper directory structure, Docker services, environment files, CI pipeline, scripts, and all dependencies installed -- ready to code.
+Stackweld eliminates the hours spent setting up new projects. Select your technologies, and it generates a complete, working project with proper directory structure, Docker services, environment files, CI pipeline, scripts, and all dependencies installed -- ready to code.
 
 ## Key Features
 
@@ -31,7 +31,7 @@ Forgeboard eliminates the hours spent setting up new projects. Select your techn
 - **Stack sharing** via encoded URLs (no cloud needed)
 - **Infrastructure as Code** generation for VPS, AWS, and GCP
 - **Learning paths** with curated resources per technology
-- **Team standards** enforcement via `.forgeboardrc` linting
+- **Team standards** enforcement via `.stackweldrc` linting
 - **Plugin system** for community extensions
 
 ## Compatibility
@@ -54,8 +54,8 @@ Forgeboard eliminates the hours spent setting up new projects. Select your techn
 
 ```bash
 # Clone the repository
-git clone https://github.com/Xplus-technologies-open-in-process/Forgeboard.git
-cd Forgeboard
+git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+cd Stackweld
 
 # Install dependencies
 pnpm install
@@ -68,7 +68,7 @@ node packages/cli/dist/index.js --help
 
 # Or link globally
 cd packages/cli && pnpm link --global
-forgeboard --help
+stackweld --help
 ```
 
 ### Desktop App
@@ -85,7 +85,7 @@ cd packages/desktop
 pnpm tauri:build
 
 # Run it
-./src-tauri/target/release/forgeboard-desktop
+./src-tauri/target/release/stackweld-desktop
 ```
 
 ## CLI Usage
@@ -94,10 +94,10 @@ pnpm tauri:build
 
 ```bash
 # Interactive mode -- wizard guides you through everything
-forgeboard init
+stackweld init
 
 # One-shot generation -- specify everything at once
-forgeboard generate \
+stackweld generate \
   --name "my-saas" \
   --path "/home/user/projects" \
   --techs "nextjs,fastapi,postgresql,redis,prisma,tailwindcss,nextauth,vitest,docker" \
@@ -105,7 +105,7 @@ forgeboard generate \
   --git
 
 # From a built-in template
-forgeboard create t3-stack --path /home/user/projects
+stackweld create t3-stack --path /home/user/projects
 ```
 
 ### What gets generated (example: Next.js + FastAPI full-stack)
@@ -141,61 +141,61 @@ my-saas/
 
 | Command | Description |
 |---------|-------------|
-| `forgeboard init` | Interactive stack creation wizard |
-| `forgeboard generate` | One-shot project generation (name + path + techs + profile) |
-| `forgeboard create <id>` | Scaffold from a template |
-| `forgeboard list` | List saved stacks |
-| `forgeboard info <id>` | Show stack or technology details |
-| `forgeboard browse` | Browse technology catalog |
-| `forgeboard browse --templates` | Browse templates |
-| `forgeboard doctor` | Check system requirements |
-| `forgeboard doctor --suggest` | Suggest fixes for missing tools |
-| `forgeboard up` | Start Docker services |
-| `forgeboard down` | Stop Docker services |
-| `forgeboard down --volumes` | Stop and remove volumes |
-| `forgeboard status` | Show running service status |
-| `forgeboard logs [service]` | View service logs |
-| `forgeboard logs -f` | Follow log output |
-| `forgeboard export <id>` | Export stack to YAML or JSON |
-| `forgeboard import <file>` | Import stack from file |
-| `forgeboard save <id>` | Save version snapshot |
-| `forgeboard delete <id>` | Delete a stack |
-| `forgeboard clone <id>` | Duplicate a stack |
-| `forgeboard scaffold <id>` | Generate project files from saved stack |
-| `forgeboard version list <id>` | Show version history |
-| `forgeboard version diff <id> <a> <b>` | Compare two versions |
-| `forgeboard version rollback <id> --to <v>` | Rollback to version |
-| `forgeboard template list` | List built-in templates |
-| `forgeboard template save <id>` | Save stack as custom template |
-| `forgeboard template saved` | List your custom templates |
-| `forgeboard template use-custom <id>` | Create from custom template |
-| `forgeboard config list` | Show preferences |
-| `forgeboard config set <key> <value>` | Set a preference |
-| `forgeboard ai suggest "<desc>"` | Get stack suggestion from description |
-| `forgeboard ai readme <id>` | Generate README from stack |
-| `forgeboard ai explain <id>` | Explain stack architecture |
-| `forgeboard completion <shell>` | Generate shell completions (bash/zsh/fish) |
+| `stackweld init` | Interactive stack creation wizard |
+| `stackweld generate` | One-shot project generation (name + path + techs + profile) |
+| `stackweld create <id>` | Scaffold from a template |
+| `stackweld list` | List saved stacks |
+| `stackweld info <id>` | Show stack or technology details |
+| `stackweld browse` | Browse technology catalog |
+| `stackweld browse --templates` | Browse templates |
+| `stackweld doctor` | Check system requirements |
+| `stackweld doctor --suggest` | Suggest fixes for missing tools |
+| `stackweld up` | Start Docker services |
+| `stackweld down` | Stop Docker services |
+| `stackweld down --volumes` | Stop and remove volumes |
+| `stackweld status` | Show running service status |
+| `stackweld logs [service]` | View service logs |
+| `stackweld logs -f` | Follow log output |
+| `stackweld export <id>` | Export stack to YAML or JSON |
+| `stackweld import <file>` | Import stack from file |
+| `stackweld save <id>` | Save version snapshot |
+| `stackweld delete <id>` | Delete a stack |
+| `stackweld clone <id>` | Duplicate a stack |
+| `stackweld scaffold <id>` | Generate project files from saved stack |
+| `stackweld version list <id>` | Show version history |
+| `stackweld version diff <id> <a> <b>` | Compare two versions |
+| `stackweld version rollback <id> --to <v>` | Rollback to version |
+| `stackweld template list` | List built-in templates |
+| `stackweld template save <id>` | Save stack as custom template |
+| `stackweld template saved` | List your custom templates |
+| `stackweld template use-custom <id>` | Create from custom template |
+| `stackweld config list` | Show preferences |
+| `stackweld config set <key> <value>` | Set a preference |
+| `stackweld ai suggest "<desc>"` | Get stack suggestion from description |
+| `stackweld ai readme <id>` | Generate README from stack |
+| `stackweld ai explain <id>` | Explain stack architecture |
+| `stackweld completion <shell>` | Generate shell completions (bash/zsh/fish) |
 | **Analysis** | |
-| `forgeboard score <techA> [techB]` | Compatibility score (0-100) between technologies |
-| `forgeboard analyze [path]` | Detect stack from existing project |
-| `forgeboard benchmark <id>` | Performance profile for a stack |
-| `forgeboard cost <id>` | Estimate monthly hosting costs |
+| `stackweld score <techA> [techB]` | Compatibility score (0-100) between technologies |
+| `stackweld analyze [path]` | Detect stack from existing project |
+| `stackweld benchmark <id>` | Performance profile for a stack |
+| `stackweld cost <id>` | Estimate monthly hosting costs |
 | **Environment** | |
-| `forgeboard env [sync\|check]` | Sync .env.example with .env, detect dangerous values |
-| `forgeboard health [path]` | Health check (secrets, .gitignore, TypeScript strict, etc.) |
+| `stackweld env [sync\|check]` | Sync .env.example with .env, detect dangerous values |
+| `stackweld health [path]` | Health check (secrets, .gitignore, TypeScript strict, etc.) |
 | **Scaffolding** | |
-| `forgeboard preview <id>` | Preview docker-compose.yml without generating files |
-| `forgeboard deploy <id> --target <provider>` | Generate Infrastructure as Code (vps, aws, gcp) |
+| `stackweld preview <id>` | Preview docker-compose.yml without generating files |
+| `stackweld deploy <id> --target <provider>` | Generate Infrastructure as Code (vps, aws, gcp) |
 | **Migration & Learning** | |
-| `forgeboard migrate --from <tech> --to <tech>` | Step-by-step migration plan |
-| `forgeboard learn <technology>` | Learning resources for a technology |
+| `stackweld migrate --from <tech> --to <tech>` | Step-by-step migration plan |
+| `stackweld learn <technology>` | Learning resources for a technology |
 | **Collaboration** | |
-| `forgeboard share <id>` | Generate shareable URL (no cloud needed) |
-| `forgeboard import-url <url>` | Import from shared URL |
-| `forgeboard compare <a> <b>` | Compare two stacks side by side |
-| `forgeboard lint` | Validate stack against team standards (.forgeboardrc) |
+| `stackweld share <id>` | Generate shareable URL (no cloud needed) |
+| `stackweld import-url <url>` | Import from shared URL |
+| `stackweld compare <a> <b>` | Compare two stacks side by side |
+| `stackweld lint` | Validate stack against team standards (.stackweldrc) |
 | **Extensibility** | |
-| `forgeboard plugin list\|install\|remove\|info` | Plugin management |
+| `stackweld plugin list\|install\|remove\|info` | Plugin management |
 
 ### Technology catalog (83 technologies)
 

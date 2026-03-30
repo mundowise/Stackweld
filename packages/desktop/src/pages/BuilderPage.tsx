@@ -132,7 +132,7 @@ export function BuilderPage() {
     } else {
       setCreateResult({
         success: false,
-        message: `Project creation requires the Tauri desktop app.\n\nTo create from CLI:\n  forgeboard generate --name "${builderName}" --path "${projectPath}" --techs "${techList}" --profile "${builderProfile}" --git\n\nOr use the compiled app:\n  ./packages/desktop/src-tauri/target/release/forgeboard-desktop`,
+        message: `Project creation requires the Tauri desktop app.\n\nTo create from CLI:\n  stackweld generate --name "${builderName}" --path "${projectPath}" --techs "${techList}" --profile "${builderProfile}" --git\n\nOr use the compiled app:\n  ./packages/desktop/src-tauri/target/release/stackweld-desktop`,
       });
     }
     setCreating(false);

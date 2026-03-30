@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a bug in Forgeboard
+about: Report a bug in Stackweld
 title: '[Bug] '
 labels: bug
 assignees: ''
@@ -23,7 +23,7 @@ A clear description of the bug.
 ## Environment
 - OS:
 - Node.js version:
-- Forgeboard version:
+- Stackweld version:
 - Desktop or CLI:
 
 ## Screenshots / Logs

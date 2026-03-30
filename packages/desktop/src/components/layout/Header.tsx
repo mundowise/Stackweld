@@ -17,7 +17,7 @@ export function Header() {
   return (
     <header className="h-14 bg-zinc-900/50 border-b border-zinc-800 flex items-center justify-between px-6 backdrop-blur-sm">
       <h1 className="text-lg font-semibold text-zinc-100">
-        {pageTitles[currentPage] || "Forgeboard"}
+        {pageTitles[currentPage] || "Stackweld"}
       </h1>
 
       <div className="relative w-72">

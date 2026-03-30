@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Forgeboard CLI — The operating system for your dev stacks.
+ * Stackweld CLI — The operating system for your dev stacks.
  */
 
 import chalk from "chalk";
@@ -49,7 +49,7 @@ const VERSION = "0.1.0";
 const program = new Command();
 
 program
-  .name("forgeboard")
+  .name("stackweld")
   .description("The operating system for your dev stacks")
   .version(VERSION, "-V, --version", "Show version number")
   .addCommand(initCommand)
@@ -148,7 +148,7 @@ if (process.argv.length <= 2) {
   console.log(`${chalk.dim("      config          ")}Manage preferences`);
   console.log(`${chalk.dim("      completion      ")}Generate shell completions`);
   console.log("");
-  console.log(chalk.dim(`  Run ${chalk.white("forgeboard <command> --help")} for detailed usage.`));
+  console.log(chalk.dim(`  Run ${chalk.white("stackweld <command> --help")} for detailed usage.`));
   console.log("");
   process.exit(0);
 }
@@ -158,7 +158,7 @@ program.parseAsync(process.argv).catch((err) => {
     const cmd = process.argv[2];
     console.error(chalk.red(`\u2716 Unknown command: "${cmd}"`));
     console.error(
-      chalk.dim(`  Run ${chalk.white("forgeboard --help")} to see available commands.`),
+      chalk.dim(`  Run ${chalk.white("stackweld --help")} to see available commands.`),
     );
     process.exit(1);
   }

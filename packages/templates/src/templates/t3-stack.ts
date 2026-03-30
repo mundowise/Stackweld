@@ -1,4 +1,4 @@
-import type { Template } from "@forgeboard/core";
+import type { Template } from "@stackweld/core";
 
 export const t3Stack: Template = {
   id: "t3-stack",

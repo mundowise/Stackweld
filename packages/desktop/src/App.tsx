@@ -40,7 +40,7 @@ export function App() {
       <div className="flex items-center justify-center h-screen bg-zinc-950">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm text-zinc-500 mt-4">Loading Forgeboard...</p>
+          <p className="text-sm text-zinc-500 mt-4">Loading Stackweld...</p>
         </div>
       </div>
     );

@@ -28,7 +28,7 @@ export { profilePerformance } from "./engine/performance-profiler.js";
 export type {
   PluginCommand,
   PluginManifest,
-  ForgeboardPlugin,
+  StackweldPlugin,
 } from "./engine/plugin-loader.js";
 export {
   getPluginDir,

@@ -34,7 +34,7 @@ export function Sidebar() {
       <div className="p-4 border-b border-zinc-800">
         <div className="flex items-center gap-2">
           <Layers className="w-6 h-6 text-indigo-400" />
-          <span className="font-bold text-lg tracking-tight">Forgeboard</span>
+          <span className="font-bold text-lg tracking-tight">Stackweld</span>
         </div>
         <p className="text-xs text-zinc-500 mt-1">Dev stack OS</p>
       </div>

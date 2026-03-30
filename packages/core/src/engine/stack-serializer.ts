@@ -11,7 +11,7 @@ export interface ShareableStack {
   technologies: Array<{ id: string; version?: string; port?: number }>;
 }
 
-const DEFAULT_BASE_URL = "https://forgeboard.dev/s/#";
+const DEFAULT_BASE_URL = "https://stackweld.dev/s/#";
 
 /**
  * Compress a stack into a URL-safe base64 string.

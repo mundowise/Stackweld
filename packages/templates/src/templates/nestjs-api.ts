@@ -1,4 +1,4 @@
-import type { Template } from "@forgeboard/core";
+import type { Template } from "@stackweld/core";
 
 export const nestjsApi: Template = {
   id: "nestjs-api",

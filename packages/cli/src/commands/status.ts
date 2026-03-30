@@ -1,5 +1,5 @@
 /**
- * forgeboard status — Show status of Docker services.
+ * stackweld status — Show status of Docker services.
  */
 
 import * as path from "node:path";
@@ -36,7 +36,7 @@ export const statusCommand = new Command("status")
     }
 
     if (services.length === 0) {
-      console.log(emptyState("No services running.", "Run `forgeboard up` to start services."));
+      console.log(emptyState("No services running.", "Run `stackweld up` to start services."));
       return;
     }
 

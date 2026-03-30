@@ -1,5 +1,5 @@
 /**
- * forgeboard logs [service] — Show logs from Docker services.
+ * stackweld logs [service] — Show logs from Docker services.
  */
 
 import * as path from "node:path";
@@ -27,7 +27,7 @@ export const logsCommand = new Command("logs")
     const composePath = runtime.composeExists(projectDir);
     if (!composePath) {
       console.error(error(`No docker-compose.yml found in ${projectDir}`));
-      console.error(chalk.dim("  Run `forgeboard scaffold` to generate one from a stack."));
+      console.error(chalk.dim("  Run `stackweld scaffold` to generate one from a stack."));
       process.exit(1);
     }
 

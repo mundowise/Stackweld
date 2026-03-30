@@ -46,7 +46,7 @@ export function SettingsPage() {
       </Card>
 
       <Card>
-        <h2 className="font-semibold mb-4">About Forgeboard</h2>
+        <h2 className="font-semibold mb-4">About Stackweld</h2>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span className="text-zinc-500">Version</span>

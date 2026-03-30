@@ -1,5 +1,5 @@
 /**
- * forgeboard delete <id> — Delete a saved stack.
+ * stackweld delete <id> — Delete a saved stack.
  */
 
 import { confirm } from "@inquirer/prompts";

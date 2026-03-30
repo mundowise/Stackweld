@@ -1,5 +1,5 @@
 /**
- * forgeboard info <id> — Show detailed information about a stack or technology.
+ * stackweld info <id> — Show detailed information about a stack or technology.
  */
 
 import chalk from "chalk";

@@ -1,10 +1,10 @@
 /**
- * forgeboard init — Initialize Forgeboard in the current directory or interactively create a new stack.
+ * stackweld init — Initialize Stackweld in the current directory or interactively create a new stack.
  */
 
 import { checkbox, confirm, input, select } from "@inquirer/prompts";
-import type { StackProfile, StackTechnology } from "@forgeboard/core";
-import { getAllTemplates } from "@forgeboard/templates";
+import type { StackProfile, StackTechnology } from "@stackweld/core";
+import { getAllTemplates } from "@stackweld/templates";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine, getStackEngine } from "../ui/context.js";
@@ -22,7 +22,7 @@ export const initCommand = new Command("init")
   .option("--template <id>", "Start from a template")
   .option("--json", "Output result as JSON")
   .action(async (opts) => {
-    console.log(`\n  ${gradientHeader("Forgeboard")} ${chalk.dim("/ New Stack Wizard")}\n`);
+    console.log(`\n  ${gradientHeader("Stackweld")} ${chalk.dim("/ New Stack Wizard")}\n`);
 
     const rules = getRulesEngine();
     const engine = getStackEngine();
@@ -212,9 +212,9 @@ export const initCommand = new Command("init")
       console.log(formatStackSummary(stack));
       console.log(
         nextSteps([
-          `forgeboard scaffold ${stack.id} --path .`,
-          `forgeboard generate --name ${stackName} --path . --techs ${technologies.map((t) => t.technologyId).join(",")}`,
-          `forgeboard info ${stack.id}`,
+          `stackweld scaffold ${stack.id} --path .`,
+          `stackweld generate --name ${stackName} --path . --techs ${technologies.map((t) => t.technologyId).join(",")}`,
+          `stackweld info ${stack.id}`,
         ]),
       );
     }

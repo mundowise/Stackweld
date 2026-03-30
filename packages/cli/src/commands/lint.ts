@@ -1,11 +1,11 @@
 /**
- * forgeboard lint — Validate a stack against team standards (.forgeboardrc).
+ * stackweld lint — Validate a stack against team standards (.stackweldrc).
  */
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { LintResult, StackStandards } from "@forgeboard/core";
-import { detectStack, lintStack, loadStandards } from "@forgeboard/core";
+import type { LintResult, StackStandards } from "@stackweld/core";
+import { detectStack, lintStack, loadStandards } from "@stackweld/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getStackEngine } from "../ui/context.js";
@@ -24,7 +24,7 @@ function buildStackFromDetected(detected: ReturnType<typeof detectStack>): {
 }
 
 export const lintCommand = new Command("lint")
-  .description("Validate a stack against team standards (.forgeboardrc)")
+  .description("Validate a stack against team standards (.stackweldrc)")
   .option("-c, --config <path>", "Path to standards config file")
   .option("-s, --stack <id>", "Lint a saved stack by ID")
   .option("--json", "Output as JSON")
@@ -32,7 +32,7 @@ export const lintCommand = new Command("lint")
     // ── Load standards ──
     const configPath = opts.config
       ? path.resolve(opts.config)
-      : path.resolve(process.cwd(), ".forgeboardrc");
+      : path.resolve(process.cwd(), ".stackweldrc");
 
     let standards: StackStandards | null = null;
 
@@ -58,7 +58,7 @@ export const lintCommand = new Command("lint")
     }
 
     if (!standards) {
-      console.error(chalk.red("\u2716 No .forgeboardrc found in current directory."));
+      console.error(chalk.red("\u2716 No .stackweldrc found in current directory."));
       console.error(chalk.dim("  Create one or use --config <path>"));
       process.exit(1);
     }
@@ -71,7 +71,7 @@ export const lintCommand = new Command("lint")
       const saved = engine.get(opts.stack);
       if (!saved) {
         console.error(chalk.red(`\u2716 Stack "${opts.stack}" not found.`));
-        console.error(chalk.dim("  Run: forgeboard list"));
+        console.error(chalk.dim("  Run: stackweld list"));
         process.exit(1);
       }
       stackLike = saved;
@@ -213,7 +213,7 @@ export const lintCommand = new Command("lint")
     );
     lines.push("");
 
-    console.log(`\n  ${gradientHeader("Forgeboard")} ${chalk.dim("/ Lint")}\n`);
+    console.log(`\n  ${gradientHeader("Stackweld")} ${chalk.dim("/ Lint")}\n`);
     console.log(box(lines.join("\n"), `Stack Lint: ${teamName}`));
     console.log("");
 

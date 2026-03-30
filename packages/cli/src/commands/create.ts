@@ -1,13 +1,13 @@
 /**
- * forgeboard create <stack-id> --path <dir> — Scaffold a stack to disk.
+ * stackweld create <stack-id> --path <dir> — Scaffold a stack to disk.
  * Uses official CLI tools when available and fills gaps.
  */
 
 import { execSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { Template } from "@forgeboard/core";
-import { getAllTemplates, getTemplate } from "@forgeboard/templates";
+import type { Template } from "@stackweld/core";
+import { getAllTemplates, getTemplate } from "@stackweld/templates";
 import chalk from "chalk";
 import { Command } from "commander";
 import ora from "ora";

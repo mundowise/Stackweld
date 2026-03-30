@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stackweld — The Developer's Forge</title>
+  <meta name="description" content="Compose your tech stack visually. Validate compatibility instantly. Generate production-ready projects in seconds. Free and open source.">
+  <meta name="keywords" content="developer tools, tech stack, project scaffolding, CLI, compatibility, devops, open source">
+  <meta name="author" content="Orlando Fernandez / XPlus Technologies LLC">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://stackweld.dev">
+
+  <!-- OpenGraph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Stackweld — The Developer's Forge">
+  <meta property="og:description" content="Compose your tech stack visually. Validate compatibility instantly. Generate production-ready projects in seconds.">
+  <meta property="og:url" content="https://stackweld.dev">
+  <meta property="og:image" content="https://stackweld.dev/assets/og-image.png">
+  <meta property="og:site_name" content="Stackweld">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Stackweld — The Developer's Forge">
+  <meta name="twitter:description" content="Compose your tech stack visually. Validate compatibility instantly. Generate production-ready projects in seconds.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Stackweld",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Linux, macOS, Windows",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Compose your tech stack visually. Validate compatibility instantly. Generate production-ready projects in seconds.",
+    "author": {
+      "@type": "Organization",
+      "name": "XPlus Technologies LLC",
+      "url": "https://xplustechnologies.com"
+    },
+    "license": "https://opensource.org/licenses/MIT",
+    "url": "https://stackweld.dev",
+    "downloadUrl": "https://github.com/mundowise/Stackweld/releases",
+    "softwareVersion": "1.0.0"
+  }
+  </script>
+
+  <!-- Critical inline CSS -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Living Toybox (Light) */
+      --bg-primary: #fff4f6;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #fef0f2;
+      --text-primary: #1a1a2e;
+      --text-secondary: #4a4a6a;
+      --text-muted: #8888a8;
+      --accent-gold: #ffd709;
+      --accent-teal: #006668;
+      --accent-purple: #9720ab;
+      --accent-pink: #e8457c;
+      --border-color: #1a1a2e;
+      --border-width: 4px;
+      --shadow-color: #1a1a2e;
+      --card-bg: #ffffff;
+      --card-shadow: 6px 6px 0 #1a1a2e;
+      --card-shadow-hover: 8px 8px 0 #1a1a2e;
+      --terminal-bg: #1a1a2e;
+      --terminal-text: #e0e0e0;
+      --code-bg: #f0e8f4;
+      --nav-bg: rgba(255, 244, 246, 0.92);
+      --badge-bg: #fef0d0;
+      --badge-text: #7a5a00;
+      --glow: none;
+      --heading-gradient: linear-gradient(135deg, #9720ab, #006668);
+      --btn-primary-bg: #ffd709;
+      --btn-primary-text: #1a1a2e;
+      --btn-primary-border: #1a1a2e;
+      --btn-secondary-bg: transparent;
+      --btn-secondary-text: #1a1a2e;
+      --btn-secondary-border: #1a1a2e;
+      --feature-icon-shadow: 4px 4px 0 var(--accent-gold);
+      --section-alt-bg: #ffffff;
+      --footer-bg: #1a1a2e;
+      --footer-text: #e0e0e0;
+      --particle-color: rgba(151, 32, 171, 0.08);
+      --stat-number-color: #9720ab;
+    }
+
+    [data-theme="dark"] {
+      /* Neon Nightbox (Dark) */
+      --bg-primary: #0b0c1f;
+      --bg-secondary: #12133a;
+      --bg-tertiary: #0f1030;
+      --text-primary: #eef0ff;
+      --text-secondary: #b0b4d4;
+      --text-muted: #6a6e94;
+      --accent-gold: #ffe483;
+      --accent-teal: #00e3fd;
+      --accent-purple: #ff51fa;
+      --accent-pink: #ff51fa;
+      --border-color: #2a2d5a;
+      --border-width: 2px;
+      --shadow-color: transparent;
+      --card-bg: #12133a;
+      --card-shadow: 0 0 20px rgba(0, 227, 253, 0.1);
+      --card-shadow-hover: 0 0 30px rgba(255, 81, 250, 0.2);
+      --terminal-bg: #080919;
+      --terminal-text: #e0e0e0;
+      --code-bg: #1a1b40;
+      --nav-bg: rgba(11, 12, 31, 0.92);
+      --badge-bg: rgba(255, 228, 131, 0.12);
+      --badge-text: #ffe483;
+      --glow: 0 0 40px rgba(0, 227, 253, 0.15);
+      --heading-gradient: linear-gradient(135deg, #ff51fa, #00e3fd);
+      --btn-primary-bg: linear-gradient(135deg, #ff51fa, #00e3fd);
+      --btn-primary-text: #0b0c1f;
+      --btn-primary-border: transparent;
+      --btn-secondary-bg: transparent;
+      --btn-secondary-text: #00e3fd;
+      --btn-secondary-border: #00e3fd;
+      --feature-icon-shadow: 0 0 20px rgba(255, 81, 250, 0.3);
+      --section-alt-bg: #0f1030;
+      --footer-bg: #080919;
+      --footer-text: #b0b4d4;
+      --particle-color: rgba(0, 227, 253, 0.06);
+      --stat-number-color: #00e3fd;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* Canvas */
+    #particle-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Utility */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; font-weight: 700; }
+
+    .gradient-text {
+      background: var(--heading-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border: var(--border-width) solid;
+    }
+
+    .btn-primary {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border-color: var(--btn-primary-border);
+      box-shadow: var(--card-shadow);
+    }
+    .btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--card-shadow-hover);
+    }
+    [data-theme="dark"] .btn-primary {
+      border: none;
+      box-shadow: 0 0 20px rgba(255, 81, 250, 0.3);
+    }
+    [data-theme="dark"] .btn-primary:hover {
+      box-shadow: 0 0 30px rgba(255, 81, 250, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--btn-secondary-bg);
+      color: var(--btn-secondary-text);
+      border-color: var(--btn-secondary-border);
+    }
+    .btn-secondary:hover {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+    }
+    [data-theme="dark"] .btn-secondary:hover {
+      background: rgba(0, 227, 253, 0.1);
+      color: var(--accent-teal);
+    }
+
+    /* Skip to content for a11y */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 16px;
+      background: var(--accent-gold);
+      color: #1a1a2e;
+      padding: 8px 16px;
+      z-index: 9999;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .skip-link:focus { top: 16px; }
+  </style>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="Stackweld Home">
+        <img src="assets/logo.png" alt="" width="36" height="36" class="logo-img">
+        <span class="logo-text">Stackweld</span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="#features" class="nav-link" data-i18n="nav.features">Features</a></li>
+          <li><a href="#cli-demo" class="nav-link" data-i18n="nav.cli">CLI</a></li>
+          <li><a href="#download" class="nav-link" data-i18n="nav.download">Download</a></li>
+          <li><a href="https://github.com/mundowise/Stackweld/wiki" class="nav-link" data-i18n="nav.docs" target="_blank" rel="noopener">Docs</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="toggle-btn lang-toggle" id="lang-toggle" aria-label="Switch language" title="Switch language">
+          <span class="lang-label">EN</span>
+        </button>
+        <button class="toggle-btn theme-toggle" id="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="#download" class="btn btn-primary btn-sm" data-i18n="nav.getStarted">Get Started</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <div class="container hero-inner">
+        <div class="hero-content reveal">
+          <span class="badge" data-i18n="hero.badge">Open Source Developer Tool</span>
+          <h1 class="hero-title">
+            <span data-i18n="hero.titleLine1">The Developer's</span><br>
+            <span class="gradient-text" data-i18n="hero.titleLine2">Forge</span>
+          </h1>
+          <p class="hero-subtitle" data-i18n="hero.subtitle">Compose your tech stack visually. Validate compatibility instantly. Generate production-ready projects in seconds.</p>
+
+          <div class="hero-ctas">
+            <a href="#download" class="btn btn-primary" data-i18n="hero.ctaPrimary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+              Install via npm
+            </a>
+            <a href="https://github.com/mundowise/Stackweld" class="btn btn-secondary" target="_blank" rel="noopener" data-i18n="hero.ctaSecondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+
+          <div class="install-block">
+            <div class="install-cmd" id="install-cmd">
+              <span class="install-prefix">$</span>
+              <code>npm install -g stackweld</code>
+              <button class="copy-btn" id="copy-btn" aria-label="Copy to clipboard" data-i18n-aria="copy.label">
+                <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-stats reveal">
+          <div class="stat">
+            <span class="stat-number" data-count="83">0</span>
+            <span class="stat-label" data-i18n="hero.statTech">Technologies</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-count="38">0</span>
+            <span class="stat-label" data-i18n="hero.statCli">CLI Commands</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-count="20">0</span>
+            <span class="stat-label" data-i18n="hero.statTemplates">Templates</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-count="15">0</span>
+            <span class="stat-label" data-i18n="hero.statTools">Analysis Tools</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURES ============ -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title"><span data-i18n="features.titlePrefix">Built for</span> <span class="gradient-text" data-i18n="features.titleAccent">Real Workflows</span></h2>
+          <p class="section-subtitle" data-i18n="features.subtitle">Everything you need to compose, validate, and ship your tech stack with confidence.</p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Feature 1: Stack Composition -->
+          <div class="feature-card reveal" data-accent="teal">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                <circle cx="6.5" cy="6.5" r="1.5" fill="currentColor"/>
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3 class="feature-title" data-i18n="features.composition.title">Stack Composition</h3>
+            <p class="feature-desc" data-i18n="features.composition.desc">Select from 83 technologies. Auto-validate combinations as you build. Visual dependency graph included.</p>
+          </div>
+
+          <!-- Feature 2: Compatibility Scoring -->
+          <div class="feature-card reveal" data-accent="purple">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <h3 class="feature-title" data-i18n="features.scoring.title">Compatibility Scoring</h3>
+            <p class="feature-desc" data-i18n="features.scoring.desc">Get a 0-100 compatibility score between any two technologies. Letter grades from D to S. Know before you commit.</p>
+          </div>
+
+          <!-- Feature 3: Project Scaffolding -->
+          <div class="feature-card reveal" data-accent="gold">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <h3 class="feature-title" data-i18n="features.scaffolding.title">Project Scaffolding</h3>
+            <p class="feature-desc" data-i18n="features.scaffolding.desc">Generate full project structures from validated stacks. Config files, folder layout, and boilerplate — all production-ready.</p>
+          </div>
+
+          <!-- Feature 4: Health Monitor -->
+          <div class="feature-card reveal" data-accent="teal">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <h3 class="feature-title" data-i18n="features.health.title">Health Monitor</h3>
+            <p class="feature-desc" data-i18n="features.health.desc">Audit existing projects for outdated deps, missing configs, security issues, and performance bottlenecks.</p>
+          </div>
+
+          <!-- Feature 5: Migration Assistant -->
+          <div class="feature-card reveal" data-accent="purple">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polyline points="17 1 21 5 17 9"/>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                <polyline points="7 23 3 19 7 15"/>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+              </svg>
+            </div>
+            <h3 class="feature-title" data-i18n="features.migration.title">Migration Assistant</h3>
+            <p class="feature-desc" data-i18n="features.migration.desc">Step-by-step guides for migrating between technologies. Risk analysis and rollback plans included.</p>
+          </div>
+
+          <!-- Feature 6: Infrastructure Gen -->
+          <div class="feature-card reveal" data-accent="gold">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="8" rx="2"/>
+                <rect x="2" y="14" width="20" height="8" rx="2"/>
+                <circle cx="6" cy="6" r="1" fill="currentColor"/>
+                <circle cx="6" cy="18" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3 class="feature-title" data-i18n="features.infra.title">Infrastructure Generation</h3>
+            <p class="feature-desc" data-i18n="features.infra.desc">Auto-generate Dockerfiles, nginx configs, CI/CD pipelines, and deploy scripts tailored to your stack.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CLI DEMO ============ -->
+    <section class="cli-demo" id="cli-demo">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title"><span data-i18n="cli.titlePrefix">See It</span> <span class="gradient-text" data-i18n="cli.titleAccent">In Action</span></h2>
+          <p class="section-subtitle" data-i18n="cli.subtitle">One command to create, validate, and scaffold a production-ready stack.</p>
+        </div>
+
+        <div class="terminal reveal">
+          <div class="terminal-chrome">
+            <div class="terminal-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <span class="terminal-title">stackweld</span>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">stackweld init</span></div>
+            <div class="term-line term-blank"></div>
+            <div class="term-line"><span class="term-cyan">?</span> <span class="term-text">Stack name:</span> <span class="term-value">my-saas-app</span></div>
+            <div class="term-line"><span class="term-cyan">?</span> <span class="term-text">Profile:</span> <span class="term-value">production</span></div>
+            <div class="term-line"><span class="term-cyan">?</span> <span class="term-text">Technologies:</span> <span class="term-value">Next.js, FastAPI, PostgreSQL, Redis, Docker</span></div>
+            <div class="term-line term-blank"></div>
+            <div class="term-line"><span class="term-green">&#10003;</span> <span class="term-text">Stack created with 5 technologies</span></div>
+            <div class="term-line"><span class="term-green">&#10003;</span> <span class="term-text">All validations passed</span> <span class="term-dim">—</span> <span class="term-text">Score:</span> <span class="term-gold">92/100</span> <span class="term-dim">(Grade:</span> <span class="term-gold">S</span><span class="term-dim">)</span></div>
+            <div class="term-line"><span class="term-green">&#10003;</span> <span class="term-text">Project scaffolded at</span> <span class="term-cyan">./my-saas-app</span></div>
+            <div class="term-line term-blank"></div>
+            <div class="term-line"><span class="term-dim">Next steps:</span></div>
+            <div class="term-line"><span class="term-text">  cd my-saas-app</span></div>
+            <div class="term-line"><span class="term-text">  stackweld up</span></div>
+            <div class="term-line"><span class="term-text">  stackweld health</span></div>
+            <div class="term-cursor"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="how-it-works" id="how-it-works">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title"><span data-i18n="how.titlePrefix">How It</span> <span class="gradient-text" data-i18n="how.titleAccent">Works</span></h2>
+        </div>
+
+        <div class="steps">
+          <div class="step reveal">
+            <div class="step-number">01</div>
+            <div class="step-content">
+              <h3 class="step-title" data-i18n="how.step1.title">Choose</h3>
+              <p class="step-desc" data-i18n="how.step1.desc">Select from 83 technologies across frontend, backend, database, DevOps, and more. Mix and match freely.</p>
+            </div>
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+            </div>
+          </div>
+          <div class="step-connector" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="step reveal">
+            <div class="step-number">02</div>
+            <div class="step-content">
+              <h3 class="step-title" data-i18n="how.step2.title">Validate</h3>
+              <p class="step-desc" data-i18n="how.step2.desc">Automatically check compatibility between every pair. Get scores, grades, and actionable warnings before writing a line of code.</p>
+            </div>
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+          </div>
+          <div class="step-connector" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="step reveal">
+            <div class="step-number">03</div>
+            <div class="step-content">
+              <h3 class="step-title" data-i18n="how.step3.title">Build</h3>
+              <p class="step-desc" data-i18n="how.step3.desc">Generate your project with Docker, CI/CD, tests, and deploy configs. Everything wired up and ready to ship.</p>
+            </div>
+            <div class="step-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MORE FEATURES ============ -->
+    <section class="more-features" id="more-features">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title"><span data-i18n="more.titlePrefix">And</span> <span class="gradient-text" data-i18n="more.titleAccent">Much More</span></h2>
+          <p class="section-subtitle" data-i18n="more.subtitle">A growing ecosystem of tools for every stage of your development workflow.</p>
+        </div>
+
+        <div class="mini-features-grid">
+          <div class="mini-card reveal">
+            <div class="mini-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h4 data-i18n="more.cost.title">Cost Estimator</h4>
+            <p data-i18n="more.cost.desc">Estimate monthly cloud costs for your stack across AWS, GCP, and Azure.</p>
+          </div>
+
+          <div class="mini-card reveal">
+            <div class="mini-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <h4 data-i18n="more.profiles.title">Performance Profiles</h4>
+            <p data-i18n="more.profiles.desc">Optimize for speed, cost, or reliability with pre-tuned configuration profiles.</p>
+          </div>
+
+          <div class="mini-card reveal">
+            <div class="mini-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </div>
+            <h4 data-i18n="more.sharing.title">Stack Sharing</h4>
+            <p data-i18n="more.sharing.desc">Export and share your validated stacks as JSON. Import community stacks instantly.</p>
+          </div>
+
+          <div class="mini-card reveal">
+            <div class="mini-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h4 data-i18n="more.team.title">Team Standards</h4>
+            <p data-i18n="more.team.desc">Define and enforce stack policies across your team with shared configs.</p>
+          </div>
+
+          <div class="mini-card reveal">
+            <div class="mini-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <h4 data-i18n="more.learning.title">Learning Paths</h4>
+            <p data-i18n="more.learning.desc">Interactive tutorials for each technology in your stack. Learn as you build.</p>
+          </div>
+
+          <div class="mini-card reveal">
+            <div class="mini-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <h4 data-i18n="more.plugins.title">Plugin System</h4>
+            <p data-i18n="more.plugins.desc">Extend Stackweld with community plugins. Custom validators, generators, and analyzers.</p>
+          </div>
+
+          <div class="mini-card reveal">
+            <div class="mini-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+            </div>
+            <h4 data-i18n="more.env.title">Env Sync</h4>
+            <p data-i18n="more.env.desc">Auto-generate .env files with correct variables for each service in your stack.</p>
+          </div>
+
+          <div class="mini-card reveal">
+            <div class="mini-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+            </div>
+            <h4 data-i18n="more.compare.title">Stack Comparison</h4>
+            <p data-i18n="more.compare.desc">Compare two stacks side-by-side. Performance, cost, complexity, and compatibility metrics.</p>
+          </div>
+
+          <div class="mini-card reveal">
+            <div class="mini-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+            <h4 data-i18n="more.deploy.title">Deploy Anywhere</h4>
+            <p data-i18n="more.deploy.desc">Generate deploy configs for VPS, AWS, GCP, Vercel, Railway, and more.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOWNLOAD ============ -->
+    <section class="download" id="download">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title"><span data-i18n="download.titlePrefix">Get</span> <span class="gradient-text" data-i18n="download.titleAccent">Stackweld</span></h2>
+          <p class="section-subtitle" data-i18n="download.subtitle">Available on all major platforms. Free and open source.</p>
+        </div>
+
+        <div class="download-detected reveal">
+          <p data-i18n="download.detected">Detected OS:</p>
+          <span class="os-badge" id="detected-os">Linux</span>
+        </div>
+
+        <div class="platform-cards">
+          <div class="platform-card reveal" data-platform="linux">
+            <div class="platform-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12.504 0c-.155 0-.311.001-.465.003-.895.017-1.759.17-2.541.467-.782.298-1.503.74-2.094 1.35-.586.607-1.047 1.378-1.34 2.283-.293.904-.41 1.943-.382 3.068.026 1.02.163 2.1.42 3.184.256 1.084.63 2.173 1.136 3.206.374.77.827 1.51 1.37 2.175a.24.24 0 0 1 .035.052c.064.118.128.237.195.355l.008.015c.325.572.677 1.07 1.064 1.477.128.135.26.262.398.38.007.045.017.09.029.134.069.25.162.49.286.7.176.297.413.555.719.718a1.49 1.49 0 0 0 .76.204c.267 0 .521-.09.736-.253.213-.162.38-.392.497-.671.065-.155.116-.327.152-.516.02-.105.034-.218.042-.337.139-.046.27-.109.388-.193.252-.179.437-.424.548-.7.112-.276.152-.583.121-.887a2.09 2.09 0 0 0-.18-.63c.294-.39.553-.824.774-1.293.498-1.058.81-2.267.934-3.467.124-1.2.062-2.394-.18-3.399a6.04 6.04 0 0 0-.395-1.128 4.37 4.37 0 0 0-.634-.958c-.269-.3-.587-.551-.952-.715-.365-.164-.78-.238-1.23-.198-.45.04-.886.19-1.284.43.092-.405.15-.827.173-1.251.03-.571-.002-1.147-.112-1.694-.11-.547-.299-1.063-.58-1.5a3.07 3.07 0 0 0-1.075-1.04A3.21 3.21 0 0 0 12.504 0zm-.27 1.262c.36.006.69.094.976.26.285.165.526.403.71.707.185.304.315.674.39 1.088.074.414.094.872.058 1.354-.04.533-.138 1.056-.29 1.546-.247-.118-.513-.2-.791-.24a2.61 2.61 0 0 0-.886.032 3.15 3.15 0 0 0-.84.303c-.267.142-.51.32-.72.53a7.67 7.67 0 0 0-.34-.645c-.367-.623-.838-1.14-1.378-1.485-.333-.213-.696-.358-1.074-.41.31-.81.71-1.456 1.186-1.934.476-.477 1.02-.812 1.601-.974.392-.11.799-.152 1.21-.14.063.002.127.005.19.008z"/></svg>
+            </div>
+            <h3>Linux</h3>
+            <p class="platform-format">.AppImage</p>
+            <a href="https://github.com/mundowise/Stackweld/releases/latest" class="btn btn-primary btn-sm" target="_blank" rel="noopener" data-i18n="download.btnLinux">Download for Linux</a>
+          </div>
+
+          <div class="platform-card reveal" data-platform="macos">
+            <div class="platform-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            </div>
+            <h3>macOS</h3>
+            <p class="platform-format">.dmg</p>
+            <a href="https://github.com/mundowise/Stackweld/releases/latest" class="btn btn-primary btn-sm" target="_blank" rel="noopener" data-i18n="download.btnMac">Download for macOS</a>
+          </div>
+
+          <div class="platform-card reveal" data-platform="windows">
+            <div class="platform-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.45H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.45L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+            </div>
+            <h3>Windows</h3>
+            <p class="platform-format">.msi</p>
+            <a href="https://github.com/mundowise/Stackweld/releases/latest" class="btn btn-primary btn-sm" target="_blank" rel="noopener" data-i18n="download.btnWin">Download for Windows</a>
+          </div>
+        </div>
+
+        <div class="download-alt reveal">
+          <p data-i18n="download.altLabel">Or install via npm:</p>
+          <div class="install-cmd install-cmd-alt">
+            <span class="install-prefix">$</span>
+            <code>npm install -g stackweld</code>
+          </div>
+          <a href="https://github.com/mundowise/Stackweld/releases" class="link-subtle" target="_blank" rel="noopener" data-i18n="download.allReleases">View all releases on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OPEN SOURCE ============ -->
+    <section class="open-source" id="open-source">
+      <div class="container">
+        <div class="oss-banner reveal">
+          <div class="oss-content">
+            <h2 class="oss-title" data-i18n="oss.title">Free and Open Source</h2>
+            <p class="oss-desc" data-i18n="oss.desc">Stackweld is MIT licensed. Use it, fork it, improve it. Contributions welcome.</p>
+            <div class="oss-actions">
+              <a href="https://github.com/mundowise/Stackweld" class="btn btn-primary" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span data-i18n="oss.starBtn">Star on GitHub</span>
+              </a>
+              <a href="https://github.com/mundowise/Stackweld/graphs/contributors" class="btn btn-secondary" target="_blank" rel="noopener" data-i18n="oss.contribBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Contributors
+              </a>
+            </div>
+          </div>
+          <div class="oss-decoration" aria-hidden="true">
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+              <circle cx="60" cy="60" r="50" stroke="currentColor" stroke-width="2" stroke-dasharray="8 6" opacity="0.3"/>
+              <circle cx="60" cy="60" r="30" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" opacity="0.2"/>
+              <circle cx="60" cy="60" r="10" fill="currentColor" opacity="0.15"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/logo.png" alt="" width="28" height="28">
+          <span>Stackweld</span>
+        </div>
+        <p class="footer-tagline" data-i18n="footer.tagline">The Developer's Forge</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4 data-i18n="footer.product">Product</h4>
+          <ul>
+            <li><a href="#features" data-i18n="footer.features">Features</a></li>
+            <li><a href="#download" data-i18n="footer.download">Download</a></li>
+            <li><a href="#cli-demo" data-i18n="footer.cli">CLI</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.resources">Resources</h4>
+          <ul>
+            <li><a href="https://github.com/mundowise/Stackweld/wiki" target="_blank" rel="noopener" data-i18n="footer.docs">Documentation</a></li>
+            <li><a href="https://github.com/mundowise/Stackweld/releases" target="_blank" rel="noopener" data-i18n="footer.releases">Releases</a></li>
+            <li><a href="https://github.com/mundowise/Stackweld" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.community">Community</h4>
+          <ul>
+            <li><a href="https://github.com/mundowise/Stackweld/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" data-i18n="footer.contributing">Contributing</a></li>
+            <li><a href="https://github.com/mundowise/Stackweld/issues" target="_blank" rel="noopener" data-i18n="footer.issues">Issues</a></li>
+            <li><a href="https://github.com/mundowise/Stackweld/discussions" target="_blank" rel="noopener" data-i18n="footer.discussions">Discussions</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p data-i18n="footer.copyright">&copy; 2026 Stackweld. Built by Orlando Fernandez / XPlus Technologies LLC.</p>
+        <p class="footer-license" data-i18n="footer.license">Released under the MIT License.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,8 +1,8 @@
 /**
- * forgeboard benchmark <stackId> — Show performance profile for a saved stack.
+ * stackweld benchmark <stackId> — Show performance profile for a saved stack.
  */
 
-import { profilePerformance } from "@forgeboard/core";
+import { profilePerformance } from "@stackweld/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine, getStackEngine } from "../ui/context.js";
@@ -39,7 +39,7 @@ export const benchmarkCommand = new Command("benchmark")
 
     if (!stack) {
       console.error(chalk.red(`\u2716 Stack "${stackId}" not found.`));
-      console.error(chalk.dim("  Run: forgeboard list"));
+      console.error(chalk.dim("  Run: stackweld list"));
       process.exit(1);
     }
 
@@ -96,7 +96,7 @@ export const benchmarkCommand = new Command("benchmark")
       lines.push("");
     }
 
-    console.log(`\n  ${gradientHeader("Forgeboard")} ${chalk.dim("/ Benchmark")}\n`);
+    console.log(`\n  ${gradientHeader("Stackweld")} ${chalk.dim("/ Benchmark")}\n`);
     console.log(box(lines.join("\n"), `Performance: ${stack.name}`));
     console.log("");
   });

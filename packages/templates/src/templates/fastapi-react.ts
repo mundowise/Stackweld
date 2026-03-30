@@ -1,4 +1,4 @@
-import type { Template } from "@forgeboard/core";
+import type { Template } from "@stackweld/core";
 
 export const fastapiReact: Template = {
   id: "fastapi-react",

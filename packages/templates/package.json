@@ -1,5 +1,5 @@
 {
-  "name": "@forgeboard/templates",
+  "name": "@stackweld/templates",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -14,8 +14,8 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@forgeboard/core": "workspace:*",
-    "@forgeboard/registry": "workspace:*"
+    "@stackweld/core": "workspace:*",
+    "@stackweld/registry": "workspace:*"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.0.0",

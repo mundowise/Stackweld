@@ -1,5 +1,5 @@
 /**
- * forgeboard plugin — Manage Forgeboard plugins.
+ * stackweld plugin — Manage Stackweld plugins.
  *
  * Subcommands: list, install, remove, info.
  */
@@ -10,7 +10,7 @@ import {
   installPlugin,
   listPlugins,
   removePlugin,
-} from "@forgeboard/core";
+} from "@stackweld/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { box, emptyState, formatJson, gradientHeader, table } from "../ui/format.js";
@@ -28,11 +28,11 @@ const pluginListCommand = new Command("list")
       return;
     }
 
-    console.log(`\n  ${gradientHeader("Forgeboard")} ${chalk.dim("/ Plugins")}\n`);
+    console.log(`\n  ${gradientHeader("Stackweld")} ${chalk.dim("/ Plugins")}\n`);
 
     if (plugins.length === 0) {
       console.log(
-        emptyState("No plugins installed.", "Install one with: forgeboard plugin install <path>"),
+        emptyState("No plugins installed.", "Install one with: stackweld plugin install <path>"),
       );
       return;
     }
@@ -71,7 +71,7 @@ const pluginInstallCommand = new Command("install")
         return;
       }
 
-      console.log(`\n  ${gradientHeader("Forgeboard")} ${chalk.dim("/ Plugin Install")}\n`);
+      console.log(`\n  ${gradientHeader("Stackweld")} ${chalk.dim("/ Plugin Install")}\n`);
       console.log(
         `  ${chalk.green("\u2714")} Plugin ${chalk.cyan.bold(manifest.name)} v${manifest.version} installed successfully.`,
       );
@@ -134,7 +134,7 @@ const pluginInfoCommand = new Command("info")
         process.exit(1);
       }
       console.error(chalk.red(`\u2716 Plugin "${name}" not found.`));
-      console.error(chalk.dim("  Run: forgeboard plugin list"));
+      console.error(chalk.dim("  Run: stackweld plugin list"));
       process.exit(1);
     }
 
@@ -152,7 +152,7 @@ const pluginInfoCommand = new Command("info")
       `${chalk.dim("Location:")}    ${getPluginDir()}/${manifest.name}`,
     ].join("\n");
 
-    console.log(`\n  ${gradientHeader("Forgeboard")} ${chalk.dim("/ Plugin Info")}\n`);
+    console.log(`\n  ${gradientHeader("Stackweld")} ${chalk.dim("/ Plugin Info")}\n`);
     console.log(box(lines, `Plugin: ${manifest.name}`));
     console.log("");
   });
@@ -160,7 +160,7 @@ const pluginInfoCommand = new Command("info")
 // ─── Main plugin command ──────────────────────────────
 
 export const pluginCommand = new Command("plugin")
-  .description("Manage Forgeboard plugins")
+  .description("Manage Stackweld plugins")
   .addCommand(pluginListCommand)
   .addCommand(pluginInstallCommand)
   .addCommand(pluginRemoveCommand)

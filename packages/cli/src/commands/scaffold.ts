@@ -1,5 +1,5 @@
 /**
- * forgeboard scaffold <stack-id> — Generate project files from a saved stack.
+ * stackweld scaffold <stack-id> — Generate project files from a saved stack.
  * Generates docker-compose.yml, .env.example, README.md, .gitignore, devcontainer.json.
  */
 

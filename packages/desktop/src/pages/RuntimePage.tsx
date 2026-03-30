@@ -33,7 +33,7 @@ export function RuntimePage() {
             <Terminal className="w-12 h-12 mx-auto mb-3 opacity-40" />
             <p className="font-medium">No services running</p>
             <p className="text-sm mt-1">
-              Create and scaffold a stack, then use `forgeboard up` to start services
+              Create and scaffold a stack, then use `stackweld up` to start services
             </p>
           </div>
         </Card>

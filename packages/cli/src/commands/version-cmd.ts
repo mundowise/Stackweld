@@ -1,5 +1,5 @@
 /**
- * forgeboard version — Stack version management.
+ * stackweld version — Stack version management.
  */
 
 import chalk from "chalk";

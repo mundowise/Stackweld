@@ -1,4 +1,4 @@
-import type { Template } from "@forgeboard/core";
+import type { Template } from "@stackweld/core";
 
 export const nuxt3App: Template = {
   id: "nuxt3-app",

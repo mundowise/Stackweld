@@ -1,8 +1,8 @@
 /**
- * forgeboard cost <stackId> — Estimate monthly hosting costs for a saved stack.
+ * stackweld cost <stackId> — Estimate monthly hosting costs for a saved stack.
  */
 
-import { estimateCost } from "@forgeboard/core";
+import { estimateCost } from "@stackweld/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine, getStackEngine } from "../ui/context.js";
@@ -33,7 +33,7 @@ export const costCommand = new Command("cost")
 
     if (!stack) {
       console.error(chalk.red(`\u2716 Stack "${stackId}" not found.`));
-      console.error(chalk.dim("  Run: forgeboard list"));
+      console.error(chalk.dim("  Run: stackweld list"));
       process.exit(1);
     }
 
@@ -116,7 +116,7 @@ export const costCommand = new Command("cost")
       lines.push("");
     }
 
-    console.log(`\n  ${gradientHeader("Forgeboard")} ${chalk.dim("/ Cost Estimator")}\n`);
+    console.log(`\n  ${gradientHeader("Stackweld")} ${chalk.dim("/ Cost Estimator")}\n`);
     console.log(box(lines.join("\n"), `Cost Estimate: ${stack.name}`));
     console.log("");
   });

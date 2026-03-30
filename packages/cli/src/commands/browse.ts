@@ -1,9 +1,9 @@
 /**
- * forgeboard browse — Browse the technology catalog and templates.
+ * stackweld browse — Browse the technology catalog and templates.
  */
 
 import { select } from "@inquirer/prompts";
-import { getAllTemplates } from "@forgeboard/templates";
+import { getAllTemplates } from "@stackweld/templates";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine } from "../ui/context.js";

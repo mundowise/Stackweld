@@ -1,12 +1,12 @@
 /**
- * forgeboard completion — Generate shell completions.
+ * stackweld completion — Generate shell completions.
  */
 
 import { Command } from "commander";
 
 const BASH_COMPLETION = `
-# forgeboard bash completion
-_forgeboard_completions() {
+# stackweld bash completion
+_stackweld_completions() {
   local cur="\${COMP_WORDS[COMP_CWORD]}"
   local commands="init create list info save export import browse doctor delete version up down status logs scaffold completion"
 
@@ -14,13 +14,13 @@ _forgeboard_completions() {
     COMPREPLY=( $(compgen -W "\${commands}" -- "\${cur}") )
   fi
 }
-complete -F _forgeboard_completions forgeboard
+complete -F _stackweld_completions stackweld
 `.trim();
 
 const ZSH_COMPLETION = `
-#compdef forgeboard
+#compdef stackweld
 
-_forgeboard() {
+_stackweld() {
   local -a commands
   commands=(
     'init:Create a new stack interactively'
@@ -45,28 +45,28 @@ _forgeboard() {
   _describe 'command' commands
 }
 
-_forgeboard
+_stackweld
 `.trim();
 
 const FISH_COMPLETION = `
-# forgeboard fish completions
-complete -c forgeboard -n "__fish_use_subcommand" -a init -d "Create a new stack interactively"
-complete -c forgeboard -n "__fish_use_subcommand" -a create -d "Scaffold a project"
-complete -c forgeboard -n "__fish_use_subcommand" -a list -d "List all saved stacks"
-complete -c forgeboard -n "__fish_use_subcommand" -a info -d "Show details about a stack or technology"
-complete -c forgeboard -n "__fish_use_subcommand" -a save -d "Save a version snapshot"
-complete -c forgeboard -n "__fish_use_subcommand" -a export -d "Export a stack definition"
-complete -c forgeboard -n "__fish_use_subcommand" -a import -d "Import a stack definition"
-complete -c forgeboard -n "__fish_use_subcommand" -a browse -d "Browse the technology catalog"
-complete -c forgeboard -n "__fish_use_subcommand" -a doctor -d "Check system requirements"
-complete -c forgeboard -n "__fish_use_subcommand" -a delete -d "Delete a saved stack"
-complete -c forgeboard -n "__fish_use_subcommand" -a version -d "Manage stack versions"
-complete -c forgeboard -n "__fish_use_subcommand" -a up -d "Start Docker services"
-complete -c forgeboard -n "__fish_use_subcommand" -a down -d "Stop Docker services"
-complete -c forgeboard -n "__fish_use_subcommand" -a status -d "Show status of running services"
-complete -c forgeboard -n "__fish_use_subcommand" -a logs -d "Show logs from Docker services"
-complete -c forgeboard -n "__fish_use_subcommand" -a scaffold -d "Generate project files"
-complete -c forgeboard -n "__fish_use_subcommand" -a completion -d "Generate shell completions"
+# stackweld fish completions
+complete -c stackweld -n "__fish_use_subcommand" -a init -d "Create a new stack interactively"
+complete -c stackweld -n "__fish_use_subcommand" -a create -d "Scaffold a project"
+complete -c stackweld -n "__fish_use_subcommand" -a list -d "List all saved stacks"
+complete -c stackweld -n "__fish_use_subcommand" -a info -d "Show details about a stack or technology"
+complete -c stackweld -n "__fish_use_subcommand" -a save -d "Save a version snapshot"
+complete -c stackweld -n "__fish_use_subcommand" -a export -d "Export a stack definition"
+complete -c stackweld -n "__fish_use_subcommand" -a import -d "Import a stack definition"
+complete -c stackweld -n "__fish_use_subcommand" -a browse -d "Browse the technology catalog"
+complete -c stackweld -n "__fish_use_subcommand" -a doctor -d "Check system requirements"
+complete -c stackweld -n "__fish_use_subcommand" -a delete -d "Delete a saved stack"
+complete -c stackweld -n "__fish_use_subcommand" -a version -d "Manage stack versions"
+complete -c stackweld -n "__fish_use_subcommand" -a up -d "Start Docker services"
+complete -c stackweld -n "__fish_use_subcommand" -a down -d "Stop Docker services"
+complete -c stackweld -n "__fish_use_subcommand" -a status -d "Show status of running services"
+complete -c stackweld -n "__fish_use_subcommand" -a logs -d "Show logs from Docker services"
+complete -c stackweld -n "__fish_use_subcommand" -a scaffold -d "Generate project files"
+complete -c stackweld -n "__fish_use_subcommand" -a completion -d "Generate shell completions"
 `.trim();
 
 export const completionCommand = new Command("completion")

@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { input } from "@inquirer/prompts";
-import { getDatabase } from "@forgeboard/core";
-import { getAllTemplates, getTemplate } from "@forgeboard/templates";
+import { getDatabase } from "@stackweld/core";
+import { getAllTemplates, getTemplate } from "@stackweld/templates";
 import chalk from "chalk";
 import { Command } from "commander";
 import { getRulesEngine, getStackEngine } from "../ui/context.js";
@@ -116,7 +116,7 @@ export const templateCommand = new Command("template")
         console.log(chalk.dim(`  ID: ${id}`));
         console.log(chalk.dim(`  Technologies: ${techIds.join(", ")}`));
         console.log(chalk.dim(`  Profile: ${stack.profile}`));
-        console.log(chalk.dim(`\nUse it: forgeboard template use-custom ${id}`));
+        console.log(chalk.dim(`\nUse it: stackweld template use-custom ${id}`));
       }),
   )
   .addCommand(
@@ -131,7 +131,7 @@ export const templateCommand = new Command("template")
 
         if (rows.length === 0) {
           console.log(
-            chalk.dim("No custom templates saved yet. Use `forgeboard template save <stack-id>`."),
+            chalk.dim("No custom templates saved yet. Use `stackweld template save <stack-id>`."),
           );
           return;
         }

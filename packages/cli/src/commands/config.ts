@@ -1,15 +1,15 @@
 /**
- * forgeboard config — Manage user preferences.
+ * stackweld config — Manage user preferences.
  */
 
-import type { UserPreferences } from "@forgeboard/core";
+import type { UserPreferences } from "@stackweld/core";
 import {
   getDefaultPreferences,
   getPreferenceKeys,
   getPreferences,
   resetPreferences,
   setPreference,
-} from "@forgeboard/core";
+} from "@stackweld/core";
 import chalk from "chalk";
 import { Command } from "commander";
 import { formatJson } from "../ui/format.js";

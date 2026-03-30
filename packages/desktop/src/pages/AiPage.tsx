@@ -79,7 +79,7 @@ export function AiPage() {
           "AI features require the Tauri desktop app with ANTHROPIC_API_KEY configured.\n\n" +
             "To use from CLI:\n" +
             `export ANTHROPIC_API_KEY=sk-ant-...\n` +
-            `forgeboard ai ${activeMode} "${input}"`,
+            `stackweld ai ${activeMode} "${input}"`,
         );
       }
     } catch (e) {
@@ -223,13 +223,13 @@ export function AiPage() {
         </div>
         <div className="space-y-2 text-xs font-mono text-zinc-500">
           <p>
-            <span className="text-indigo-400">forgeboard ai suggest</span> "describe your project"
+            <span className="text-indigo-400">stackweld ai suggest</span> "describe your project"
           </p>
           <p>
-            <span className="text-indigo-400">forgeboard ai readme</span> &lt;stack-id&gt;
+            <span className="text-indigo-400">stackweld ai readme</span> &lt;stack-id&gt;
           </p>
           <p>
-            <span className="text-indigo-400">forgeboard ai explain</span> &lt;stack-id&gt;
+            <span className="text-indigo-400">stackweld ai explain</span> &lt;stack-id&gt;
           </p>
         </div>
       </Card>

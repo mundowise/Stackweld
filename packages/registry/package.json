@@ -1,5 +1,5 @@
 {
-  "name": "@forgeboard/registry",
+  "name": "@stackweld/registry",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -18,7 +18,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@forgeboard/core": "workspace:*",
+    "@stackweld/core": "workspace:*",
     "ajv": "^8.17.0",
     "yaml": "^2.7.0"
   },

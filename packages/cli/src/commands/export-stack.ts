@@ -1,5 +1,5 @@
 /**
- * forgeboard export <stack-id> — Export a stack definition to YAML or JSON.
+ * stackweld export <stack-id> — Export a stack definition to YAML or JSON.
  */
 
 import * as fs from "node:fs";
@@ -35,7 +35,7 @@ export const exportCommand = new Command("export")
         port: t.port,
       })),
       exportedAt: new Date().toISOString(),
-      exportedBy: "forgeboard",
+      exportedBy: "stackweld",
     };
 
     let output: string;
