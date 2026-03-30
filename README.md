@@ -200,6 +200,30 @@ packages/
   desktop/     -- Tauri 2 + React 19 + TypeScript + Tailwind CSS 4 + Zustand
 ```
 
+**Package dependency graph:**
+
+```
+cli ──────────► core, registry, templates
+desktop ──────► core (via Tauri IPC)
+registry ─────► core (types only)
+templates ────► core (types only)
+```
+
+**Scaffold pipeline (what runs when you `generate`):**
+
+```
+User input
+  └─► Rules Engine (BFS validation + port assignment)
+        └─► Stack Engine (persist to SQLite)
+              └─► Scaffold Orchestrator
+                    ├─ 1. Official scaffold CLI (create-next-app, django-admin...)
+                    ├─ 2. Tech Installer (Prisma, NextAuth, Vitest, Biome...)
+                    ├─ 3. Docker Compose generation (databases + services only)
+                    └─ 4. Config files (Makefile, CI workflow, devcontainer)
+```
+
+Full architecture documentation with ADRs: [docs/architecture.md](docs/architecture.md)
+
 Monorepo managed with Turborepo + pnpm. TypeScript strict mode. Biome for linting. Vitest for testing. GitHub Actions for CI.
 
 ## Development

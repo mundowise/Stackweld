@@ -422,13 +422,26 @@ export const generateCommand = new Command("generate")
       process.exit(1);
     }
 
+    // SEC-004: Sanitize project name to prevent path traversal
+    const safeName = path.basename(opts.name);
+    if (safeName !== opts.name || !/^[a-zA-Z0-9_.\-]+$/.test(safeName)) {
+      console.error(
+        error("Project name must be alphanumeric (a-z, 0-9, -, _, .). No path separators."),
+      );
+      process.exit(1);
+    }
+
     const parentDir = path.resolve(opts.path);
     if (!fs.existsSync(parentDir)) {
       console.error(error(`Parent directory does not exist: ${parentDir}`));
       process.exit(1);
     }
 
-    const targetDir = path.resolve(opts.path, opts.name);
+    const targetDir = path.resolve(parentDir, safeName);
+    if (!targetDir.startsWith(parentDir)) {
+      console.error(error("Project path resolves outside the parent directory."));
+      process.exit(1);
+    }
     if (fs.existsSync(targetDir) && fs.readdirSync(targetDir).length > 0) {
       console.error(error(`Target directory already exists and is not empty: ${targetDir}`));
       process.exit(1);

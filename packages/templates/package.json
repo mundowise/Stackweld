@@ -18,8 +18,8 @@
     "@stackpilot/registry": "workspace:*"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
     "typescript": "^5.9.0",
-    "vitest": "^4.0.0",
-    "@biomejs/biome": "^2.0.0"
+    "vitest": "^4.1.2"
   }
 }

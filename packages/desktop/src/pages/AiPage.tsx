@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/cn";
-import { execCommand, isTauri } from "@/lib/tauri";
+import { execCommand, isTauri, type CliResult } from "@/lib/tauri";
 import { Sparkles, FileText, Brain, Terminal, Copy, Check } from "lucide-react";
 
 type AiMode = "suggest" | "readme" | "explain";
@@ -32,20 +32,18 @@ export function AiPage() {
 
     try {
       if (isTauri) {
-        const cliPath = "packages/cli/dist/index.js";
-        let cmd: string;
+        let res: CliResult;
         switch (activeMode) {
           case "suggest":
-            cmd = `node ${cliPath} ai suggest "${input.replace(/"/g, '\\"')}"`;
+            res = await execCommand({ action: "AiSuggest", description: input });
             break;
           case "readme":
-            cmd = `node ${cliPath} ai readme "${input}"`;
+            res = await execCommand({ action: "AiReadme", stack_id: input });
             break;
           case "explain":
-            cmd = `node ${cliPath} ai explain "${input}"`;
+            res = await execCommand({ action: "AiExplain", stack_id: input });
             break;
         }
-        const res = await execCommand(cmd);
         if (res.success) {
           setResult(res.stdout);
         } else {

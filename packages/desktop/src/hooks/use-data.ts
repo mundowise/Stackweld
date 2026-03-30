@@ -21,9 +21,7 @@ export function useLoadData() {
 
         if (isTauri) {
           // In Tauri mode, also load saved stacks from the CLI
-          const stackResult = await execCommand(
-            "node packages/cli/dist/index.js list --json",
-          );
+          const stackResult = await execCommand({ action: "ListStacks" });
           if (
             stackResult.success &&
             stackResult.stdout &&

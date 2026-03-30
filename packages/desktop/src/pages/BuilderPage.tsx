@@ -49,14 +49,17 @@ export function BuilderPage() {
 
     if (isTauri) {
       try {
-        // Use the CLI `generate` command which does everything in one step:
+        // Use the structured CLI action which does everything in one step:
         // 1. Creates stack in DB with validation + auto-resolved deps
         // 2. Generates ALL scaffold files (docker-compose, .env, README, Makefile, scripts, devcontainer, CI, .gitignore, .vscode)
         // 3. Initializes git with first commit
-        const cliBase = "/home/orlando/Desktop/XPlus-Finance/PROYECTOS_NUEVOS/StackPilot/stackpilot";
-        const cmd = `node ${cliBase}/packages/cli/dist/index.js generate --name "${builderName}" --path "${projectPath}" --techs "${techList}" --profile "${builderProfile}" --git --json`;
-
-        const result = await execCommand(cmd);
+        const result = await execCommand({
+          action: "Generate",
+          name: builderName,
+          path: projectPath,
+          techs: techList,
+          profile: builderProfile,
+        });
 
         if (result.success && result.stdout) {
           try {
