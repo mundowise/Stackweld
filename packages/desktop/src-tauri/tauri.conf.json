@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/nicedoc/tauri-schema/main/schema.json",
   "productName": "Stackweld",
   "identifier": "com.stackweld.app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
