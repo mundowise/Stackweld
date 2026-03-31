@@ -1,6 +1,6 @@
 {
   "name": "@stackweld/templates",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Built-in stack templates for Stackweld — 20 ready-to-use project templates.",
   "license": "MIT",
   "author": "Orlando Fernandez <hello@xplustechnologies.com>",
@@ -10,7 +10,6 @@
     "url": "https://github.com/mundowise/Stackweld.git",
     "directory": "packages/templates"
   },
-  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,8 +22,8 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@stackweld/core": "workspace:*",
-    "@stackweld/registry": "workspace:*"
+    "@stackweld/core": "0.2.1",
+    "@stackweld/registry": "0.2.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.0.0",

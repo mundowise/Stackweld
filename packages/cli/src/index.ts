@@ -6,6 +6,7 @@
 
 import chalk from "chalk";
 import { Command } from "commander";
+import { select, input } from "@inquirer/prompts";
 import { aiCommand } from "./commands/ai.js";
 import { analyzeCommand } from "./commands/analyze.js";
 import { benchmarkCommand } from "./commands/benchmark.js";
@@ -44,8 +45,7 @@ import { upCommand } from "./commands/up.js";
 import { versionCommand } from "./commands/version-cmd.js";
 import { banner } from "./ui/format.js";
 
-// Read version from package.json at build time; fallback for development
-const VERSION = "0.2.0";
+const VERSION = "0.2.1";
 
 const program = new Command();
 
@@ -91,78 +91,231 @@ program
   .addCommand(pluginCommand)
   .addCommand(versionCommand);
 
-// Show banner when run without arguments
-if (process.argv.length <= 2) {
+// ── Interactive Menu ───────────────────────────────────────────────
+async function interactiveMenu(): Promise<void> {
+  console.clear();
   console.log(banner(VERSION));
-  console.log(chalk.bold("  Commands:"));
-  console.log("");
-  console.log(chalk.cyan("    Setup"));
-  console.log(`${chalk.dim("      init            ")}Create a new stack interactively`);
-  console.log(`${chalk.dim("      generate        ")}Scaffold a full project (one-shot)`);
-  console.log(`${chalk.dim("      create          ")}Scaffold from a stack or template`);
-  console.log(`${chalk.dim("      doctor          ")}Check system requirements`);
-  console.log("");
-  console.log(chalk.cyan("    Stacks"));
-  console.log(`${chalk.dim("      list            ")}List all saved stacks`);
-  console.log(`${chalk.dim("      info <id>       ")}Show stack or technology details`);
-  console.log(`${chalk.dim("      browse          ")}Browse technology catalog`);
-  console.log(`${chalk.dim("      save            ")}Save a version snapshot`);
-  console.log(`${chalk.dim("      delete          ")}Delete a saved stack`);
-  console.log(`${chalk.dim("      clone           ")}Duplicate a stack`);
-  console.log(`${chalk.dim("      export/import   ")}Export or import stack definitions`);
-  console.log(`${chalk.dim("      share <id>      ")}Generate a shareable URL for a stack`);
-  console.log(`${chalk.dim("      import-url <url> ")}Import a stack from a share URL`);
-  console.log(`${chalk.dim("      preview <id>    ")}Preview docker-compose.yml for a stack`);
-  console.log("");
-  console.log(chalk.cyan("    Runtime"));
-  console.log(`${chalk.dim("      up              ")}Start Docker services`);
-  console.log(`${chalk.dim("      down            ")}Stop Docker services`);
-  console.log(`${chalk.dim("      status          ")}Show service status`);
-  console.log(`${chalk.dim("      logs            ")}Show service logs`);
-  console.log("");
-  console.log(chalk.cyan("    Analysis"));
-  console.log(`${chalk.dim("      analyze [path]  ")}Detect project stack automatically`);
-  console.log(`${chalk.dim("      health [path]   ")}Check project health and best practices`);
-  console.log(`${chalk.dim("      compare <a> <b> ")}Compare two saved stacks`);
-  console.log(`${chalk.dim("      env [sync|check]")} Sync .env files and check for issues`);
-  console.log(`${chalk.dim("      score <a> [b]   ")}Compatibility score between technologies`);
-  console.log("");
-  console.log(chalk.cyan("    Deploy & Standards"));
-  console.log(`${chalk.dim("      deploy <id>     ")}Generate infrastructure files (VPS/AWS/GCP)`);
-  console.log(`${chalk.dim("      lint            ")}Validate stack against team standards`);
-  console.log(`${chalk.dim("      benchmark <id>  ")}Show performance profile for a stack`);
-  console.log(`${chalk.dim("      cost <id>       ")}Estimate monthly hosting costs`);
-  console.log("");
-  console.log(chalk.cyan("    Plugins"));
-  console.log(`${chalk.dim("      plugin list     ")}List installed plugins`);
-  console.log(`${chalk.dim("      plugin install  ")}Install a plugin from local directory`);
-  console.log(`${chalk.dim("      plugin remove   ")}Remove an installed plugin`);
-  console.log(`${chalk.dim("      plugin info     ")}Show plugin details`);
-  console.log("");
-  console.log(chalk.cyan("    Migration & Learning"));
-  console.log(`${chalk.dim("      migrate         ")}Generate a migration plan between techs`);
-  console.log(`${chalk.dim("      learn <tech>    ")}Show learning resources for a technology`);
-  console.log("");
-  console.log(chalk.cyan("    Extras"));
-  console.log(`${chalk.dim("      ai suggest      ")}AI-powered stack suggestions`);
-  console.log(`${chalk.dim("      template        ")}Manage templates`);
-  console.log(`${chalk.dim("      config          ")}Manage preferences`);
-  console.log(`${chalk.dim("      completion      ")}Generate shell completions`);
-  console.log("");
-  console.log(chalk.dim(`  Run ${chalk.white("stackweld <command> --help")} for detailed usage.`));
-  console.log("");
-  process.exit(0);
+
+  while (true) {
+    try {
+      const action = await select({
+        message: chalk.bold("What would you like to do?"),
+        choices: [
+          { name: `${chalk.green("🚀")} Create a new project`,           value: "create" },
+          { name: `${chalk.cyan("📋")} Browse technologies (83)`,        value: "browse" },
+          { name: `${chalk.yellow("📊")} Score compatibility`,             value: "score" },
+          { name: `${chalk.blue("🔍")} Analyze an existing project`,     value: "analyze" },
+          { name: `${chalk.magenta("🏥")} System health check (doctor)`,   value: "doctor" },
+          { name: `${chalk.cyan("📚")} Learn about a technology`,        value: "learn" },
+          { name: `${chalk.yellow("🔄")} Migrate between technologies`,    value: "migrate" },
+          { name: `${chalk.green("💰")} Estimate hosting costs`,          value: "cost-ask" },
+          { name: `${chalk.blue("⚡")} Performance profile`,              value: "bench-ask" },
+          { name: `${chalk.cyan("🩺")} Check project health`,            value: "health" },
+          { name: `${chalk.yellow("🌐")} Environment sync (.env)`,        value: "env" },
+          new (await import("@inquirer/prompts")).Separator(),
+          { name: `${chalk.dim("📦")} Manage saved stacks`,             value: "stacks" },
+          { name: `${chalk.dim("🐳")} Docker runtime`,                  value: "docker" },
+          { name: `${chalk.dim("⚙️")}  Settings & tools`,                value: "settings" },
+          new (await import("@inquirer/prompts")).Separator(),
+          { name: `${chalk.red("❌")} Exit`,                             value: "exit" },
+        ],
+      });
+
+      if (action === "exit") {
+        console.log(chalk.dim("\n  Goodbye! 👋\n"));
+        process.exit(0);
+      }
+
+      console.log("");
+
+      switch (action) {
+        case "create":
+          await program.parseAsync(["node", "stackweld", "init"]);
+          break;
+
+        case "browse":
+          await program.parseAsync(["node", "stackweld", "browse"]);
+          break;
+
+        case "score": {
+          const techA = await input({ message: "First technology ID:" });
+          const techB = await input({ message: "Second technology ID (or Enter to see best/worst):" });
+          const args = ["node", "stackweld", "score", techA];
+          if (techB) args.push(techB);
+          await program.parseAsync(args);
+          break;
+        }
+
+        case "analyze": {
+          const path = await input({ message: "Project path:", default: "." });
+          await program.parseAsync(["node", "stackweld", "analyze", path]);
+          break;
+        }
+
+        case "doctor":
+          await program.parseAsync(["node", "stackweld", "doctor"]);
+          break;
+
+        case "learn": {
+          const tech = await input({ message: "Technology to learn about:" });
+          await program.parseAsync(["node", "stackweld", "learn", tech]);
+          break;
+        }
+
+        case "migrate": {
+          const from = await input({ message: "Migrate FROM (technology ID):" });
+          const to = await input({ message: "Migrate TO (technology ID):" });
+          await program.parseAsync(["node", "stackweld", "migrate", "--from", from, "--to", to]);
+          break;
+        }
+
+        case "cost-ask": {
+          const stackId = await input({ message: "Stack ID:" });
+          await program.parseAsync(["node", "stackweld", "cost", stackId]);
+          break;
+        }
+
+        case "bench-ask": {
+          const stackId = await input({ message: "Stack ID:" });
+          await program.parseAsync(["node", "stackweld", "benchmark", stackId]);
+          break;
+        }
+
+        case "health": {
+          const path = await input({ message: "Project path:", default: "." });
+          await program.parseAsync(["node", "stackweld", "health", path]);
+          break;
+        }
+
+        case "env": {
+          const subAction = await select({
+            message: "Environment action:",
+            choices: [
+              { name: "Sync .env.example with .env", value: "sync" },
+              { name: "Check for dangerous values", value: "check" },
+            ],
+          });
+          const path = await input({ message: "Project path:", default: "." });
+          await program.parseAsync(["node", "stackweld", "env", subAction, "--path", path]);
+          break;
+        }
+
+        case "stacks": {
+          const subAction = await select({
+            message: "Stack management:",
+            choices: [
+              { name: "📋 List all stacks", value: "list" },
+              { name: "🔍 Stack info", value: "info" },
+              { name: "🗑️  Delete a stack", value: "delete" },
+              { name: "📤 Export a stack", value: "export" },
+              { name: "📥 Import a stack", value: "import" },
+              { name: "🔗 Share via URL", value: "share" },
+              { name: "📑 Compare two stacks", value: "compare" },
+              { name: "📋 Clone a stack", value: "clone" },
+              { name: "⬅️  Back", value: "back" },
+            ],
+          });
+          if (subAction === "back") break;
+          if (subAction === "list") {
+            await program.parseAsync(["node", "stackweld", "list"]);
+          } else if (subAction === "info") {
+            const id = await input({ message: "Stack ID:" });
+            await program.parseAsync(["node", "stackweld", "info", id]);
+          } else if (subAction === "delete") {
+            const id = await input({ message: "Stack ID to delete:" });
+            await program.parseAsync(["node", "stackweld", "delete", id]);
+          } else if (subAction === "export") {
+            const id = await input({ message: "Stack ID:" });
+            await program.parseAsync(["node", "stackweld", "export", id]);
+          } else if (subAction === "import") {
+            const file = await input({ message: "File path:" });
+            await program.parseAsync(["node", "stackweld", "import", file]);
+          } else if (subAction === "share") {
+            const id = await input({ message: "Stack ID:" });
+            await program.parseAsync(["node", "stackweld", "share", id]);
+          } else if (subAction === "compare") {
+            const a = await input({ message: "First stack ID:" });
+            const b = await input({ message: "Second stack ID:" });
+            await program.parseAsync(["node", "stackweld", "compare", a, b]);
+          } else if (subAction === "clone") {
+            const id = await input({ message: "Stack ID to clone:" });
+            await program.parseAsync(["node", "stackweld", "clone", id]);
+          }
+          break;
+        }
+
+        case "docker": {
+          const subAction = await select({
+            message: "Docker runtime:",
+            choices: [
+              { name: "▶️  Start services (up)", value: "up" },
+              { name: "⏹️  Stop services (down)", value: "down" },
+              { name: "📊 Service status", value: "status" },
+              { name: "📜 View logs", value: "logs" },
+              { name: "⬅️  Back", value: "back" },
+            ],
+          });
+          if (subAction === "back") break;
+          await program.parseAsync(["node", "stackweld", subAction]);
+          break;
+        }
+
+        case "settings": {
+          const subAction = await select({
+            message: "Settings & tools:",
+            choices: [
+              { name: "⚙️  Configuration", value: "config" },
+              { name: "🔌 Plugins", value: "plugin" },
+              { name: "🏗️  Deploy (generate IaC)", value: "deploy-ask" },
+              { name: "✅ Lint (team standards)", value: "lint" },
+              { name: "📝 Templates", value: "template" },
+              { name: "🤖 AI assistant", value: "ai" },
+              { name: "⬅️  Back", value: "back" },
+            ],
+          });
+          if (subAction === "back") break;
+          if (subAction === "deploy-ask") {
+            const id = await input({ message: "Stack ID:" });
+            const target = await select({
+              message: "Deploy target:",
+              choices: [
+                { name: "VPS (Docker + nginx)", value: "vps" },
+                { name: "AWS (ECS Fargate)", value: "aws" },
+                { name: "GCP (Cloud Run)", value: "gcp" },
+              ],
+            });
+            await program.parseAsync(["node", "stackweld", "deploy", id, "--target", target]);
+          } else if (subAction === "config") {
+            await program.parseAsync(["node", "stackweld", "config", "list"]);
+          } else if (subAction === "plugin") {
+            await program.parseAsync(["node", "stackweld", "plugin", "list"]);
+          } else {
+            await program.parseAsync(["node", "stackweld", subAction]);
+          }
+          break;
+        }
+      }
+
+      // Pause before showing menu again
+      console.log("");
+      await input({ message: chalk.dim("Press Enter to continue...") });
+      console.clear();
+      console.log(banner(VERSION));
+
+    } catch (err: unknown) {
+      // Handle Ctrl+C gracefully
+      if (err && typeof err === "object" && "name" in err && (err as { name: string }).name === "ExitPromptError") {
+        console.log(chalk.dim("\n  Goodbye! 👋\n"));
+        process.exit(0);
+      }
+      throw err;
+    }
+  }
 }
 
-program.parseAsync(process.argv).catch((err) => {
-  if (err && err.code === "commander.unknownCommand") {
-    const cmd = process.argv[2];
-    console.error(chalk.red(`\u2716 Unknown command: "${cmd}"`));
-    console.error(
-      chalk.dim(`  Run ${chalk.white("stackweld --help")} to see available commands.`),
-    );
-    process.exit(1);
-  }
-  console.error(chalk.red(`\u2716 ${err instanceof Error ? err.message : String(err)}`));
-  process.exit(1);
-});
+// ── Entry Point ───────────────────────────────────────────────────
+if (process.argv.length <= 2) {
+  interactiveMenu().catch(() => process.exit(0));
+} else {
+  program.parse();
+}

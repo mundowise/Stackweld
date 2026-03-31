@@ -1,7 +1,22 @@
 # Stackweld User Guide
 
+## Interactive Mode
+
+The easiest way to use Stackweld is to simply run:
+
+```bash
+stackweld
+```
+
+This opens an interactive menu where you can navigate all features without memorizing commands. Use arrow keys to select, Enter to confirm, and the menu returns after each action.
+
+For automation and scripting, all commands also work directly as documented below.
+
+---
+
 ## Table of Contents
 
+- [Interactive Mode](#interactive-mode)
 - [Installation](#installation)
 - [Creating Your First Project](#creating-your-first-project)
 - [Using the Desktop App](#using-the-desktop-app)
