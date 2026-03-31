@@ -1,6 +1,6 @@
 {
   "name": "@stackweld/core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Core engine for Stackweld — rules, scaffold orchestrator, runtime manager, tech installer, and SQLite persistence.",
   "license": "MIT",
   "author": "Orlando Fernandez <hello@xplustechnologies.com>",
@@ -10,7 +10,6 @@
     "url": "https://github.com/mundowise/Stackweld.git",
     "directory": "packages/core"
   },
-  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

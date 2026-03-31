@@ -407,7 +407,7 @@
     if (!btn) return;
 
     btn.addEventListener('click', function () {
-      var text = 'npm install -g stackweld';
+      var text = 'npm install -g @stackweld/cli';
       navigator.clipboard.writeText(text).then(function () {
         var copyIcon = btn.querySelector('.copy-icon');
         var checkIcon = btn.querySelector('.check-icon');

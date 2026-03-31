@@ -1,6 +1,6 @@
 {
   "name": "@stackweld/registry",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Technology registry for Stackweld — 83 YAML technology definitions with JSON Schema validation.",
   "license": "MIT",
   "author": "Orlando Fernandez <hello@xplustechnologies.com>",
@@ -10,7 +10,6 @@
     "url": "https://github.com/mundowise/Stackweld.git",
     "directory": "packages/registry"
   },
-  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -27,7 +26,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@stackweld/core": "workspace:*",
+    "@stackweld/core": "0.2.1",
     "ajv": "^8.17.0",
     "yaml": "^2.7.0"
   },

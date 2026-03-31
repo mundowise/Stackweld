@@ -36,7 +36,13 @@ Stackweld eliminates the hours spent setting up new projects. Select your techno
 
 ## Quick Start
 
-### Option 1: Clone and run locally
+### Option 1: Install via npm
+
+```bash
+npm install -g @stackweld/cli
+```
+
+### Option 2: Clone and run locally
 
 ```bash
 git clone https://github.com/mundowise/Stackweld.git
@@ -52,30 +58,25 @@ cd packages/cli && pnpm link --global
 stackweld --help
 ```
 
-### Option 2: Install via npm (coming soon)
+After installing, just run:
 
 ```bash
-npm install -g @stackweld/cli
-stackweld init
+stackweld
 ```
 
-### Your first stack
+This launches an interactive menu where you can:
+- Create new projects step by step
+- Browse 83 technologies
+- Check system requirements
+- Score compatibility between technologies
+- And much more -- all guided, no commands to memorize
 
-```bash
-# Interactive mode
-stackweld init
-
-# Or one-shot
-stackweld generate --name my-app --techs nextjs,prisma,postgresql --profile standard --path .
-```
-
-### Quick commands
+For power users, all commands also work directly:
 
 ```bash
 stackweld doctor          # Check system requirements
-stackweld browse          # Browse 83 technologies
 stackweld score nextjs prisma  # Compatibility score
-stackweld health .        # Audit current project
+stackweld generate --name my-app --techs nextjs,prisma,postgresql --profile standard --path .
 ```
 
 ## Compatibility
