@@ -44,7 +44,8 @@ import { upCommand } from "./commands/up.js";
 import { versionCommand } from "./commands/version-cmd.js";
 import { banner } from "./ui/format.js";
 
-const VERSION = "0.1.0";
+// Read version from package.json at build time; fallback for development
+const VERSION = "0.2.0";
 
 const program = new Command();
 

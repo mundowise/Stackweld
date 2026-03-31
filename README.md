@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/mundowise/Stackweld/actions/workflows/ci.yml/badge.svg)](https://github.com/mundowise/Stackweld/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](https://github.com/mundowise/Stackweld/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/mundowise/Stackweld/releases)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 [![Tauri](https://img.shields.io/badge/Tauri-2.0-orange.svg)](https://tauri.app/)
 
@@ -34,6 +34,50 @@ Stackweld eliminates the hours spent setting up new projects. Select your techno
 - **Team standards** enforcement via `.stackweldrc` linting
 - **Plugin system** for community extensions
 
+## Quick Start
+
+### Option 1: Clone and run locally
+
+```bash
+git clone https://github.com/mundowise/Stackweld.git
+cd Stackweld
+pnpm install
+pnpm build
+
+# Run CLI directly
+node packages/cli/dist/index.js --help
+
+# Or link globally
+cd packages/cli && pnpm link --global
+stackweld --help
+```
+
+### Option 2: Install via npm (coming soon)
+
+```bash
+npm install -g @stackweld/cli
+stackweld init
+```
+
+### Your first stack
+
+```bash
+# Interactive mode
+stackweld init
+
+# Or one-shot
+stackweld generate --name my-app --techs nextjs,prisma,postgresql --profile standard --path .
+```
+
+### Quick commands
+
+```bash
+stackweld doctor          # Check system requirements
+stackweld browse          # Browse 83 technologies
+stackweld score nextjs prisma  # Compatibility score
+stackweld health .        # Audit current project
+```
+
 ## Compatibility
 
 | Platform | CLI | Desktop App |
@@ -54,7 +98,7 @@ Stackweld eliminates the hours spent setting up new projects. Select your techno
 
 ```bash
 # Clone the repository
-git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+git clone https://github.com/mundowise/Stackweld.git
 cd Stackweld
 
 # Install dependencies

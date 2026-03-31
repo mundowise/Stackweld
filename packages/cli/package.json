@@ -1,10 +1,29 @@
 {
   "name": "@stackweld/cli",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
+  "description": "The operating system for your dev stacks — define, validate, scaffold, and launch development environments from the terminal.",
+  "license": "MIT",
+  "author": "Orlando Fernandez <hello@xplustechnologies.com>",
+  "homepage": "https://github.com/mundowise/Stackweld",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mundowise/Stackweld.git",
+    "directory": "packages/cli"
+  },
+  "keywords": ["cli", "devtools", "scaffold", "stack", "docker", "developer-tools", "project-generator"],
   "type": "module",
+  "main": "./dist/index.js",
   "bin": {
     "stackweld": "./dist/index.js"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
   },
   "scripts": {
     "build": "tsc -b",
