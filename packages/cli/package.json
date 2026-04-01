@@ -36,9 +36,9 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",
     "@inquirer/prompts": "^7.0.0",
-    "@stackweld/core": "0.2.1",
-    "@stackweld/registry": "0.2.1",
-    "@stackweld/templates": "0.2.1",
+    "@stackweld/core": "workspace:*",
+    "@stackweld/registry": "workspace:*",
+    "@stackweld/templates": "workspace:*",
     "chalk": "^5.4.0",
     "commander": "^13.0.0",
     "ora": "^8.0.0",
