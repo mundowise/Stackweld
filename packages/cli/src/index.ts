@@ -4,7 +4,7 @@
  * Stackweld CLI — The operating system for your dev stacks.
  */
 
-import { input, select, Separator } from "@inquirer/prompts";
+import { input, Separator, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { Command } from "commander";
 import { aiCommand } from "./commands/ai.js";
@@ -95,10 +95,7 @@ program
 function isExitSignal(err: unknown): boolean {
   if (!err || typeof err !== "object") return false;
   const e = err as Record<string, unknown>;
-  return (
-    e.name === "ExitPromptError" ||
-    e.code === "ERR_USE_AFTER_CLOSE"
-  );
+  return e.name === "ExitPromptError" || e.code === "ERR_USE_AFTER_CLOSE";
 }
 
 async function pressEnterToContinue(): Promise<void> {

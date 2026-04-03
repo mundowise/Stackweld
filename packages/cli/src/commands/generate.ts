@@ -5,7 +5,8 @@
  * generates per-directory .env files, and leaves everything ready to code.
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
+import { randomBytes } from "node:crypto";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import type { StackProfile, StackTechnology, Technology } from "@stackweld/core";
@@ -28,7 +29,8 @@ import {
 
 function run(cmd: string, cwd: string, timeoutMs = 120_000): { success: boolean; output: string } {
   try {
-    const out = execSync(cmd, {
+    const parts = cmd.split(/\s+/).filter(Boolean);
+    const out = execFileSync(parts[0], parts.slice(1), {
       cwd,
       stdio: "pipe",
       timeout: timeoutMs,
@@ -245,7 +247,7 @@ function scaffoldBackend(
         `# ${projectName} — Backend Environment Variables`,
         ``,
         `DEBUG=True`,
-        `SECRET_KEY=change-me-in-production`,
+        `SECRET_KEY=${randomBytes(32).toString("base64url")}`,
         `DATABASE_URL=${dbUrl}`,
         hasRedis ? `REDIS_URL=redis://localhost:6379/0` : "",
         `ALLOWED_HOSTS=localhost,127.0.0.1`,

@@ -14,6 +14,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/generate-data.mjs",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",

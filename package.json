@@ -32,6 +32,9 @@
       "esbuild",
       "better-sqlite3",
       "turbo"
-    ]
+    ],
+    "overrides": {
+      "picomatch": ">=4.0.4"
+    }
   }
 }

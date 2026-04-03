@@ -2,7 +2,7 @@
  * Stack Health Monitor — Checks project health across multiple dimensions.
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
@@ -37,17 +37,25 @@ function readFileContent(filePath: string): string | null {
 
 function execQuiet(command: string, cwd?: string): string | null {
   try {
-    return execSync(command, { stdio: "pipe", timeout: 10000, cwd }).toString().trim();
+    const parts = command.split(/\s+/).filter(Boolean);
+    return execFileSync(parts[0], parts.slice(1), { stdio: "pipe", timeout: 10000, cwd })
+      .toString()
+      .trim();
   } catch {
     return null;
   }
 }
 
 function getDirSizeMB(dirPath: string): number | null {
-  const result = execQuiet(`du -sm "${dirPath}" 2>/dev/null`);
-  if (!result) return null;
-  const match = result.match(/^(\d+)/);
-  return match ? parseInt(match[1], 10) : null;
+  try {
+    const result = execFileSync("du", ["-sm", dirPath], { stdio: "pipe", timeout: 10000 })
+      .toString()
+      .trim();
+    const match = result.match(/^(\d+)/);
+    return match ? parseInt(match[1], 10) : null;
+  } catch {
+    return null;
+  }
 }
 
 // ─── Individual Checks ───────────────────────────────

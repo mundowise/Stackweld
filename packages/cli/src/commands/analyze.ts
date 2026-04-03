@@ -3,7 +3,7 @@
  */
 
 import * as path from "node:path";
-import type { DetectedTech } from "@stackweld/core";
+import type { DetectedStack, DetectedTech } from "@stackweld/core";
 import { detectStack } from "@stackweld/core";
 import chalk from "chalk";
 import { Command } from "commander";
@@ -27,7 +27,7 @@ export const analyzeCommand = new Command("analyze")
   .action((targetPath: string, opts) => {
     const projectDir = path.resolve(targetPath);
 
-    let result;
+    let result: DetectedStack;
     try {
       result = detectStack(projectDir);
     } catch (err) {

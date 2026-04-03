@@ -4,7 +4,8 @@
 
 import { Command } from "commander";
 
-const ALL_COMMANDS = "init create generate list info save delete clone export import import-url share compare browse doctor up down status logs scaffold template config completion ai score analyze env preview health migrate learn deploy lint benchmark cost plugin version";
+const ALL_COMMANDS =
+  "init create generate list info save delete clone export import import-url share compare browse doctor up down status logs scaffold template config completion ai score analyze env preview health migrate learn deploy lint benchmark cost plugin version";
 
 const BASH_COMPLETION = `
 # stackweld bash completion

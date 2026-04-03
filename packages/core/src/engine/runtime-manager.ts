@@ -3,7 +3,7 @@
  * Handles up, down, status, logs, and health check waiting.
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import type { RuntimeState, ServiceStatus, Technology } from "../types/index.js";
@@ -24,9 +24,10 @@ export class RuntimeManager {
    * Start all services with docker compose up.
    */
   up(opts: RuntimeOptions, detach = true): { success: boolean; output: string } {
-    const flags = detach ? "-d" : "";
+    const args = ["compose", "-f", opts.composePath, "up"];
+    if (detach) args.push("-d");
     try {
-      const output = execSync(`docker compose -f "${opts.composePath}" up ${flags}`, {
+      const output = execFileSync("docker", args, {
         cwd: opts.projectDir,
         stdio: "pipe",
         timeout: 120_000,
@@ -42,9 +43,10 @@ export class RuntimeManager {
    * Stop all services.
    */
   down(opts: RuntimeOptions, volumes = false): { success: boolean; output: string } {
+    const args = ["compose", "-f", opts.composePath, "down"];
+    if (volumes) args.push("--volumes");
     try {
-      const volumesFlag = volumes ? " --volumes" : "";
-      const output = execSync(`docker compose -f "${opts.composePath}" down${volumesFlag}`, {
+      const output = execFileSync("docker", args, {
         cwd: opts.projectDir,
         stdio: "pipe",
         timeout: 60_000,
@@ -61,11 +63,15 @@ export class RuntimeManager {
    */
   status(opts: RuntimeOptions): ServiceStatus[] {
     try {
-      const raw = execSync(`docker compose -f "${opts.composePath}" ps --format json`, {
-        cwd: opts.projectDir,
-        stdio: "pipe",
-        timeout: 10_000,
-      }).toString();
+      const raw = execFileSync(
+        "docker",
+        ["compose", "-f", opts.composePath, "ps", "--format", "json"],
+        {
+          cwd: opts.projectDir,
+          stdio: "pipe",
+          timeout: 10_000,
+        },
+      ).toString();
 
       const services: ServiceStatus[] = [];
       const lines = raw.trim().split("\n").filter(Boolean);
@@ -124,13 +130,18 @@ export class RuntimeManager {
    * Get logs for a specific service or all services.
    */
   logs(opts: RuntimeOptions, service?: string, tail = 50, follow = false): string {
+    if (service && !/^[a-zA-Z0-9_-]+$/.test(service)) {
+      throw new Error(`Invalid service name: ${service}`);
+    }
+    const args = ["compose", "-f", opts.composePath, "logs", "--tail", String(tail)];
+    if (follow) args.push("-f");
+    if (service) args.push(service);
     try {
-      const serviceArg = service || "";
-      const followFlag = follow ? " -f" : "";
-      return execSync(
-        `docker compose -f "${opts.composePath}" logs --tail ${tail}${followFlag} ${serviceArg}`,
-        { cwd: opts.projectDir, stdio: follow ? "inherit" : "pipe", timeout: follow ? 0 : 10_000 },
-      ).toString();
+      return execFileSync("docker", args, {
+        cwd: opts.projectDir,
+        stdio: follow ? "inherit" : "pipe",
+        timeout: follow ? 0 : 10_000,
+      }).toString();
     } catch (err) {
       return err instanceof Error ? err.message : String(err);
     }
@@ -198,7 +209,7 @@ export class RuntimeManager {
    */
   isDockerAvailable(): boolean {
     try {
-      execSync("docker info", { stdio: "pipe", timeout: 5_000 });
+      execFileSync("docker", ["info"], { stdio: "pipe", timeout: 5_000 });
       return true;
     } catch {
       return false;

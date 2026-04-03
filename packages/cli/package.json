@@ -34,7 +34,7 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.80.0",
+    "@anthropic-ai/sdk": "^0.81.0",
     "@inquirer/prompts": "^7.0.0",
     "@stackweld/core": "workspace:*",
     "@stackweld/registry": "workspace:*",

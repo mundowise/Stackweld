@@ -13,7 +13,7 @@
  * Frontend and Backend scaffolding is handled by the generate command directly.
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import type { Technology } from "../types/index.js";
@@ -41,7 +41,8 @@ export interface InstallResult {
 
 function run(cmd: string, cwd: string, timeout = 60_000): boolean {
   try {
-    execSync(cmd, { cwd, stdio: "pipe", timeout });
+    const parts = cmd.split(/\s+/).filter(Boolean);
+    execFileSync(parts[0], parts.slice(1), { cwd, stdio: "pipe", timeout });
     return true;
   } catch {
     return false;

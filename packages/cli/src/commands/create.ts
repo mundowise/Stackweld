@@ -3,7 +3,7 @@
  * Uses official CLI tools when available and fills gaps.
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import type { Template } from "@stackweld/core";
@@ -12,6 +12,34 @@ import chalk from "chalk";
 import { Command } from "commander";
 import ora from "ora";
 import { getStackEngine } from "../ui/context.js";
+
+const SAFE_SCAFFOLD_BIN = new Set([
+  "npx",
+  "npm",
+  "pnpm",
+  "bun",
+  "bunx",
+  "yarn",
+  "go",
+  "cargo",
+  "python3",
+  "python",
+  "pip3",
+  "pip",
+  "composer",
+  "php",
+  "dotnet",
+]);
+
+function validateAndSplitCommand(command: string): { bin: string; args: string[] } | null {
+  const parts = command.split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return null;
+  const bin = parts[0];
+  if (!SAFE_SCAFFOLD_BIN.has(bin)) return null;
+  return { bin, args: parts.slice(1) };
+}
+
+const SAFE_NAME_RE = /^[a-zA-Z0-9_.-]+$/;
 
 export const createCommand = new Command("create")
   .description("Scaffold a project from a stack or template")
@@ -45,6 +73,16 @@ export const createCommand = new Command("create")
       const projectName = path.basename(
         opts.path === "." ? template.variables.projectName || "my-project" : opts.path,
       );
+
+      if (!SAFE_NAME_RE.test(projectName)) {
+        console.error(
+          chalk.red(
+            `Invalid project name: "${projectName}". Use only letters, numbers, dots, dashes, and underscores.`,
+          ),
+        );
+        process.exit(1);
+      }
+
       const targetDir = path.resolve(opts.path === "." ? projectName : opts.path);
 
       // Execute scaffold steps
@@ -59,9 +97,15 @@ export const createCommand = new Command("create")
           continue;
         }
 
+        const parsed = validateAndSplitCommand(command);
+        if (!parsed) {
+          console.error(chalk.red(`  Refusing unsafe scaffold command: ${command}`));
+          continue;
+        }
+
         const spinner = ora(step.name).start();
         try {
-          execSync(command, { cwd, stdio: "pipe" });
+          execFileSync(parsed.bin, parsed.args, { cwd, stdio: "pipe" });
           spinner.succeed(step.name);
         } catch (err) {
           spinner.fail(step.name);
@@ -104,13 +148,18 @@ export const createCommand = new Command("create")
         if (hook.requiresConfirmation) {
           console.log(chalk.yellow(`Hook requires confirmation: ${hook.description}`));
           console.log(chalk.dim(`  Command: ${command}`));
-          // In a real implementation, we'd prompt for confirmation here
+          continue;
+        }
+
+        const parsed = validateAndSplitCommand(command);
+        if (!parsed) {
+          console.error(chalk.red(`  Refusing unsafe hook command: ${command}`));
           continue;
         }
 
         const spinner = ora(`${hook.timing}: ${hook.name}`).start();
         try {
-          execSync(command, { stdio: "pipe" });
+          execFileSync(parsed.bin, parsed.args, { stdio: "pipe" });
           spinner.succeed(`${hook.timing}: ${hook.name}`);
         } catch {
           spinner.fail(`${hook.timing}: ${hook.name}`);

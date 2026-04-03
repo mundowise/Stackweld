@@ -2,7 +2,7 @@
  * stackweld doctor — Detect system capabilities and issues.
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync, execSync } from "node:child_process";
 import * as os from "node:os";
 import chalk from "chalk";
 import { Command } from "commander";
@@ -38,7 +38,10 @@ const INSTALL_SUGGESTIONS: Record<string, string> = {
 
 function check(name: string, command: string): CheckResult {
   try {
-    const output = execSync(command, { stdio: "pipe", timeout: 5000 }).toString().trim();
+    const parts = command.split(/\s+/);
+    const output = execFileSync(parts[0], parts.slice(1), { stdio: "pipe", timeout: 5000 })
+      .toString()
+      .trim();
     const versionMatch = output.match(/(\d+\.\d+[.\d]*)/);
     return {
       name,
