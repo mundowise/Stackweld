@@ -5,6 +5,35 @@ All notable changes to Stackweld will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2026-04-02
+
+### Security
+- All shell execution migrated from `execSync` to `execFileSync` — prevents command injection in scaffold, runtime, and git operations
+- Scaffold command allowlist: only trusted binaries (`npx`, `npm`, `pnpm`, `cargo`, `go`, `python3`, etc.) are executed
+- Input validation: project names, service names, and paths validated with strict regex before use
+- Cryptographically secure secrets generated via `crypto.randomBytes` for all `.env.example` files — replaces weak defaults (`postgres`, `root`, `change-me`)
+- Bumped `@anthropic-ai/sdk` from `^0.80.0` to `^0.81.0` (fixes CVE GHSA-5474-4w2j-mq4c path traversal)
+- Added `picomatch >=4.0.4` override (fixes CVE GHSA-c2c7-rcm5-vvqj ReDoS)
+- Added `Content-Security-Policy` meta tag to landing page
+
+### Changed
+- CI pipeline now runs: build → lint → typecheck → test (previously missing lint and typecheck)
+- Release workflow now publishes all 4 packages to npm automatically
+- Turbo `typecheck` task now depends on `^build` for correct workspace resolution
+- Biome config: `noNonNullAssertion`, `noExplicitAny`, `noControlCharactersInRegex` set to warn level
+
+### Fixed
+- CHANGELOG engine module names corrected to match actual filenames
+- ROADMAP.md rewritten to reflect actual release history (was stuck at v0.1.1)
+- SECURITY.md supported versions updated to 0.3.x
+- GitHub URLs corrected in user-guide.md, CONTRIBUTING.md (was using old org name)
+- Architecture docs version stamp and module paths corrected
+- Removed stale `package-lock.json` from desktop package
+- Removed duplicate nested `packages/desktop/packages/` directory
+- Automated `registry-data.ts` generation in desktop prebuild step
+
+---
+
 ## [0.3.0] - 2026-03-31
 
 ### Added

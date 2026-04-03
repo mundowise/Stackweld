@@ -61,7 +61,7 @@ For automation and scripting, all commands also work directly as documented belo
 
 ```bash
 # Clone the repository
-git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+git clone https://github.com/mundowise/Stackweld.git
 cd Stackweld
 
 # Install dependencies
@@ -101,7 +101,7 @@ pnpm tauri:build
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # Clone and build
-git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+git clone https://github.com/mundowise/Stackweld.git
 cd Stackweld
 pnpm install
 pnpm build
@@ -124,7 +124,7 @@ pnpm tauri:build
 # Install Rust from https://rustup.rs (required for the desktop app only)
 
 # Clone and build (PowerShell or Git Bash)
-git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+git clone https://github.com/mundowise/Stackweld.git
 cd Stackweld
 pnpm install
 pnpm build

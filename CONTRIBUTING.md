@@ -17,7 +17,7 @@ Thank you for considering a contribution to Stackweld. This document explains ho
 
 ```bash
 # Clone the repository
-git clone https://github.com/Xplus-technologies-open-in-process/Stackweld.git
+git clone https://github.com/mundowise/Stackweld.git
 cd Stackweld
 
 # Install dependencies

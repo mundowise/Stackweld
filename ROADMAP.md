@@ -1,48 +1,59 @@
 # Stackweld Roadmap
 
-## v0.1 — Foundation (Completed)
+## v0.1.0 — Foundation (Released 2026-03-28)
 
-### Phase 1: Core Engine
-- Technology registry with 83 technologies across 9 categories (YAML definitions + JSON Schema validation)
-- Rules engine with BFS validation, incompatibility detection, dependency auto-resolution, and port assignment
-- Stack engine with SQLite persistence (create, list, info, delete, clone, export/import)
-- Version control system: save snapshots, diff versions, rollback
+- Technology registry with 83 technologies across 9 categories
+- Rules engine with BFS validation, incompatibility detection, dependency resolution
+- Stack engine with SQLite persistence and version control
+- Scaffold orchestrator using official CLI tools
+- Docker Compose generation for databases and services
+- Runtime manager: up, down, status, logs
+- 23 CLI commands, 20 built-in templates
+- Desktop app: Tauri 2 + React 19 + visual stack builder
 
-### Phase 2: Scaffold & Runtime
-- Scaffold orchestrator using official CLI tools (create-next-app, django-admin, etc.)
-- Full-stack detection: separate frontend/ + backend/ directories with per-project configs
-- Per-technology installer: ORMs with schema, auth with routes, styling with configs, devops with pipelines
-- Docker Compose generation for databases and services (not runtimes)
-- Config file generation: Makefile, CI workflow, .devcontainer, .gitignore, README
-- Runtime manager: up, down, status, logs commands wrapping Docker Compose
+## v0.2.0 — Analysis & Intelligence (Released 2026-03-30)
 
-### Phase 3: CLI & Templates
-- 23 CLI commands covering the full workflow (Commander + Inquirer + Chalk + Ora)
-- 20 built-in templates (T3 Stack, SaaS Starter, FastAPI + React, Go Microservice, etc.)
-- Custom template support: save your stacks as reusable templates
-- Shell completion generation (bash, zsh, fish)
-- User preferences via `config` command
+- Compatibility scoring engine (0-100 scores with grade S/A/B/C/D/F)
+- Stack detection from existing projects
+- Performance profiling and cost estimation
+- Environment sync and health checks
+- Infrastructure as Code generation (VPS, AWS, GCP)
+- Migration planner between technologies
+- Stack sharing via base64-encoded URLs
+- Team standards linting (`.stackweldrc`)
+- Plugin system for community extensions
+- 14 new engine modules, expanded to 38 CLI commands
 
-### Phase 4: Desktop Application
-- Tauri 2 + React 19 + TypeScript + Tailwind CSS 4 + Zustand
-- Dashboard with technology overview, saved stacks, templates, and category stats
-- Visual stack builder with real-time validation, incompatibility warnings, and native folder picker
-- Technology catalog browser with category filters and search
-- Runtime panel for Docker service management
-- Settings page with system information and preferences
+## v0.3.0 — Interactive Generation (Released 2026-03-31)
 
-## v0.1.1 — Current Release
+- Interactive `stackweld init` wizard with step-by-step flow
+- ASCII art banner on CLI startup
+- Updated shell completions for all 38 commands
+- npm package protection via `.npmignore`
 
-### Phase 5: AI Utilities (In Progress)
-- `ai suggest` — natural language stack suggestions
-- `ai readme` — generate project README from stack definition
-- `ai explain` — explain stack architecture decisions
-- AI assistant panel in the desktop app
+## v0.3.1 — Security Hardening (Current Release, 2026-04-02)
 
-## v0.2 — Planned
+- All shell commands migrated to `execFileSync` (prevents command injection)
+- Scaffold command allowlist validation
+- Cryptographically secure secrets in generated `.env.example` files
+- Vulnerable dependency fixes (`@anthropic-ai/sdk`, `picomatch`)
+- CI pipeline: build + lint + typecheck + test
+- Automated npm publish in release workflow
+- Content-Security-Policy on landing page
+- Documentation accuracy pass
 
-- **More technologies**: Expand beyond 83 to cover emerging tools and frameworks
-- **Plugin system**: Allow community-contributed technology definitions and templates
-- **Web dashboard**: Browser-based interface as an alternative to the desktop app
-- **Cloud sync**: Sync stacks and templates across machines
-- **Team features**: Shared templates and stack standards for teams
+## v0.4.0 — Planned
+
+- End-to-end tests for CLI command handlers
+- Desktop app test suite (Zustand store, Tauri bridge, React pages)
+- Expanded template library (10+ new templates)
+- `stackweld doctor --fix` with safe auto-remediation
+- `--dry-run` support across all scaffold commands
+- Project profiles: rapid, standard, production, enterprise, lightweight
+
+## v0.5.0 — Future
+
+- AI utilities: `stackweld ai suggest`, `ai readme`, `ai explain`
+- Custom user templates (`stackweld template save/use`)
+- Expanded registry: 100+ deeply modeled technologies
+- Evaluate demand for web dashboard, cloud sync, marketplace

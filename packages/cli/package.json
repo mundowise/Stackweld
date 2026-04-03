@@ -1,6 +1,6 @@
 {
   "name": "@stackweld/cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "The operating system for your dev stacks — define, validate, scaffold, and launch development environments from the terminal.",
   "license": "MIT",
   "author": "Orlando Fernandez <hello@xplustechnologies.com>",

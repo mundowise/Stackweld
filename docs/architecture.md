@@ -1,6 +1,6 @@
 # Stackweld — Architecture Documentation
 
-> Version: 0.2.0 | Last updated: 2026-03-30 | Covers: Core, Registry, Templates, CLI, Desktop
+> Version: 0.3.1 | Last updated: 2026-04-02 | Covers: Core, Registry, Templates, CLI, Desktop
 
 ---
 
@@ -140,7 +140,7 @@ Thin wrapper around `docker compose` for a project's `docker-compose.yml`. Opera
 | Lint | `engine/lint.ts` | `lintStack()` | Validate stacks against team standards (.stackweldrc) |
 | Benchmark | `engine/benchmark.ts` | `profilePerformance()` | Heuristic performance estimates (cold start, build time, memory) |
 | Cost | `engine/cost.ts` | `estimateCost()` | Monthly hosting cost estimates across providers |
-| Learn | `engine/learn.ts` | `getResources()` | Curated learning resources per technology |
+| Learn | `registry/src/learning-resources.ts` | `getResources()` | Curated learning resources per technology |
 | Plugin | `engine/plugin.ts` | `listPlugins()`, `installPlugin()`, `removePlugin()` | Plugin lifecycle management (npm-based) |
 
 All new modules follow the same pattern: pure functions that receive a `StackDefinition` and/or `Technology[]` and return a typed result. No side effects except `syncEnv()` (writes to .env), `installPlugin()` (npm install), and `removePlugin()` (npm uninstall).

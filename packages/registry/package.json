@@ -1,6 +1,6 @@
 {
   "name": "@stackweld/registry",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Technology registry for Stackweld — 83 YAML technology definitions with JSON Schema validation.",
   "license": "MIT",
   "author": "Orlando Fernandez <hello@xplustechnologies.com>",
